@@ -66,7 +66,7 @@ const components = [
 export function SiteHeader() {
   return (
     <header className="border-b border-dashed sticky top-0 z-50 bg-background">
-      <div className="flex items-center py-2 px-4  border-x border-dashed justify-between">
+      <div className="flex items-center py-2 px-4 max-w-7xl mx-auto border-x border-dashed justify-between">
         <div className="flex items-center gap-2">
           <MobileMenu sections={sections} />
           <Button
