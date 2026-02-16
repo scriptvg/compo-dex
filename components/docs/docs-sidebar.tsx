@@ -1,7 +1,29 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
 import { Badge } from "../ui/badge";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
+
+interface SectionItem {
+  id: string;
+  title: string;
+}
+
+const DocsSidebarContext = createContext<{
+  register: (id: string, title?: string) => void;
+  unregister: (id: string) => void;
+  items: SectionItem[];
+  activeItem: string | null;
+  setActiveItem: (id: string) => void;
+} | null>(null);
 
 function DocsSidebarProvider({
   children,
@@ -10,12 +32,76 @@ function DocsSidebarProvider({
 }: React.ComponentProps<"div"> & {
   className?: string;
 }) {
+  const [items, setItems] = useState<SectionItem[]>([]);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
+
+  const register = useCallback((id: string, title?: string) => {
+    setItems((prev) => {
+      // Avoid duplicates
+      if (prev.some((item) => item.id === id)) return prev;
+      return [...prev, { id, title: title || id }];
+    });
+  }, []);
+
+  const unregister = useCallback((id: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  }, []);
+
+  // Intersection Observer to track active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveItem(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-80px 0px -80% 0px",
+        threshold: 0,
+      },
+    );
+
+    // Observe all registered sections
+    items.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [items]);
+
   return (
-    <div className={cn("flex min-h-dvh flex-col", className)} {...props}>
-      {children}
-    </div>
+    <DocsSidebarContext.Provider
+      value={{
+        register,
+        unregister,
+        items,
+        activeItem,
+        setActiveItem,
+      }}
+    >
+      <div className={cn("flex min-h-dvh flex-col", className)} {...props}>
+        {children}
+      </div>
+    </DocsSidebarContext.Provider>
   );
 }
+
+export const useDocsSidebar = () => {
+  const context = useContext(DocsSidebarContext);
+
+  if (!context) {
+    throw new Error("DocsSidebar must be used within DocsSidebarProvider");
+  }
+
+  return context;
+};
 
 const docsSidebarVariants = cva("hidden w-84 shrink-0 border-dashed", {
   variants: {

@@ -1,6 +1,10 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
+import { useDocsSidebar } from "./docs-sidebar";
+import { useEffect } from "react";
 
 function Docs({
   className,
@@ -122,8 +126,25 @@ function DocsHeader({ className, ...props }: React.ComponentProps<"header">) {
   return <header className={cn("space-y-2", className)} {...props} />;
 }
 
-function DocsSection({ className, ...props }: React.ComponentProps<"section">) {
-  return <section className={cn("space-y-4", className)} {...props} />;
+function DocsSection({
+  className,
+  id,
+  title,
+  ...props
+}: React.ComponentProps<"section"> & {
+  id?: string;
+  title?: string;
+}) {
+  const { register, unregister } = useDocsSidebar();
+
+  useEffect(() => {
+    if (id) {
+      register(id, title);
+      return () => unregister(id);
+    }
+  }, [id, title, register, unregister]);
+
+  return <section id={id} className={cn("space-y-4", className)} {...props} />;
 }
 
 export { Docs, DocsPage, DocsTitle, DocsDescription, DocsSection, DocsHeader };

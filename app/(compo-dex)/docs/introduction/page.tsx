@@ -24,7 +24,7 @@ export default function Page() {
         </DocsDescription>
       </DocsHeader>
 
-      <DocsSection>
+      <DocsSection id="what-is-compo-dex" title="What is compo/dex?">
         <DocsHeader>
           <DocsTitle variant="h2">What is compo/dex?</DocsTitle>
           <DocsDescription size="default">
@@ -37,7 +37,7 @@ export default function Page() {
         </DocsHeader>
       </DocsSection>
 
-      <DocsSection>
+      <DocsSection id="why-compo-dex" title="Why compo/dex?">
         <DocsHeader>
           <DocsTitle variant="h2">Why compo/dex?</DocsTitle>
           <DocsDescription size="default">
@@ -71,7 +71,7 @@ export default function Page() {
         </DocsDescription>
       </DocsSection>
 
-      <DocsSection>
+      <DocsSection id="who-is-this-for" title="Who is this for?">
         <DocsHeader>
           <DocsTitle variant="h2">Who is this for?</DocsTitle>
           <DocsDescription size="default">

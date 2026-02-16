@@ -7,6 +7,7 @@ import {
   DocsSidebarProvider,
   DocsSidebarTitle,
 } from "@/components/docs/docs-sidebar";
+import { DocsTOC } from "@/components/docs/docs-toc";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -107,7 +108,13 @@ export default function DocsLayout({
 
         {/* TOC */}
         <DocsSidebar side="right" variant="mobile">
-          TOC
+          <DocsSidebarHeader>
+            <DocsSidebarTitle>On this page</DocsSidebarTitle>
+          </DocsSidebarHeader>
+
+          <DocsSidebarNav>
+            <DocsTOC />
+          </DocsSidebarNav>
         </DocsSidebar>
       </div>
     </DocsSidebarProvider>
