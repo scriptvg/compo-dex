@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/site-header";
+import { Badge } from "@/components/ui/badge";
 
 export default function DocsLayout({
   children,
@@ -20,19 +21,19 @@ export default function DocsLayout({
             <nav className="divide-y divide-dashed">
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="flex items-center justify-between px-4 py-2 hover:bg-muted/30"
               >
-                Introduction
+                <span>Introduction</span>
               </a>
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="block px-4 py-2 hover:bg-muted/30"
               >
                 Installation
               </a>
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="block px-4 py-2 hover:bg-muted/30"
               >
                 Components
               </a>
@@ -45,27 +46,31 @@ export default function DocsLayout({
             <nav className="divide-y divide-dashed">
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="flex items-center justify-between px-4 py-2 hover:bg-muted/30"
               >
-                Pokemon Image
+                <span>Pokemon Image</span>{" "}
+                <Badge variant="secondary" className="bg-sky-500/20 text-sky-600 dark:text-sky-400">New</Badge>
               </a>
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="flex items-center justify-between px-4 py-2 hover:bg-muted/30 opacity-50"
               >
-                Pokemon Badge
+                <span>Pokemon Badge</span>
+                <Badge>Coming soon</Badge>
               </a>
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="flex items-center justify-between px-4 py-2 hover:bg-muted/30 opacity-50"
               >
-                Pokemon Card
+                <span>Pokemon Card</span>
+                <Badge>Coming soon</Badge>
               </a>
               <a
                 href="#introduction"
-                className="block px-4 py-2 hover:bg-accent/50"
+                className="flex items-center justify-between px-4 py-2 hover:bg-muted/30 opacity-50"
               >
-                Pokemon Stats
+                <span>Pokemon Stats</span>
+                <Badge>Coming soon</Badge>
               </a>
             </nav>
           </div>
