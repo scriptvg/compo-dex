@@ -93,7 +93,7 @@ export default function DocsLayout({
                   <span>{component.title}</span>
                   {component.badge && (
                     <DocsBadge variant={component.badge}>
-                      {component.badge}
+                      {component.badge.includes("new") ? "New" : "Coming Soon"}
                     </DocsBadge>
                   )}
                 </Link>

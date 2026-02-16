@@ -53,7 +53,7 @@ function DocsSidebar({
     >
       <div
         data-slot="docs-sidebar-content"
-        className="sticky top-12 h-[calc(100dvh-3rem)] overflow-y-auto"
+        className="sticky top-12.5 h-[calc(100dvh-10rem)] overflow-y-auto"
       >
         {children}
       </div>
