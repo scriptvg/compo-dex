@@ -4,13 +4,7 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
 import { Badge } from "../ui/badge";
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, useCallback } from "react";
 
 interface SectionItem {
   id: string;
@@ -21,8 +15,8 @@ const DocsSidebarContext = createContext<{
   register: (id: string, title?: string) => void;
   unregister: (id: string) => void;
   items: SectionItem[];
-  activeItem: string | null;
-  setActiveItem: (id: string) => void;
+  activeId: string | null;
+  setActiveId: (id: string) => void;
 } | null>(null);
 
 function DocsSidebarProvider({
@@ -33,7 +27,7 @@ function DocsSidebarProvider({
   className?: string;
 }) {
   const [items, setItems] = useState<SectionItem[]>([]);
-  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const register = useCallback((id: string, title?: string) => {
     setItems((prev) => {
@@ -47,43 +41,14 @@ function DocsSidebarProvider({
     setItems((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
-  // Intersection Observer to track active section
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveItem(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-80px 0px -80% 0px",
-        threshold: 0,
-      },
-    );
-
-    // Observe all registered sections
-    items.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [items]);
-
   return (
     <DocsSidebarContext.Provider
       value={{
         register,
         unregister,
         items,
-        activeItem,
-        setActiveItem,
+        activeId,
+        setActiveId,
       }}
     >
       <div className={cn("flex min-h-dvh flex-col", className)} {...props}>
