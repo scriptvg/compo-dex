@@ -108,7 +108,7 @@ const lineHighlightTransformer = (lines: number[]): ShikiTransformer => ({
   name: "line-highlight",
   line(node, line) {
     if (lines.includes(line)) {
-      this.addClassToHast(node, "bg-muted/50");
+      this.addClassToHast(node, "w-full bg-muted/50");
     }
   },
 });
