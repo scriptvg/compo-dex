@@ -1,48 +1,88 @@
 import * as React from "react";
 import PokemonImageDemo, {
   code as pokemonImageCode,
+  importCode as pokemonImageImportCode,
+  usageCode as pokemonImageUsageCode,
 } from "./pokemon-image/pokemon-image-demo";
 import PokemonImageBasicUsage, {
   code as pokemonBasicUsageCode,
 } from "./pokemon-image/pokemon-basic-usage";
+import PokemonImageSize, {
+  code as pokemonImageSizeCode,
+} from "./pokemon-image/pokemon-image-size";
 import { CLInstaller } from "@/components/cli-installer";
 import { ExampleFile } from "@/components/example-file";
 import { type CodeLanguage } from "@/components/example-context";
 import { Badge } from "@/components/ui/badge";
 
+type files = {
+  title: string;
+  path: string;
+  language: CodeLanguage;
+};
+
+type manualSteps = {
+  title: string;
+  description?: React.ReactNode;
+  content?: React.ReactNode;
+};
+
+type usage = {
+  importCode: {
+    code: string;
+    language: CodeLanguage;
+  };
+  usageCode: {
+    code: string;
+    language: CodeLanguage;
+  };
+};
+
+type overview = {
+  filename: string;
+  path?: string;
+  code: string;
+  example: React.ReactNode;
+};
+
+type examples = {
+  id: string;
+  title?: string | React.ReactNode;
+  props?: {
+    type?: string;
+    prop?: string;
+    value?: string;
+  }[];
+  highlightedLines?: number[];
+  description?: string | React.ReactNode;
+  filename: string;
+  path?: string;
+  code: string;
+  example: React.ReactNode;
+};
+
 export interface RegistryEntry {
   title: string;
   description: string;
-  files?: {
-    title: string;
-    path: string;
-    language: CodeLanguage;
-  }[];
-  manualSteps: {
-    title: string;
-    description?: React.ReactNode;
-    content?: React.ReactNode;
-  }[];
+  files?: files[];
+  manualSteps: manualSteps[];
+  usage: {
+    importCode: {
+      code: string;
+      language: CodeLanguage;
+    };
+    usageCode: {
+      code: string;
+      language: CodeLanguage;
+    };
+  };
   overview: {
     filename: string;
     path?: string;
     code: string;
     example: React.ReactNode;
   };
-  examples: {
-    id: string;
-    title?: string | React.ReactNode;
-    props?: {
-      type?: string;
-      prop?: string;
-      value?: string;
-    }[];
-    description?: string | React.ReactNode;
-    filename: string;
-    path?: string;
-    code: string;
-    example: React.ReactNode;
-  }[];
+  examples: examples[];
 }
 
 export const registry: Record<string, RegistryEntry> = {
@@ -81,7 +121,7 @@ export const registry: Record<string, RegistryEntry> = {
           <ExampleFile
             path="components/compo-dex/pokemon-image.tsx"
             language="tsx"
-            title="pokemon-image-demo"
+            title="pokemon-image"
           />
         ),
       },
@@ -89,6 +129,16 @@ export const registry: Record<string, RegistryEntry> = {
         title: "Update the import paths to match your project structure",
       },
     ],
+    usage: {
+      importCode: {
+        code: pokemonImageImportCode,
+        language: "tsx",
+      },
+      usageCode: {
+        code: pokemonImageUsageCode,
+        language: "tsx",
+      },
+    },
     examples: [
       {
         id: "basic-usage",
@@ -100,13 +150,6 @@ export const registry: Record<string, RegistryEntry> = {
       },
       {
         id: "pokemon-image-sizes",
-        props: [
-          {
-            type: "string",
-            prop: "size",
-            value: "lg",
-          },
-        ],
         title: "Sizes",
         description: (
           <>
@@ -115,80 +158,9 @@ export const registry: Record<string, RegistryEntry> = {
           </>
         ),
         filename: "pokemon-image-sizes",
-        code: pokemonImageCode,
-        example: <PokemonImageDemo />,
-      },
-    ],
-  },
-  "pokemon-badge": {
-    title: "Pokemon Badge",
-    description: "Pokemon Badge is a component that displays a Pokemon badge.",
-    overview: {
-      filename: "pokemon-badge-demo",
-      code: pokemonImageCode,
-      example: <PokemonImageDemo />,
-    },
-    manualSteps: [
-      {
-        title: "Import the component",
-        description: (
-          <ExampleFile
-            path="components/ui/badge.tsx"
-            language="tsx"
-            title="badge"
-          />
-        ),
-      },
-      {
-        title: "Update the import paths to match your project structure",
-      },
-    ],
-    examples: [
-      {
-        id: "basic-usage",
-        filename: "pokemon-badge-basic",
-        code: `import { Badge } from "@/components/ui/badge";\n\n<Badge>Fire</Badge>`,
-        example: (
-          <div className="p-4 border rounded-md bg-accent text-center font-bold">
-            Pokemon Badge Mockup
-          </div>
-        ),
-      },
-    ],
-  },
-  "pokemon-card": {
-    title: "Pokemon Card",
-    description: "Pokemon Card is a component that displays a Pokemon card.",
-    overview: {
-      filename: "pokemon-card-demo",
-      code: pokemonImageCode,
-      example: <PokemonImageDemo />,
-    },
-    manualSteps: [
-      {
-        title: "Import the component",
-        description: (
-          <ExampleFile
-            path="components/ui/card.tsx"
-            language="tsx"
-            title="card"
-          />
-        ),
-      },
-      {
-        title: "Update the import paths to match your project structure",
-      },
-    ],
-    examples: [
-      {
-        id: "card-basic",
-        filename: "pokemon-card-basic",
-        code: `import { Card } from "@/components/ui/card";\n\n<Card>Pikachu</Card>`,
-        example: (
-          <div className="p-4 border rounded-md bg-accent text-center font-bold">
-            Pokemon Card Mockup
-          </div>
-        ),
+        code: pokemonImageSizeCode,
+        example: <PokemonImageSize />,
+        highlightedLines: [10, 17, 24, 31],
       },
     ],
   },
