@@ -20,8 +20,7 @@ function PokemonImageDemo() {
 
 export default PokemonImageDemo;
 
-export const code = `
-import {
+export const code = `import {
   PokemonImage,
   PokemonSprite,
   PokemonFallback,
@@ -41,5 +40,18 @@ function PokemonImageDemo() {
   );
 }
 
-export default PokemonImageDemo;
-`;
+export default PokemonImageDemo;`;
+
+export const importCode = `import {
+  PokemonImage,
+  PokemonSprite,
+  PokemonFallback,
+} from "@/components/compo-dex/pokemon-image";`;
+
+export const usageCode = `<PokemonImage>
+  <PokemonSprite
+    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+    alt="Bulbasaur"
+  />
+  <PokemonFallback />
+</PokemonImage>`;
