@@ -19,6 +19,7 @@ import { getSourceCode } from "@/lib/source-code";
 import { FileTabs } from "@/components/file-tabs";
 import * as React from "react";
 import { cloneElement, isValidElement } from "react";
+import { UsageCode } from "@/components/usage-code";
 
 async function resolvePathsInJSX(
   element: React.ReactNode,
@@ -94,7 +95,7 @@ export default async function Page({
       <DocsSection id="overview" title="Overview">
         <DocsHeader>
           <div className="flex items-center justify-between">
-            <DocsTitle>{component.title}</DocsTitle>
+            <DocsTitle>{entry.title}</DocsTitle>
             <DocsNav>
               {prevComponent && (
                 <DocsNavPrevious
@@ -111,7 +112,7 @@ export default async function Page({
             </DocsNav>
           </div>
           <DocsDescription className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]">
-            {component.description}
+            {entry.description}
           </DocsDescription>
         </DocsHeader>
 
@@ -151,6 +152,10 @@ export default async function Page({
 
       <DocsSection>
         <DocsTitle variant="h2">Usage</DocsTitle>
+        <UsageCode
+          importCode={entry.usage.importCode}
+          usageCode={entry.usage.usageCode}
+        />
       </DocsSection>
 
       <DocsSection>
@@ -170,6 +175,7 @@ export default async function Page({
               title={example.filename}
               code={example.code}
               language="tsx"
+              highlightLines={example.highlightedLines as number[]}
             >
               {example.example}
             </ExampleComponent>
