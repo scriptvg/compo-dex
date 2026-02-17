@@ -43,6 +43,8 @@ export function DocsTOC() {
           className={cn(
             "transition-colors",
             activeId === item.id && "bg-muted/30 text-foreground font-medium",
+            item.level === 3 && "pl-8 text-sm",
+            item.level === 4 && "pl-12 text-sm",
           )}
         >
           <Link href={`#${item.id}`} data-scrollspy-anchor={item.id}>

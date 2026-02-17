@@ -9,10 +9,11 @@ import { createContext, useContext, useState, useCallback } from "react";
 interface SectionItem {
   id: string;
   title: string;
+  level?: number;
 }
 
 const DocsSidebarContext = createContext<{
-  register: (id: string, title?: string) => void;
+  register: (id: string, title?: string, level?: number) => void;
   unregister: (id: string) => void;
   items: SectionItem[];
   activeId: string | null;
@@ -29,11 +30,11 @@ function DocsSidebarProvider({
   const [items, setItems] = useState<SectionItem[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const register = useCallback((id: string, title?: string) => {
+  const register = useCallback((id: string, title?: string, level?: number) => {
     setItems((prev) => {
       // Avoid duplicates
       if (prev.some((item) => item.id === id)) return prev;
-      return [...prev, { id, title: title || id }];
+      return [...prev, { id, title: title || id, level }];
     });
   }, []);
 
