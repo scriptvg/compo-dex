@@ -91,33 +91,30 @@ export default async function Page({
 
   return (
     <DocsPage>
-      <DocsHeader>
-        <div className="flex items-center justify-between">
-          <DocsTitle>{component.title}</DocsTitle>
-          <DocsNav>
-            {prevComponent && (
-              <DocsNavPrevious
-                href={prevComponent.url}
-                tooltip={prevComponent.title}
-              />
-            )}
-            {nextComponent && (
-              <DocsNavNext
-                href={nextComponent.url}
-                tooltip={nextComponent.title}
-              />
-            )}
-          </DocsNav>
-        </div>
-        <DocsDescription className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]">
-          {component.description}
-        </DocsDescription>
-      </DocsHeader>
-
       <DocsSection id="overview" title="Overview">
         <DocsHeader>
-          <DocsTitle variant="h2">Overview</DocsTitle>
+          <div className="flex items-center justify-between">
+            <DocsTitle>{component.title}</DocsTitle>
+            <DocsNav>
+              {prevComponent && (
+                <DocsNavPrevious
+                  href={prevComponent.url}
+                  tooltip={prevComponent.title}
+                />
+              )}
+              {nextComponent && (
+                <DocsNavNext
+                  href={nextComponent.url}
+                  tooltip={nextComponent.title}
+                />
+              )}
+            </DocsNav>
+          </div>
+          <DocsDescription className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]">
+            {component.description}
+          </DocsDescription>
         </DocsHeader>
+
         <ExampleComponent
           title={entry.overview.filename}
           code={overviewCode}
@@ -160,7 +157,11 @@ export default async function Page({
         <DocsTitle variant="h2">Examples</DocsTitle>
 
         {entry.examples.map((example) => (
-          <DocsSection key={example.id} id={example.id}>
+          <DocsSection
+            key={example.id}
+            id={example.id}
+            title={example.title as string}
+          >
             <DocsHeader>
               <DocsTitle variant="h3">{example.title}</DocsTitle>
               <DocsDescription>{example.description}</DocsDescription>

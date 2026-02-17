@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import { SiTypescript, SiJavascript, SiReact, SiGnubash } from "react-icons/si";
+import { VscJson } from "react-icons/vsc";
 
 export type CodeLanguage =
   | "tsx"
@@ -35,6 +36,7 @@ export const languageIcons: Record<
   js: SiJavascript,
   javascript: SiJavascript,
   bash: SiGnubash,
+  json: VscJson,
 };
 
 export type ExampleFileContextType = {

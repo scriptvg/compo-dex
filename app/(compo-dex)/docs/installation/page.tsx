@@ -10,6 +10,7 @@ import {
   DocsSection,
   DocsTitle,
 } from "@/components/docs";
+import { ExampleFile } from "@/components/example-file";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Info } from "lucide-react";
@@ -108,17 +109,16 @@ export default function Page() {
           to add the compo/dex registry to your{" "}
           <Badge variant="secondary">components.json</Badge> file.
         </DocsDescription>
-        <div className="my-6 rounded-md bg-zinc-950 p-4 dark:bg-zinc-900 border border-border">
-          <pre className="text-sm text-zinc-50 overflow-x-auto">
-            <code>
-              {`{
+        <ExampleFile
+          isCollapse={false}
+          language="json"
+          title="components"
+          code={`{
   "registries": {
     "@compodex": "https://compodex.netlify.app/r/{name}.json"
   }
 }`}
-            </code>
-          </pre>
-        </div>
+        />
       </DocsSection>
 
       {/* Installation */}
