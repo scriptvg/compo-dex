@@ -2,6 +2,8 @@ import {
   Docs,
   DocsDescription,
   DocsHeader,
+  DocsNav,
+  DocsNavNext,
   DocsPage,
   DocsSection,
   DocsTitle,
@@ -12,7 +14,12 @@ export default function Page() {
   return (
     <DocsPage>
       <DocsHeader>
-        <DocsTitle>Introduction</DocsTitle>
+        <div className="flex items-center justify-between">
+          <DocsTitle>Introduction</DocsTitle>
+          <DocsNav>
+            <DocsNavNext href="/docs/installation" tooltip="Installation" />
+          </DocsNav>
+        </div>
         <DocsDescription
           className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]"
           size="lg"

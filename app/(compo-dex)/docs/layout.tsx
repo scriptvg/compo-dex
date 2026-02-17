@@ -11,6 +11,7 @@ import { DocsTOC } from "@/components/docs/docs-toc";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { components } from "@/content/docs/components/components";
 
 const navLinks = [
   {
@@ -27,31 +28,16 @@ const navLinks = [
   },
 ];
 
-const components = [
-  {
-    title: "Pokemon Image",
-    href: "/docs/components/pokemon-image",
-    badge: "new" as const,
-  },
-  {
-    title: "Pokemon Badge",
-    href: "/docs/components/pokemon-badge",
-    badge: "coming-soon" as const,
-    disabled: true,
-  },
-  {
-    title: "Pokemon Card",
-    href: "/docs/components/pokemon-card",
-    badge: "coming-soon" as const,
-    disabled: true,
-  },
-  {
-    title: "Pokemon Stats",
-    href: "/docs/components/pokemon-stats",
-    badge: "coming-soon" as const,
-    disabled: true,
-  },
-];
+const sidebarComponents: {
+  title: string;
+  href: string;
+  badge: "new" | "coming-soon";
+  disabled?: boolean;
+}[] = components.map((component) => ({
+  title: component.title,
+  href: component.url,
+  badge: "new" as const,
+}));
 
 export default function DocsLayout({
   children,
@@ -84,7 +70,7 @@ export default function DocsLayout({
           </DocsSidebarHeader>
 
           <DocsSidebarNav>
-            {components.map((component) => (
+            {sidebarComponents.map((component) => (
               <DocsSidebarLink
                 key={component.href}
                 disabled={component.disabled}
