@@ -54,10 +54,10 @@ export function CLInstaller({
                 className="bg-transparent p-0 h-fit! gap-2"
                 variant="default"
               >
-                <TabsTrigger className="px-1 h-fit" value={title.pnpm}>
+                <TabsTrigger className="px-1 data-[state=active]:border h-fit" value={title.pnpm}>
                   {title.pnpm}
                 </TabsTrigger>
-                <TabsTrigger className="px-1 h-fit" value={title.npm}>
+                <TabsTrigger className="px-1 data-[state=active]:border h-fit" value={title.npm}>
                   {title.npm}
                 </TabsTrigger>
               </TabsList>

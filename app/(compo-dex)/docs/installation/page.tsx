@@ -99,26 +99,64 @@ export default function Page() {
         </div>
       </DocsSection>
 
+      {/* Registry Configuration */}
+      <DocsSection id="registry-configuration" title="Registry Configuration">
+        <DocsTitle variant="h2">Registry Configuration</DocsTitle>
+        <DocsDescription>
+          To use the shorthand installation commands like{" "}
+          <Badge variant="secondary">@compodex/component-name</Badge>, you need
+          to add the compo/dex registry to your{" "}
+          <Badge variant="secondary">components.json</Badge> file.
+        </DocsDescription>
+        <div className="my-6 rounded-md bg-zinc-950 p-4 dark:bg-zinc-900 border border-border">
+          <pre className="text-sm text-zinc-50 overflow-x-auto">
+            <code>
+              {`{
+  "registries": {
+    "@compodex": "https://compodex.netlify.app/r/{name}.json"
+  }
+}`}
+            </code>
+          </pre>
+        </div>
+      </DocsSection>
+
       {/* Installation */}
       <DocsSection id="installation-cli" title="Installation">
         <DocsTitle variant="h2">Installation</DocsTitle>
 
         <DocsDescription>
-          Install compo/dex components using the CLI from the root of your
-          project. The CLI automatically adds the selected component and
-          installs all required dependencies.
+          Install compo/dex components using the CLI. You can use the full URL
+          or the shorthand if you have configured the registry.
           <br />
           <br />
           For example, to install the{" "}
           <Badge variant="secondary">PokemonImage</Badge> component:
         </DocsDescription>
 
-        <CLInstaller
-          codes={{
-            npm: "npx shadcn@latest add http://localhost:3000/r/pokemon-image.json",
-            pnpm: "pnpm dlx shadcn@latest add http://localhost:3000/r/pokemon-image.json",
-          }}
-        />
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium">
+              Using Shorthand (Recommended)
+            </h4>
+            <CLInstaller
+              codes={{
+                npm: "npx shadcn@latest add @compodex/pokemon-image",
+                pnpm: "pnpm dlx shadcn@latest add @compodex/pokemon-image",
+              }}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium">Using Direct URL</h4>
+            <CLInstaller
+              codes={{
+                npm: "npx shadcn@latest add https://compodex.netlify.app/r/pokemon-image.json",
+                pnpm: "pnpm dlx shadcn@latest add https://compodex.netlify.app/r/pokemon-image.json",
+              }}
+            />
+          </div>
+        </div>
       </DocsSection>
     </DocsPage>
   );
