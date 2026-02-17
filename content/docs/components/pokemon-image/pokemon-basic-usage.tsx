@@ -36,8 +36,7 @@ function PokemonImageBasicUsage() {
 
 export default PokemonImageBasicUsage;
 
-export const code = `
-import {
+export const code = `import {
   PokemonImage,
   PokemonSprite,
   PokemonFallback,
@@ -71,5 +70,4 @@ function PokemonImageBasicUsage() {
       </PokemonImage>
     </div>
   );
-}
-`;
+}`;
