@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pokemon-image",
+  "title": "Pokemon Image",
+  "description": "Display Pokémon images with support for different official artwork variants and fallbacks.",
+  "dependencies": [
+    "radix-ui",
+    "class-variance-authority"
+  ],
+  "files": [
+    {
+      "path": "components/compo-dex/pokemon-image.tsx",
+      "content": "/**\r\n * @name PokemonImage\r\n * @description Display Pokémon images with support for different official artwork variants and fallbacks.\r\n * @base radix\r\n * @component true\r\n * @pattern compound components\r\n * @api https://www.radix-ui.com/primitives/docs/components/avatar#api-reference\r\n * @doc https://www.radix-ui.com/primitives/docs/components/avatar\r\n */\r\n\r\nimport * as React from \"react\";\r\nimport { cn } from \"@/lib/utils\"; /* utils */\r\nimport { cva } from \"class-variance-authority\"; /* cva */\r\nimport { Avatar as AvatarPrimitive } from \"radix-ui\"; /* radix-ui */\r\n\r\nconst pokemonImageVariants = cva(\r\n  \"relative aspect-square overflow-hidden group/pokemon-image rounded-none bg-muted/40\",\r\n  {\r\n    variants: {\r\n      size: {\r\n        sm: \"size-12\",\r\n        md: \"size-32\",\r\n        lg: \"size-40\",\r\n        xl: \"size-48\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      size: \"md\",\r\n    },\r\n  },\r\n);\r\n\r\nfunction PokemonImage({\r\n  className,\r\n  size = \"md\",\r\n  ...props\r\n}: React.ComponentProps<typeof AvatarPrimitive.Root> & {\r\n  size?: \"sm\" | \"md\" | \"lg\" | \"xl\";\r\n}) {\r\n  return (\r\n    <AvatarPrimitive.Root\r\n      data-slot=\"pokemon-image\"\r\n      className={cn(pokemonImageVariants({ size }), className)}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n\r\nfunction PokemonSprite({\r\n  className,\r\n  ...props\r\n}: React.ComponentProps<typeof AvatarPrimitive.Image>) {\r\n  return (\r\n    <AvatarPrimitive.Image\r\n      className={cn(\r\n        \"h-full w-full object-contain transition-opacity duration-300\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n\r\nfunction PokemonFallback({\r\n  className,\r\n  isError = false,\r\n  ...props\r\n}: React.ComponentProps<typeof AvatarPrimitive.Fallback> & {\r\n  isError?: boolean;\r\n}) {\r\n  return (\r\n    <AvatarPrimitive.Fallback\r\n      data-slot=\"pokemon-fallback\"\r\n      className={cn(\r\n        \"bg-muted text-muted-foreground rounded-md flex size-full items-center justify-center text-sm group-data-[size=sm]/pokemon-image:text-xs\",\r\n        isError && \"bg-red-500\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n\r\nexport { PokemonImage, PokemonSprite, PokemonFallback };\r\n",
+      "type": "registry:component",
+      "target": "components/compo-dex/pokemon-image.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
