@@ -2,6 +2,8 @@ import {
   Docs,
   DocsDescription,
   DocsHeader,
+  DocsNav,
+  DocsNavNext,
   DocsPage,
   DocsSection,
   DocsTitle,
@@ -12,7 +14,12 @@ export default function Page() {
   return (
     <DocsPage>
       <DocsHeader>
-        <DocsTitle>Introduction</DocsTitle>
+        <div className="flex items-center justify-between">
+          <DocsTitle>Introduction</DocsTitle>
+          <DocsNav>
+            <DocsNavNext href="/docs/installation" tooltip="Installation" />
+          </DocsNav>
+        </div>
         <DocsDescription
           className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]"
           size="lg"
@@ -24,7 +31,7 @@ export default function Page() {
         </DocsDescription>
       </DocsHeader>
 
-      <DocsSection>
+      <DocsSection id="what-is-compo-dex" title="What is compo/dex?">
         <DocsHeader>
           <DocsTitle variant="h2">What is compo/dex?</DocsTitle>
           <DocsDescription size="default">
@@ -37,7 +44,7 @@ export default function Page() {
         </DocsHeader>
       </DocsSection>
 
-      <DocsSection>
+      <DocsSection id="why-compo-dex" title="Why compo/dex?">
         <DocsHeader>
           <DocsTitle variant="h2">Why compo/dex?</DocsTitle>
           <DocsDescription size="default">
@@ -71,7 +78,7 @@ export default function Page() {
         </DocsDescription>
       </DocsSection>
 
-      <DocsSection>
+      <DocsSection id="who-is-this-for" title="Who is this for?">
         <DocsHeader>
           <DocsTitle variant="h2">Who is this for?</DocsTitle>
           <DocsDescription size="default">

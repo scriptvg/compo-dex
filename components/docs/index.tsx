@@ -1,6 +1,14 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
+import { useDocsSidebar } from "./docs-sidebar";
+import { useEffect } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function Docs({
   className,
@@ -25,13 +33,118 @@ function DocsPage({
   return (
     <Docs
       className={cn(
-        "max-w-3xl space-y-8 px-4 mx-auto md:ml-0 md:mx-0 scroll-mt-16 gap-8",
+        "space-y-8 px-4 md:ml-0 md:mx-0 scroll-mt-16 gap-8",
         className,
       )}
       {...props}
     >
       {children}
     </Docs>
+  );
+}
+
+function DocsNav({
+  className,
+  ...props
+}: React.ComponentProps<"nav"> & {
+  className?: string;
+}) {
+  return (
+    <nav className={cn("flex items-center gap-2", className)} {...props} />
+  );
+}
+
+function DocsNavNext({
+  variant = "outline",
+  size = "icon-sm",
+  radius = "default",
+  tooltip = "Next",
+  className,
+  ...props
+}: {
+  variant?: "outline" | "ghost";
+  size?: "icon-sm" | "icon-md" | "icon-lg";
+  radius?: "default" | "sm" | "lg";
+  tooltip?: string;
+  className?: string;
+} & React.ComponentProps<typeof Link> &
+  React.ComponentProps<typeof Button> & {
+    tooltip?: string;
+  }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <Button
+          variant={variant}
+          size={size}
+          className={cn(navVariants({ radius }), className)}
+          asChild
+          {...props}
+        >
+          <Link {...props}>
+            <ChevronRight className="h-4 w-4" />
+            <span className="sr-only">Next</span>
+          </Link>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
+  );
+}
+
+// ============================================================================
+// NavPrevious
+// ============================================================================
+
+const navVariants = cva("", {
+  variants: {
+    radius: {
+      default: "",
+      sm: "rounded-sm",
+      lg: "rounded-lg",
+    },
+  },
+  defaultVariants: {
+    radius: "default",
+  },
+});
+
+function DocsNavPrevious({
+  variant = "outline",
+  size = "icon-sm",
+  radius = "default",
+  tooltip = "Previous",
+  className,
+
+  ...props
+}: {
+  variant?: "outline" | "ghost";
+  size?: "icon-sm" | "icon-md" | "icon-lg";
+  radius?: "default" | "sm" | "lg";
+  tooltip?: string;
+  className?: string;
+} & React.ComponentProps<typeof Link> &
+  React.ComponentProps<typeof Button> & {
+    tooltip?: string;
+  }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <Button
+          variant={variant}
+          size={size}
+          className={cn(navVariants({ radius }), className)}
+          asChild
+          {...props}
+        >
+          <Link {...props}>
+            <ChevronLeft className="h-4 w-4" />
+            <span className="sr-only">Previous</span>
+          </Link>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -122,8 +235,27 @@ function DocsHeader({ className, ...props }: React.ComponentProps<"header">) {
   return <header className={cn("space-y-2", className)} {...props} />;
 }
 
-function DocsSection({ className, ...props }: React.ComponentProps<"section">) {
-  return <section className={cn("space-y-4", className)} {...props} />;
+function DocsSection({
+  className,
+  id,
+  title,
+  level,
+  ...props
+}: React.ComponentProps<"section"> & {
+  id?: string;
+  title?: string;
+  level?: number;
+}) {
+  const { register, unregister } = useDocsSidebar();
+
+  useEffect(() => {
+    if (id) {
+      register(id, title, level);
+      return () => unregister(id);
+    }
+  }, [id, title, level, register, unregister]);
+
+  return <section id={id} className={cn("space-y-4", className)} {...props} />;
 }
 
-export { Docs, DocsPage, DocsTitle, DocsDescription, DocsSection, DocsHeader };
+export { Docs, DocsPage, DocsTitle, DocsDescription, DocsSection, DocsHeader, DocsNavNext, DocsNavPrevious, DocsNav };
