@@ -6,7 +6,7 @@ import {
 
 function PokemonImageSize() {
   return (
-    <div className="flex flex-row gap-4 items-center justify-center">
+    <div className="flex flex-wrap gap-4 items-center justify-center">
       <PokemonImage size="sm">
         <PokemonSprite
           src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
