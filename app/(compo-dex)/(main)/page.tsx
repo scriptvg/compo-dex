@@ -1,6 +1,9 @@
+import { CoreBuilding } from "@/components/core-building";
+import { Faq } from "@/components/faq";
 import { Features } from "@/components/features";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-works";
+import { WhyThisKit } from "@/components/why-this-kit";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -32,6 +35,10 @@ export default function HomePage() {
       <Hero />
       <Features />
       <HowItWorks />
+      <CoreBuilding />
+      <WhyThisKit />
+      <Faq />
+      
     </div>
   );
 }
