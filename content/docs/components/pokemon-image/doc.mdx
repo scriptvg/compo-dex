@@ -1,0 +1,113 @@
+import { ComponentDocOverviewHeader } from "@/components/docs/component-doc-overview-header";
+import {
+  DocsDescription,
+  DocsHeader,
+  DocsSection,
+  DocsTitle,
+} from "@/components/docs";
+import { ExampleComponent } from "@/components/example-component";
+import { CLInstaller } from "@/components/cli-installer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UsageCode } from "@/components/usage-code";
+import { Badge } from "@/components/ui/badge";
+import PokemonImageDemo, {
+  code as pokemonImageCode,
+  importCode as pokemonImageImportCode,
+  usageCode as pokemonImageUsageCode,
+} from "./pokemon-image-demo";
+import PokemonImageBasicUsage, {
+  code as pokemonBasicUsageCode,
+} from "./pokemon-basic-usage";
+import PokemonImageSize, {
+  code as pokemonImageSizeCode,
+} from "./pokemon-image-size";
+import { PokemonImageManualInstall } from "./manual-install";
+
+<DocsSection id="overview" title="Overview">
+  <ComponentDocOverviewHeader slug="pokemon-image" />
+
+  <ExampleComponent
+    title="pokemon-image-demo"
+    code={pokemonImageCode}
+    language="tsx"
+  >
+    <PokemonImageDemo />
+  </ExampleComponent>
+</DocsSection>
+
+<DocsSection id="installation" title="Installation">
+  <DocsHeader>
+    <DocsTitle variant="h2">Installation</DocsTitle>
+  </DocsHeader>
+  <Tabs className="relative mt-6 w-full" defaultValue="command">
+    <TabsList
+      className="justify-start gap-4 rounded-none bg-transparent px-0"
+      variant="line"
+    >
+      <TabsTrigger value="command">Command</TabsTrigger>
+      <TabsTrigger value="manual">Manual</TabsTrigger>
+    </TabsList>
+    <TabsContent value="command">
+      <CLInstaller
+        codes={{
+          npm: "npx shadcn@latest add @compodex/pokemon-image",
+          pnpm: "pnpm dlx shadcn@latest add @compodex/pokemon-image",
+        }}
+      />
+    </TabsContent>
+    <TabsContent value="manual">
+      <PokemonImageManualInstall />
+    </TabsContent>
+  </Tabs>
+</DocsSection>
+
+<DocsSection>
+  <DocsTitle variant="h2">Usage</DocsTitle>
+  <UsageCode
+    importCode={{
+      code: pokemonImageImportCode,
+      language: "tsx",
+    }}
+    usageCode={{
+      code: pokemonImageUsageCode,
+      language: "tsx",
+    }}
+  />
+</DocsSection>
+
+<DocsSection>
+  <DocsTitle variant="h2">Examples</DocsTitle>
+
+  <DocsSection id="basic-usage" title="Basic Usage">
+    <DocsHeader>
+      <DocsTitle variant="h3">Basic Usage</DocsTitle>
+      <DocsDescription>
+        Basic usage of the Pokemon Image component.
+      </DocsDescription>
+    </DocsHeader>
+    <ExampleComponent
+      title="pokemon-basic-usage"
+      code={pokemonBasicUsageCode}
+      language="tsx"
+    >
+      <PokemonImageBasicUsage />
+    </ExampleComponent>
+  </DocsSection>
+
+  <DocsSection id="pokemon-image-sizes" title="Sizes">
+    <DocsHeader>
+      <DocsTitle variant="h3">Sizes</DocsTitle>
+      <DocsDescription>
+        Use the <Badge>size</Badge> prop to change the size of the component.
+      </DocsDescription>
+    </DocsHeader>
+    <ExampleComponent
+      title="pokemon-image-sizes"
+      code={pokemonImageSizeCode}
+      language="tsx"
+      highlightLines={[10, 17, 24, 31]}
+    >
+      <PokemonImageSize />
+    </ExampleComponent>
+  </DocsSection>
+</DocsSection>
