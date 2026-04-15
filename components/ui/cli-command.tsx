@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScrollArea, ScrollBar } from "./scroll-area";
 
 
 function CLICommand({ command }: { command: string }) {
@@ -48,11 +49,10 @@ function CLICommand({ command }: { command: string }) {
                     )}
                 </AnimatePresence>
             </Button>
-            <CodeBlockCode
-                code={command}
-                language="bash"
-                className="pr-10 [&>pre]:pr-10"
-            />
+            <ScrollArea className="h-full w-full">
+                <CodeBlockCode language="bash" code={command} />
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
         </CodeBlock>
     )
 }

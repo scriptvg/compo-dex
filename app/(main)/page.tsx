@@ -19,10 +19,10 @@ export default async function MainPage() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       {/* <Hero /> */}
-      <div className="flex min-h-[calc(100dvh-6rem)] border-b border-dashed w-full items-center justify-center px-4 sm:px-6">
-        <div className="max-w-3xl text-center mx-auto w-full">
+      <div className="flex min-h-[calc(100dvh-2rem)] mx-auto border-b border-dashed w-full items-center justify-center px-4 sm:px-6">
+        <div className="max-w-3xl text-center mx-auto py-6 w-full">
           <Badge
             asChild
             className="rounded-full border-border py-1"
@@ -55,6 +55,7 @@ export default async function MainPage() {
           </div>
         </div>
       </div>
+
     </div>
   )
 }
