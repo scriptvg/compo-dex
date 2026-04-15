@@ -113,7 +113,7 @@ function CodeBlockCode({
 
     const shikiTheme: BundledTheme =
         themeProp ??
-        (resolvedTheme === "dark" ? "night-owl" : "night-owl-light");
+        (resolvedTheme === "dark" ? "github-dark-default" : "github-light-default");
 
     useEffect(() => {
         setMounted(true);
