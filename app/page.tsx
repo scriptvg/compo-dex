@@ -14,20 +14,20 @@ export default async function Page() {
     <div className="flex flex-col gap-4 min-h-svh p-6">
 
 
-      <div className="flex flex-col gap-4 max-w-md">
-        <CodeBlock className="">
+      <div className="flex flex-col gap-4 ">
+        <CodeBlock>
           <CodeBlockHeader>
             <div className="flex items-center gap-2">
-            <File className="size-4" />
-            <h1 className="text-[14px] font-medium">button.tsx</h1>
+              <File className="size-4" />
+              <h1 className="text-[14px] font-medium">button.tsx</h1>
             </div>
             <Button variant="ghost" size="icon-xs">
               <Copy className="size-4" />
             </Button>
           </CodeBlockHeader>
           <ScrollArea className="w-full h-[200px] ">
-          <CodeBlockCode code={buttonCode} language="typescript" showLineNumbers={true} />
-        <ScrollBar orientation="horizontal" />
+            <CodeBlockCode code={buttonCode} language="typescript" showLineNumbers={true} />
+            <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </CodeBlock>
       </div>

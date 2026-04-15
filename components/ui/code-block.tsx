@@ -46,7 +46,7 @@ function lineNumberTransformer(): ShikiTransformer {
                 type: "element",
                 tagName: "span",
                 properties: {
-                    class: "inline-block min-w-[3ch] shrink-0 select-none text-right tabular-nums text-muted-foreground border-border border-r pr-3 mr-3",
+                    class: "inline-block min-w-[4ch] shrink-0 select-none text-right tabular-nums font-mono text-muted-foreground border-border border-r pr-3 mr-3",
                 },
                 children: [{ type: "text", value: String(lineNo) }],
             };
@@ -113,7 +113,7 @@ function CodeBlockCode({
 
     const shikiTheme: BundledTheme =
         themeProp ??
-        (resolvedTheme === "dark" ? "one-dark-pro" : "one-light");
+        (resolvedTheme === "dark" ? "night-owl" : "night-owl-light");
 
     useEffect(() => {
         setMounted(true);
