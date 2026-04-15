@@ -67,7 +67,7 @@ export type CodeBlockProps = {
 function CodeBlock({ children, className, ...props }: CodeBlockProps) {
     return (
         <div className={cn(
-            "not-prose flex h-fit w-full min-w-0 flex-col overflow-clip border",
+            "not-prose flex h-fit w-full flex-col overflow-hidden border relative",
             "border-border bg-card text-card-foreground",
             className
         )} {...props}>
