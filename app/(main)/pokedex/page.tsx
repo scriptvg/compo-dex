@@ -1,31 +1,25 @@
 "use client"
 
-import { useMemo, type ReactNode } from "react"
+import { useEffect, useMemo, useState, type ReactNode } from "react"
 import { Page, PageContent, PageHeader } from "@/components/layout/page"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { type NamedAPIResource } from "pokenode-ts"
-import { usePokemonInfiniteList, usePokemonByName, usePokemonSpeciesByName } from "@/services/pokemon.service"
-import { PokemonBadgeType } from "@/components/compodex/ui/badge-type"
-import { PokemonSprite, PokemonSpriteFallback, PokemonSpriteImage } from "@/components/compodex/ui/pokemon-sprite"
-import { PokemonCard, PokemonCardHeader, PokemonCardTitle } from "@/components/compodex/ui/pokemon-card"
+import { usePokemonNameIndex } from "@/services/pokemon.service"
+import { PokedexCard } from "@/components/compodex/blocks/pokedex-card"
+import { PokedexSearchBar } from "@/components/compodex/blocks/pokedex-search-bar"
+import { PokedexFilterMenu } from "@/components/compodex/blocks/pokedex-filter-menu"
+import { usePokedex } from "@/contexts/pokedex-context"
+import { usePokedexFilteredList } from "@/hooks/use-pokedex-filtered-list"
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty"
+import { Badge } from "@/components/ui/badge"
 
 const PAGE_SIZE = 24
-
-
-
-function uniquePokemonByName(pages: { results: NamedAPIResource[] }[]) {
-  const seen = new Set<string>()
-  const out: NamedAPIResource[] = []
-  for (const page of pages) {
-    for (const p of page.results) {
-      if (seen.has(p.name)) continue
-      seen.add(p.name)
-      out.push(p)
-    }
-  }
-  return out
-}
 
 function PokedexGrid({
   pokemon,
@@ -41,78 +35,62 @@ function PokedexGrid({
   )
 }
 
-function PokedexCard({ pokemon }: { pokemon: NamedAPIResource }) {
-  const { data: pokemonData } = usePokemonByName(pokemon.name)
-  const { data: speciesData } = usePokemonSpeciesByName(pokemon.name)
-
-  const sprite =
-    pokemonData?.sprites.front_default ??
-    pokemonData?.sprites.other?.["official-artwork"]?.front_default ??
-    ""
-
-  const species = pokemonData?.species.name
-
-  return (
-    <PokemonCard className="relative p-2 overflow-hidden" type={pokemonData?.types[0].type.name as PokemonBadgeType} secondary={pokemonData?.types[1]?.type.name as PokemonBadgeType}>
-      
-      <PokemonSprite className="h-48 w-full bg-card">
-        <PokemonSpriteImage src={sprite} alt={pokemonData?.name ?? pokemon.name} />
-        <PokemonSpriteFallback />
-      </PokemonSprite>
-      <div className="absolute left-4 top-4">
-        <Badge variant="secondary">{pokemonData?.id.toString().padStart(3, "0")}</Badge>
-      </div>
-
-      <div className="absolute right-4 top-4 flex max-w-[70%] flex-wrap justify-end gap-1">
-        {pokemonData?.types?.map((t) => (
-          <PokemonBadgeType
-            key={t.type.name}
-            type={t.type.name as PokemonBadgeType}
-          >
-            {t.type.name}
-          </PokemonBadgeType>
-        ))}
-      </div>
-
-      <div className="absolute bottom-16 left-4">
-        {speciesData?.is_legendary ? <Badge variant="outline" className="">Legendary</Badge>
-         : speciesData?.is_mythical ? <Badge variant="outline" className="">Mythical</Badge> : null}
-      </div>
-
-{/*       <div className="absolute bottom-16 right-4">
-        <Badge variant="outline" className="">
-          {speciesData?.generation.name}
-        </Badge>
-      </div> */}
-
-      <PokemonCardHeader>
-        <PokemonCardTitle>
-          {pokemonData?.name}
-        </PokemonCardTitle>
-      </PokemonCardHeader>
-    </PokemonCard>
-  )
-}
-
 export default function PokedexPage() {
   const {
-    data,
-    isLoading,
-    isError,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = usePokemonInfiniteList(PAGE_SIZE)
+    searchNormalized,
+    setSearchQuery,
+    filters,
+    clearFilters,
+    hasActiveFilters,
+  } = usePokedex()
+  const { data: allPokemon, isLoading, isError } = usePokemonNameIndex()
+  const { matched, isLoadingFilters } = usePokedexFilteredList(
+    allPokemon,
+    searchNormalized,
+    filters,
+  )
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  const rows = useMemo(
-    () => (data?.pages ? uniquePokemonByName(data.pages) : []),
-    [data],
+  const filterKey = useMemo(
+    () =>
+      [
+        filters.selectedGenerations.join(","),
+        filters.selectedPrimaryTypes.join(","),
+        filters.selectedSecondaryTypes.join(","),
+        filters.legendaryOnly,
+        filters.mythicalOnly,
+      ].join("|"),
+    [filters],
   )
 
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE)
+  }, [searchNormalized, filterKey])
+
+  const rows = useMemo(
+    () => matched.slice(0, visibleCount),
+    [matched, visibleCount],
+  )
+
+  const hasMore = visibleCount < matched.length
+  const showFilterLoading =
+    hasActiveFilters && isLoadingFilters && matched.length === 0
+
   return (
-    <Page>
-      <PageHeader className="w-full border-b border-dashed px-4 py-2">
-        <h1 className="text-2xl font-bold">Pokedex</h1>
+    <Page className="w-full max-w-full items-stretch">
+      <PageHeader className="flex w-full min-w-0 flex-col gap-3 border-b border-dashed px-4 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="min-w-0 shrink-0">
+          <h1 className="text-2xl font-bold">Pokedex</h1>
+        </div>
+        <div className="flex flex-col min-w-0 flex-1 items-end justify-end gap-2">
+          <div className="min-w-0 w-full max-w-sm flex items-center gap-2">
+          <PokedexSearchBar />
+          <PokedexFilterMenu />
+          </div>
+          
+
+        </div>
+
       </PageHeader>
       <PageContent className="flex flex-col gap-4 p-4">
         {isLoading ? (
@@ -123,23 +101,58 @@ export default function PokedexPage() {
           <div className="text-sm text-destructive">Failed to load Pokémon.</div>
         ) : null}
 
-        {!isLoading && !isError ? (
-          <PokedexGrid
-            pokemon={rows}
-            renderItem={(pokemon) => (
-              <PokedexCard key={pokemon.name} pokemon={pokemon} />
-            )}
-          />
+        {showFilterLoading ? (
+          <div className="text-sm text-muted-foreground">
+            Aplicando filtros…
+          </div>
         ) : null}
 
-        {!isLoading && !isError ? (
+        {!isLoading && !isError && !showFilterLoading ? (
+          matched.length === 0 ? (
+            <Empty className="border">
+              <EmptyHeader>
+                <EmptyTitle>
+                  {searchNormalized || hasActiveFilters
+                    ? "Sin resultados"
+                    : "No hay Pokémon para mostrar"}
+                </EmptyTitle>
+                <EmptyDescription>
+                  {searchNormalized || hasActiveFilters
+                    ? "Prueba otra búsqueda o ajusta los filtros."
+                    : "Vuelve a intentar más tarde."}
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent className="flex flex-row flex-wrap justify-center gap-2">
+                {searchNormalized ? (
+                  <Button variant="outline" onClick={() => setSearchQuery("")}>
+                    Limpiar búsqueda
+                  </Button>
+                ) : null}
+                {hasActiveFilters ? (
+                  <Button variant="outline" onClick={() => clearFilters()}>
+                    Limpiar filtros
+                  </Button>
+                ) : null}
+              </EmptyContent>
+            </Empty>
+          ) : (
+            <PokedexGrid
+              pokemon={rows}
+              renderItem={(pokemon) => (
+                <PokedexCard key={pokemon.name} pokemon={pokemon} />
+              )}
+            />
+          )
+        ) : null}
+
+        {!isLoading && !isError && !showFilterLoading && matched.length > 0 ? (
           <div className="flex justify-center">
             <Button
               type="button"
-              onClick={() => fetchNextPage()}
-              disabled={!hasNextPage || isFetchingNextPage}
+              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+              disabled={!hasMore}
             >
-              {isFetchingNextPage ? "Loading more…" : hasNextPage ? "Load more" : "No more"}
+              {hasMore ? "Load more" : "No more"}
             </Button>
           </div>
         ) : null}
