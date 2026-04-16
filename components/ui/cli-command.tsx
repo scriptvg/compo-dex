@@ -8,9 +8,16 @@ import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollArea, ScrollBar } from "./scroll-area";
+import { cn } from "@/lib/utils";
+
+interface CLICommandProps {
+    command: string;
+    className?: string;
+}
 
 
-function CLICommand({ command }: { command: string }) {
+
+function CLICommand({ command, className }: CLICommandProps) {
     const [copied, setCopied] = useState(false);
     const handleCopy = async () => {
         setCopied(true);
@@ -25,8 +32,8 @@ function CLICommand({ command }: { command: string }) {
         }
     }
     return (
-        <CodeBlock className="relative mx-auto mt-6 w-full max-w-lg">
-            <Button variant="ghost" size="icon-xs" className="absolute top-1.5 right-1.5" onClick={handleCopy} aria-label="Copy to clipboard">
+        <CodeBlock className={cn("relative mx-auto mt-6 w-full max-w-lg border-border", className)}>
+            <Button variant="ghost" size="icon-xs" className="absolute top-1.5 right-1.5 z-10" onClick={handleCopy} aria-label="Copy to clipboard">
                 <AnimatePresence mode="wait">
                     {copied ? (
                         <motion.span 
