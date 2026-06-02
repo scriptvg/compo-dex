@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import { ScrollArea, ScrollBar } from "./scroll-area";
+import { ScrollArea } from "./scroll-area";
 import { cn } from "@/lib/utils";
 
 interface CLICommandProps {
@@ -56,9 +56,12 @@ function CLICommand({ command, className }: CLICommandProps) {
                     )}
                 </AnimatePresence>
             </Button>
-            <ScrollArea className="h-full w-full">
-                <CodeBlockCode language="bash" code={command} />
-                <ScrollBar orientation="horizontal" />
+            <ScrollArea className="w-full">
+                <CodeBlockCode
+                    language="bash"
+                    code={command}
+                    className="overflow-x-visible"
+                />
             </ScrollArea>
         </CodeBlock>
     )
