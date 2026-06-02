@@ -1,3 +1,4 @@
+import "server-only"
 
 import { readFile } from "fs/promises"
 import path from "path"
@@ -17,3 +18,4 @@ export async function getFileContent(filePath: string, fileName: string) {
     }
   }
 }
+

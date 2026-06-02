@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -25,17 +26,20 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          {children}
-          <Toaster
-            richColors
-            toastOptions={{
-              style: {
-                borderRadius: "0",
-                padding: "0.5rem 1rem",
-                margin: "0",
-              },
-            }}
-          />
+          <TooltipProvider>
+            {children}
+            <Toaster
+              richColors
+              toastOptions={{
+                style: {
+                  borderRadius: "0",
+                  padding: "0.5rem 1rem",
+                  margin: "0",
+                },
+              }}
+            />
+          </TooltipProvider>
+
         </ThemeProvider>
       </body>
     </html>
