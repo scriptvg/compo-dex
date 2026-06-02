@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpRight, CirclePlay } from "lucide-react"
 import { Metadata } from "next"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
 
 import { CLICommand } from "@/components/ui/cli-command"
 import { Hero, HeroBadge, HeroContainer, HeroCTA, HeroDescription, HeroTitle } from "@/components/ui/hero"

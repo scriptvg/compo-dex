@@ -7,21 +7,9 @@ import { extractToc } from "@/lib/toc"
 import { DocsPager } from "@/components/docs/docs-pager"
 import { DocsHeaderNav } from "@/components/docs/docs-header-nav"
 import { DocsTableOfContents } from "@/components/docs/table-of-contents"
-import { Badge } from "@/components/ui/badge"
 
 // Only pre-rendered slugs from the registry are valid; anything else 404s.
 export const dynamicParams = false
-
-const CATEGORY_LABEL = {
-    component: "Component",
-    block: "Block",
-} as const
-
-const STATUS_LABEL = {
-    stable: "Stable",
-    beta: "Beta",
-    planned: "Planned",
-} as const
 
 export function generateStaticParams() {
     return componentDocs.map((c) => ({ slug: c.slug }))
@@ -53,9 +41,8 @@ export default async function ComponentDocPage({
         notFound()
     }
 
-    
+
     const href = `/docs/components/${slug}`
-    const status = doc.status ?? "planned"
     const load = componentLoaders[slug]
 
     

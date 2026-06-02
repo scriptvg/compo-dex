@@ -15,12 +15,11 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function ComponentPreviewTabs({
     code,
-    fileName,
     children,
     className,
 }: {
     code: string | null
-    fileName: string
+    fileName?: string
     children: ReactNode
     className?: string
 }) {
