@@ -17,7 +17,6 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Badge } from "@/components/ui/badge"
 
 const PAGE_SIZE = 24
 
@@ -64,6 +63,7 @@ export default function PokedexPage() {
   )
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset pagination when search/filters change
     setVisibleCount(PAGE_SIZE)
   }, [searchNormalized, filterKey])
 

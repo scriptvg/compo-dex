@@ -116,6 +116,7 @@ function CodeBlockCode({
         (resolvedTheme === "dark" ? "github-dark-default" : "github-light-default");
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- mount guard to defer Shiki highlight until client
         setMounted(true);
     }, []);
 
