@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, X } from "lucide-react"
+import { X } from "lucide-react"
 import { usePokedex } from "@/contexts/pokedex-context"
 import { cn } from "@/lib/utils"
 import {

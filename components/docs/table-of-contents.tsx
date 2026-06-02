@@ -53,28 +53,6 @@ function useActiveItem(itemIds: string[]) {
     return activeId
 }
 
-function useScrollSentinel() {
-    const [isAtTop, setIsAtTop] = React.useState(true)
-    const sentinelRef = React.useRef<HTMLDivElement>(null)
-
-    React.useEffect(() => {
-        const sentinel = sentinelRef.current
-        if (!sentinel) return
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsAtTop(entry.isIntersecting)
-            },
-            { threshold: 0 },
-        )
-
-        observer.observe(sentinel)
-        return () => observer.disconnect()
-    }, [])
-
-    return { isAtTop, sentinelRef }
-}
-
 export function DocsTableOfContents({
     toc,
     variant = "list",
@@ -90,7 +68,6 @@ export function DocsTableOfContents({
         [toc],
     )
     const activeHeading = useActiveItem(itemIds)
-    const { isAtTop, sentinelRef } = useScrollSentinel()
 
     if (!toc?.length) {
         return null

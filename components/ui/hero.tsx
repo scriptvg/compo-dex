@@ -1,10 +1,6 @@
 "use client"
 
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, CirclePlay } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { CLICommand } from "@/components/ui/cli-command";
 import { cn } from "@/lib/utils";
 
 

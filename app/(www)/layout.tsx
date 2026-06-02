@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { queryClient } from "@/lib/query"
 import { DocsSearch } from "@/components/docs/docs-search"
-import { GithubStars } from "@/components/docs/github-stars"
 import { MobileMenu } from "@/components/mobile-nav"
 
 
