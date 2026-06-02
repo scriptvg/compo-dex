@@ -27,6 +27,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.devlog.txt
+
+# scratch / local-only assets
+/trash/
 
 # env files
 .env*.local
