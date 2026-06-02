@@ -93,9 +93,7 @@ export default function PokedexPage() {
 
       </PageHeader>
       <PageContent className="flex flex-col gap-4 p-4">
-        {isLoading ? (
-          <div className="text-sm text-muted-foreground">Loading…</div>
-        ) : null}
+        
 
         {isError ? (
           <div className="text-sm text-destructive">Failed to load Pokémon.</div>

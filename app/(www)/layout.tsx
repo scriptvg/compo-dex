@@ -1,6 +1,5 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { Layout } from "@/components/layout/layout"
 import { Main } from "@/components/layout/main"
 import { Logo } from "@/components/ui/logo"
@@ -11,24 +10,36 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { queryClient } from "@/lib/query"
+import { DocsSearch } from "@/components/docs/docs-search"
+import { GithubStars } from "@/components/docs/github-stars"
+import { MobileMenu } from "@/components/mobile-nav"
 
 
 function AppNavbar() {
     return (
-        <Navbar className="sticky top-0 z-50 bg-background">
-            <NavbarContainer>
-                <Button variant="ghost" asChild size="icon">
-                    <Link href="/">
-                        <Logo alt="Logo" />
-                    </Link>
-                </Button>
+        <Navbar className="sticky top-0 z-50 h-(--header-height) bg-background">
+            <NavbarContainer className="h-full">
                 <div className="flex items-center gap-2">
+                    <Button variant="ghost" asChild size="icon" className="hidden md:flex">
+                        <Link href="/">
+                            <Logo alt="Logo" />
+                        </Link>
+                    </Button>
+                    <MobileMenu />
+                    {/*                     <Button variant="ghost" asChild>
+                        <Link href="/docs">
+                            Docs
+                        </Link>
+                    </Button>
                     <Button variant="ghost" asChild>
                         <Link href="/pokedex">
                             Pokedex
                         </Link>
-                    </Button>
-                    
+                    </Button> */}
+                </div>
+                <div className="flex items-center gap-2">
+                    <DocsSearch className="hidden md:flex" />
+                    {/* <GithubStars /> */}
                     <ToggleTheme />
                 </div>
             </NavbarContainer>
