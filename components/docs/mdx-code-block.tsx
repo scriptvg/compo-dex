@@ -21,10 +21,11 @@ export function MdxCodeBlock({
                 className="absolute top-1.5 right-1.5 z-10 opacity-0 transition-opacity group-hover/code:opacity-100 focus-visible:opacity-100"
             />
             <ScrollArea className="w-full [&>[data-slot=scroll-area-viewport]]:max-h-64">
+                {/* w-max para que Radix detecte el overflow horizontal. */}
                 <CodeBlockCode
                     code={code}
                     language={lang as BundledLanguage}
-                    className="overflow-x-visible"
+                    className="w-max overflow-visible"
                 />
             </ScrollArea>
         </CodeBlock>

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Element } from "hast";
 import React, { useState, useEffect } from "react";
 import { BundledLanguage, BundledTheme, codeToHtml, type ShikiTransformer } from "shiki";
@@ -91,11 +92,75 @@ function CodeBlockHeader({ children, className, ...props }: CodeBlockHeaderProps
 
 
 
+/** Clases compartidas por el código resaltado y su skeleton, para que ambos
+ *  tengan EXACTAMENTE el mismo box (padding del `pre`, scroll, tipografía...). */
+const CODE_BLOCK_CLASSNAMES =
+    "mt-0 w-full min-w-0 overflow-x-auto text-[13px] [&_.line]:block [&>pre]:min-w-0 [&>pre]:w-fit [&>pre]:whitespace-pre [&>pre]:px-2 [&>pre]:py-2 [&>pre>code]:whitespace-pre";
+
+/** Mismo gutter que `lineNumberTransformer`, para que el número de línea cuadre. */
+const GUTTER_CLASSNAMES =
+    "inline-flex min-w-[4ch] shrink-0 select-none items-center justify-end border-border border-r pr-3 mr-3";
+
+/** Anchos deterministas en `ch` (como longitudes de línea de código real; evita Math.random e hidratación inconsistente). */
+const SKELETON_CH = [
+    "w-[28ch]", "w-[42ch]", "w-[20ch]", "w-[36ch]", "w-[16ch]",
+    "w-[40ch]", "w-[24ch]", "w-[33ch]", "w-[18ch]", "w-[30ch]",
+] as const;
+
+export type CodeBlockSkeletonProps = {
+    /** Número de líneas a mostrar. */
+    lines?: number;
+    /** Reserva la columna de "número de línea" para igualar el layout final. */
+    showLineNumbers?: boolean;
+    className?: string;
+};
+
+/**
+ * Placeholder de carga para `CodeBlockCode` mientras Shiki resalta en el cliente.
+ * Usa la MISMA estructura `div.classNames > pre > code` que el código real, para
+ * que las clases dirigidas al `pre` (padding, whitespace, scroll) le apliquen igual.
+ */
+function CodeBlockSkeleton({
+    lines = 8,
+    showLineNumbers = false,
+    className,
+}: CodeBlockSkeletonProps) {
+    return (
+        <div
+            data-slot="code-block-skeleton"
+            aria-hidden
+            className={cn(CODE_BLOCK_CLASSNAMES, className)}
+        >
+            <pre className="!bg-transparent">
+                <code>
+                    {Array.from({ length: Math.max(1, lines) }).map((_, i) => (
+                        <span key={i} className="flex h-5 items-center">
+                            {showLineNumbers ? (
+                                <span className={GUTTER_CLASSNAMES}>
+                                    <Skeleton className="h-3 w-3" />
+                                </span>
+                            ) : null}
+                            <Skeleton
+                                className={cn(
+                                    "h-3",
+                                    SKELETON_CH[i % SKELETON_CH.length]
+                                )}
+                            />
+                        </span>
+                    ))}
+                </code>
+            </pre>
+        </div>
+    );
+}
+
 export type CodeBlockCodeProps = {
     code: string;
     language?: BundledLanguage;
     showLineNumbers?: boolean;
     theme?: BundledTheme;
+    /** Líneas del skeleton de carga. Por defecto se infiere del código (máx. 16). */
+    skeletonLines?: number;
     className?: string;
 } & React.HTMLProps<HTMLDivElement>;
 
@@ -104,6 +169,7 @@ function CodeBlockCode({
     language = "tsx",
     showLineNumbers = false,
     theme: themeProp,
+    skeletonLines,
     className,
     ...props
 }: CodeBlockCodeProps) {
@@ -145,10 +211,14 @@ function CodeBlockCode({
         highlight();
     }, [code, language, shikiTheme, mounted, showLineNumbers]);
 
-    const classNames = cn(
-        "mt-0 w-full min-w-0 overflow-x-auto text-[13px] [&_.line]:block [&>pre]:min-w-0 [&>pre]:w-fit [&>pre]:whitespace-pre [&>pre]:px-2 [&>pre]:py-2 [&>pre>code]:whitespace-pre",
-        className
-    );
+    const classNames = cn(CODE_BLOCK_CLASSNAMES, className);
+
+    // Mientras Shiki resalta (en cliente), mostramos un skeleton.
+    // El nº de líneas sigue al código real (acotado a 40) para que llene igual
+    // el contenedor y haga scroll/clip como el resultado final.
+    const fallbackLines =
+        skeletonLines ??
+        Math.min(Math.max(code ? code.split("\n").length : 0, 1), 40);
 
     return highlightedHtml ? (
         <div
@@ -157,11 +227,11 @@ function CodeBlockCode({
             {...props}
         />
     ) : (
-        <div className={classNames}>
-            <pre className="whitespace-pre">
-                <code>{code}</code>
-            </pre>
-        </div>
+        <CodeBlockSkeleton
+            lines={fallbackLines}
+            showLineNumbers={showLineNumbers}
+            className={className}
+        />
     )
 }
 
@@ -185,4 +255,4 @@ function CodeBlockGroup({
   )
 }
 
-export { CodeBlock, CodeBlockCode, CodeBlockGroup, CodeBlockHeader };
+export { CodeBlock, CodeBlockCode, CodeBlockGroup, CodeBlockHeader, CodeBlockSkeleton };

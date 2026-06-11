@@ -4,32 +4,65 @@ import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-/** Background + text classes shared by type badges and type swatches. */
+/**
+ * Background + text classes shared by type badges and type swatches.
+ * Backed by the `--color-type-*` theme tokens (see `pokemon-type-colors`
+ * in the registry).
+ */
 export const POKEMON_TYPE_SURFACE = {
-  normal: "bg-stone-400 text-white",
-  fire: "bg-red-500 text-white",
-  water: "bg-blue-500 text-white",
-  electric: "bg-yellow-400 text-white",
-  grass: "bg-green-500 text-white",
-  ice: "bg-cyan-300 text-white",
-  fighting: "bg-rose-700 text-white",
-  poison: "bg-violet-600 text-white",
-  ground: "bg-amber-600 text-white",
-  flying: "bg-indigo-400 text-white",
-  psychic: "bg-pink-500 text-white",
-  bug: "bg-lime-500 text-white",
-  rock: "bg-yellow-700 text-white",
-  ghost: "bg-purple-800 text-white",
-  dragon: "bg-fuchsia-700 text-white",
-  dark: "bg-neutral-800 text-white",
-  steel: "bg-slate-500 text-white",
-  fairy: "bg-pink-300 text-white",
-  stellar: "bg-violet-500 text-white",
-  unknown: "bg-gray-500 text-white",
-  shadow: "bg-gray-800 text-white",
+  normal: "bg-type-normal text-white",
+  fire: "bg-type-fire text-white",
+  water: "bg-type-water text-white",
+  electric: "bg-type-electric text-white",
+  grass: "bg-type-grass text-white",
+  ice: "bg-type-ice text-white",
+  fighting: "bg-type-fighting text-white",
+  poison: "bg-type-poison text-white",
+  ground: "bg-type-ground text-white",
+  flying: "bg-type-flying text-white",
+  psychic: "bg-type-psychic text-white",
+  bug: "bg-type-bug text-white",
+  rock: "bg-type-rock text-white",
+  ghost: "bg-type-ghost text-white",
+  dragon: "bg-type-dragon text-white",
+  dark: "bg-type-dark text-white",
+  steel: "bg-type-steel text-white",
+  fairy: "bg-type-fairy text-white",
+  stellar: "bg-type-stellar text-white",
+  unknown: "bg-type-unknown text-white",
+  shadow: "bg-type-shadow text-white",
 } as const
 
 export type PokemonBadgeType = keyof typeof POKEMON_TYPE_SURFACE
+
+/**
+ * Color value per type, fed into the `--pokemon-type` CSS variable so every
+ * variant (solid/soft/outline/ghost) derives its color from a single source:
+ * the `--color-type-*` theme tokens.
+ */
+export const POKEMON_TYPE_COLOR = {
+  normal: "var(--color-type-normal)",
+  fire: "var(--color-type-fire)",
+  water: "var(--color-type-water)",
+  electric: "var(--color-type-electric)",
+  grass: "var(--color-type-grass)",
+  ice: "var(--color-type-ice)",
+  fighting: "var(--color-type-fighting)",
+  poison: "var(--color-type-poison)",
+  ground: "var(--color-type-ground)",
+  flying: "var(--color-type-flying)",
+  psychic: "var(--color-type-psychic)",
+  bug: "var(--color-type-bug)",
+  rock: "var(--color-type-rock)",
+  ghost: "var(--color-type-ghost)",
+  dragon: "var(--color-type-dragon)",
+  dark: "var(--color-type-dark)",
+  steel: "var(--color-type-steel)",
+  fairy: "var(--color-type-fairy)",
+  stellar: "var(--color-type-stellar)",
+  unknown: "var(--color-type-unknown)",
+  shadow: "var(--color-type-shadow)",
+} as const satisfies Record<PokemonBadgeType, string>
 
 /** Display order (main types first, then special). */
 export const POKEMON_TYPE_ORDER = [
@@ -61,33 +94,35 @@ const pokemonBadgeTypeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
-        secondary:
-          "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
-        destructive:
-          "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
+        solid:
+          "border-transparent bg-(--pokemon-type) text-white [a]:hover:bg-(--pokemon-type)/80",
+        soft: "border-transparent bg-(--pokemon-type)/10 text-(--pokemon-type) [a]:hover:bg-(--pokemon-type)/20",
         outline:
-          "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+          "border-(--pokemon-type) text-(--pokemon-type) [a]:hover:bg-(--pokemon-type)/10",
         ghost:
-          "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border-transparent text-(--pokemon-type) [a]:hover:bg-(--pokemon-type)/10",
       },
-      type: POKEMON_TYPE_SURFACE,
     },
     defaultVariants: {
-      variant: "default",
+      variant: "solid",
     },
   }
 )
 
+export type PokemonBadgeTypeProps = React.ComponentProps<"span"> &
+  VariantProps<typeof pokemonBadgeTypeVariants> & {
+    type?: PokemonBadgeType
+    asChild?: boolean
+  }
+
 function PokemonBadgeType({
   type = "normal",
   className,
-  variant = "default",
+  variant = "solid",
   asChild = false,
+  style,
   ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof pokemonBadgeTypeVariants> & { asChild?: boolean }) {
+}: PokemonBadgeTypeProps) {
   const Comp = asChild ? Slot.Root : "span"
 
   return (
@@ -95,7 +130,13 @@ function PokemonBadgeType({
       data-slot="pokemon-badge-type"
       data-type={type}
       data-variant={variant}
-      className={cn(pokemonBadgeTypeVariants({ variant, type }), className)}
+      className={cn(pokemonBadgeTypeVariants({ variant }), className)}
+      style={
+        {
+          "--pokemon-type": POKEMON_TYPE_COLOR[type],
+          ...style,
+        } as React.CSSProperties
+      }
       {...props}
     />
   )

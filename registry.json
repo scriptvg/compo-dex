@@ -1,38 +1,64 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "compo-dex",
-  "homepage": "http://localhost:3000",
+  "name": "compodex",
+  "homepage": "https://compodex.netlify.app",
   "items": [
     {
-      "name": "pokemon-sprite",
+      "name": "pokemon-type-colors",
+      "type": "registry:theme",
+      "title": "Pokemon Type Colors",
+      "description": "Theme tokens for every Pokemon type. Installing this adds --color-type-* variables to your Tailwind theme, generating utilities like bg-type-fire, text-type-grass, or border-type-water.",
+      "cssVars": {
+        "theme": {
+          "--color-type-normal": "#a8a29e",
+          "--color-type-fire": "#ef4444",
+          "--color-type-water": "#3b82f6",
+          "--color-type-electric": "#facc15",
+          "--color-type-grass": "#22c55e",
+          "--color-type-ice": "#67e8f9",
+          "--color-type-fighting": "#be123c",
+          "--color-type-poison": "#7c3aed",
+          "--color-type-ground": "#d97706",
+          "--color-type-flying": "#818cf8",
+          "--color-type-psychic": "#ec4899",
+          "--color-type-bug": "#84cc16",
+          "--color-type-rock": "#a16207",
+          "--color-type-ghost": "#6b21a8",
+          "--color-type-dragon": "#a21caf",
+          "--color-type-dark": "#262626",
+          "--color-type-steel": "#64748b",
+          "--color-type-fairy": "#f9a8d4",
+          "--color-type-stellar": "#8b5cf6",
+          "--color-type-unknown": "#6b7280",
+          "--color-type-shadow": "#1f2937"
+        }
+      }
+    },
+    {
+      "name": "pokedex",
       "type": "registry:ui",
-      "title": "Pokemon Sprite",
-      "description": "Avatar-based Pokémon sprite with size variants and graceful image fallbacks.",
-      "dependencies": [
-        "radix-ui"
-      ],
+      "title": "Pokedex",
+      "description": "Controllable Pokedex primitives composed on shadcn/ui: search, domain filters, incremental pagination, renderItem-based collections, empty state, and counts. Bring your own data and fetching.",
+      "dependencies": ["radix-ui", "lucide-react"],
+      "registryDependencies": ["utils", "button", "empty", "input-group"],
       "files": [
         {
-          "path": "components/compodex/ui/pokemon-sprite.tsx",
-          "type": "registry:component",
-          "target": "components/compodex/ui/pokemon-sprite.tsx"
+          "path": "components/compodex/ui/pokedex.tsx",
+          "type": "registry:ui"
         }
       ]
     },
     {
       "name": "badge-type",
       "type": "registry:ui",
-      "title": "Pokemon Type Badge",
-      "description": "Type-colored badge and swatch primitives for Pokémon elemental types.",
-      "dependencies": [
-        "class-variance-authority",
-        "radix-ui"
-      ],
+      "title": "Pokemon Badge Type",
+      "description": "A badge that displays a Pokemon type with per-type colors and solid, soft, outline, and ghost variants.",
+      "dependencies": ["class-variance-authority", "radix-ui"],
+      "registryDependencies": ["utils", "@compodex/pokemon-type-colors"],
       "files": [
         {
           "path": "components/compodex/ui/badge-type.tsx",
-          "type": "registry:component",
-          "target": "components/compodex/ui/badge-type.tsx"
+          "type": "registry:ui"
         }
       ]
     },
@@ -40,18 +66,31 @@
       "name": "pokemon-card",
       "type": "registry:ui",
       "title": "Pokemon Card",
-      "description": "Composable, type-themed Pokémon card built from compound subcomponents.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
+      "description": "A card surface tinted by primary and secondary Pokemon types, with gradient dual-type backgrounds and a mega variant.",
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": [
-        "badge-type"
+        "utils",
+        "@compodex/badge-type",
+        "@compodex/pokemon-type-colors"
       ],
       "files": [
         {
           "path": "components/compodex/ui/pokemon-card.tsx",
-          "type": "registry:component",
-          "target": "components/compodex/ui/pokemon-card.tsx"
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pokemon-sprite",
+      "type": "registry:ui",
+      "title": "Pokemon Sprite",
+      "description": "An avatar-style sprite component with image, fallback, badge, group, and group count parts.",
+      "dependencies": ["radix-ui"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/compodex/ui/pokemon-sprite.tsx",
+          "type": "registry:ui"
         }
       ]
     }

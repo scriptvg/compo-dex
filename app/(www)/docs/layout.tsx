@@ -13,7 +13,7 @@ export function DocsSidebar({
 
     return (
         <Sidebar
-            className="sticky top-(--header-height) z-30 hidden h-[calc(100svh-var(--header-height))] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex border-dashed border-r xl:border-r-0"
+            className="sticky top-0 z-30 hidden h-[calc(100svh-var(--header-height))] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex"
             collapsible="none"
             {...props}
         >
@@ -33,6 +33,21 @@ export function DocsSidebar({
                                 <SidebarMenu className="gap-0.5">
                                     {group.children.map((page) => {
                                         if (!page.href) return null
+                                        if (page.disabled) {
+                                            return (
+                                                <SidebarMenuItem key={page.href}>
+                                                    <SidebarMenuButton
+                                                        aria-disabled="true"
+                                                        className="h-[30px] w-fit cursor-not-allowed text-[0.8rem] font-medium text-muted-foreground/50 hover:bg-transparent hover:text-muted-foreground/50 active:bg-transparent"
+                                                    >
+                                                        {page.name}
+                                                        <span className="text-[9px] font-medium tracking-wide text-muted-foreground/50 uppercase">
+                                                            Soon
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            )
+                                        }
                                         return (
                                             <SidebarMenuItem key={page.href}>
                                                 <SidebarMenuButton

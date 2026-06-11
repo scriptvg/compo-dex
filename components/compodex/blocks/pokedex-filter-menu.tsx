@@ -15,7 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { usePokedex } from "@/contexts/pokedex-context"
+import { usePokedex } from "@/components/compodex/ui/pokedex"
 import {
   POKEMON_TYPE_ORDER,
   PokemonBadgeType,
@@ -83,10 +83,10 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
   const sortedTypes = sortTypeNames(typeNames)
 
   const generationRadioValue =
-    filters.selectedGenerations.length === 0
+    filters.generations.length === 0
       ? "__all__"
-      : filters.selectedGenerations.length === 1
-        ? filters.selectedGenerations[0]
+      : filters.generations.length === 1
+        ? filters.generations[0]
         : "__multi__"
 
   return (
@@ -157,7 +157,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
               generationNames.map((name) => (
                 <DropdownMenuCheckboxItem
                   key={`gen-c-${name}`}
-                  checked={filters.selectedGenerations.includes(name)}
+                  checked={filters.generations.includes(name)}
                   onCheckedChange={() => toggleGeneration(name)}
                 >
                   {GENERATION_LABEL[name] ?? name}
@@ -179,7 +179,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
               sortedTypes.map((name) => (
                 <DropdownMenuCheckboxItem
                   key={`p-${name}`}
-                  checked={filters.selectedPrimaryTypes.includes(name)}
+                  checked={filters.primaryTypes.includes(name)}
                   onCheckedChange={() => togglePrimaryType(name)}
                   className="gap-2"
                 >
@@ -204,7 +204,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
               sortedTypes.map((name) => (
                 <DropdownMenuCheckboxItem
                   key={`s-${name}`}
-                  checked={filters.selectedSecondaryTypes.includes(name)}
+                  checked={filters.secondaryTypes.includes(name)}
                   onCheckedChange={() => toggleSecondaryType(name)}
                   className="gap-2"
                 >

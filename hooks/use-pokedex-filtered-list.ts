@@ -1,8 +1,8 @@
-"use client"
+﻿"use client"
 
 import { useQueries } from "@tanstack/react-query"
 import { type NamedAPIResource } from "pokenode-ts"
-import type { PokedexFilterState } from "@/contexts/pokedex-context"
+import type { PokedexFilterState } from "@/components/compodex/ui/pokedex"
 import {
   pokeApi,
   usePokemonSpeciesFlagsIndex,
@@ -40,30 +40,30 @@ export function usePokedexFilteredList(
     usePokemonSpeciesFlagsIndex(needFlags)
 
   const generationQueries = useQueries({
-    queries: filters.selectedGenerations.map((name) => ({
+    queries: filters.generations.map((name) => ({
       queryKey: ["pokedex-filter", "generation", name] as const,
       queryFn: () => pokeApi.game.getGenerationByName(name),
       staleTime: 1000 * 60 * 60 * 24,
-      enabled: Boolean(allPokemon?.length && filters.selectedGenerations.length),
+      enabled: Boolean(allPokemon?.length && filters.generations.length),
     })),
   })
 
   const primaryTypeQueries = useQueries({
-    queries: filters.selectedPrimaryTypes.map((name) => ({
+    queries: filters.primaryTypes.map((name) => ({
       queryKey: ["pokedex-filter", "type-primary", name] as const,
       queryFn: () => fetchPrimaryTypeNames(name),
       staleTime: 1000 * 60 * 60 * 24,
-      enabled: Boolean(allPokemon?.length && filters.selectedPrimaryTypes.length),
+      enabled: Boolean(allPokemon?.length && filters.primaryTypes.length),
     })),
   })
 
   const secondaryTypeQueries = useQueries({
-    queries: filters.selectedSecondaryTypes.map((name) => ({
+    queries: filters.secondaryTypes.map((name) => ({
       queryKey: ["pokedex-filter", "type-secondary", name] as const,
       queryFn: () => fetchSecondaryTypeNames(name),
       staleTime: 1000 * 60 * 60 * 24,
       enabled: Boolean(
-        allPokemon?.length && filters.selectedSecondaryTypes.length,
+        allPokemon?.length && filters.secondaryTypes.length,
       ),
     })),
   })
@@ -87,7 +87,7 @@ export function usePokedexFilteredList(
     list = list.filter((p) => p.name.includes(searchNormalized))
   }
 
-  if (filters.selectedGenerations.length > 0) {
+  if (filters.generations.length > 0) {
     const genSet = new Set<string>()
     for (const q of generationQueries) {
       const species = q.data?.pokemon_species
@@ -100,7 +100,7 @@ export function usePokedexFilteredList(
     list = list.filter((p) => genSet.has(p.name))
   }
 
-  if (filters.selectedPrimaryTypes.length > 0) {
+  if (filters.primaryTypes.length > 0) {
     const sets = primaryTypeQueries
       .map((q) => q.data)
       .filter((s): s is Set<string> => s instanceof Set)
@@ -111,7 +111,7 @@ export function usePokedexFilteredList(
     list = list.filter((p) => primaryUnion.has(p.name))
   }
 
-  if (filters.selectedSecondaryTypes.length > 0) {
+  if (filters.secondaryTypes.length > 0) {
     const sets = secondaryTypeQueries
       .map((q) => q.data)
       .filter((s): s is Set<string> => s instanceof Set)

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import { getDocNav } from "@/lib/docs-nav"
 
 export function DocsPager({
@@ -20,36 +21,28 @@ export function DocsPager({
     return (
         <div
             className={cn(
-                "flex items-center justify-between gap-4 border-t border-dashed pt-6",
+                "flex items-center justify-between gap-4 px-4 py-4",
                 className,
             )}
         >
             {prev ? (
-                <Link
-                    href={prev.href}
-                    className="group inline-flex flex-col gap-1 text-sm"
-                >
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                        <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-0.5" />
-                        Previous
-                    </span>
-                    <span className="font-medium">{prev.name}</span>
-                </Link>
+                <Button variant="outline" className="group h-9 px-3" asChild>
+                    <Link href={prev.href} aria-label={`Anterior: ${prev.name}`}>
+                        <ArrowLeft className="transition-transform group-hover:-translate-x-0.5" />
+                        {prev.name}
+                    </Link>
+                </Button>
             ) : (
                 <span />
             )}
 
             {next ? (
-                <Link
-                    href={next.href}
-                    className="group inline-flex flex-col items-end gap-1 text-right text-sm"
-                >
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                        Next
-                        <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                    <span className="font-medium">{next.name}</span>
-                </Link>
+                <Button variant="outline" className="group h-9 px-3" asChild>
+                    <Link href={next.href} aria-label={`Siguiente: ${next.name}`}>
+                        {next.name}
+                        <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                </Button>
             ) : (
                 <span />
             )}

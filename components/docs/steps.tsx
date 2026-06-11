@@ -22,7 +22,8 @@ export function Step({
     return (
         <div
             className={cn(
-                "relative border-l border-dashed pb-8 pl-8 [counter-increment:step] last:border-l-transparent last:pb-0",
+                // ml-3.5 deja sitio para la línea conectora bajo el centro del número.
+                "relative ml-3.5 border-l border-dashed pb-8 pl-6 [counter-increment:step] last:border-l-transparent last:pb-0",
                 className,
             )}
             {...props}

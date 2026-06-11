@@ -4,8 +4,12 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { AnchorHeading } from "@/components/docs/anchor-heading"
 import { ComponentPreview } from "@/components/docs/component-preview"
+import { ComponentSource } from "@/components/docs/component-source"
 import { MdxCodeBlock } from "@/components/docs/mdx-code-block"
 import { Steps, Step } from "@/components/docs/steps"
+import { EnumType } from "@/components/docs/enum-type"
+import { PropsTable } from "@/components/docs/props-table"
+import { Callout } from "@/components/docs/callout"
 import { CodeBlock, CodeBlockCode } from "@/components/ui/code-block"
 import { CommandBlock } from "@/components/ui/command-block"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -16,6 +20,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Table, TableCell, TableHead, TableHeader } from "./components/ui/table"
+import { Badge } from "./components/ui/badge"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
@@ -29,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <AnchorHeading
                 level={2}
                 className={cn(
-                    "mt-10 mb-4 pb-2 text-2xl font-semibold first:mt-0 hover:underline underline-offset-4",
+                    "mt-8 mb-3 pb-2 text-2xl font-semibold first:mt-0 hover:underline underline-offset-4",
                     className,
                 )}
                 {...props}
@@ -38,14 +43,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h3: ({ className, ...props }) => (
             <AnchorHeading
                 level={3}
-                className={cn("mt-8 mb-3 text-xl font-semibold", className)}
+                className={cn("mt-5 mb-2 text-xl font-semibold", className)}
                 {...props}
             />
         ),
         h4: ({ className, ...props }) => (
             <AnchorHeading
                 level={4}
-                className={cn("mt-6 mb-2 text-lg font-semibold", className)}
+                className={cn("mt-5 mb-2 text-lg font-semibold", className)}
                 {...props}
             />
         ),
@@ -105,10 +110,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         td: ({ className, ...props }) => (
             <TableCell
-                className={cn(
-                    "border-b px-4 py-2 align-top [&>code]:text-xs",
-                    className,
-                )}
+                className={cn(className)}
                 {...props}
             />
         ),
@@ -141,20 +143,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         },
         // `code` inline (sin lenguaje).
         code: ({ className, ...props }) => (
-            <code
-                className={cn(
-                    "rounded-none border bg-muted px-1.5 py-0.5 font-mono text-sm",
-                    className,
-                )}
-                {...props}
-            />
+            <Badge variant="secondary" {...props} />
         ),
         ComponentPreview,
+        ComponentSource,
         CommandBlock,
         CodeBlock,
         CodeBlockCode,
         Steps,
         Step,
+        EnumType,
+        PropsTable,
+        Callout,
         Tabs,
         TabsList,
         TabsTrigger,

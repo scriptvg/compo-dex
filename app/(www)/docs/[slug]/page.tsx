@@ -2,32 +2,27 @@ import { notFound } from "next/navigation"
 
 import { docPages, getDocPage } from "@/lib/docs-registry"
 import { docLoaders } from "@/lib/docs-content"
+import { createDocRoute } from "@/lib/doc-route"
 import { getFileContent } from "@/lib/get-file"
 import { extractToc } from "@/lib/toc"
-import { DocsTableOfContents } from "@/components/docs/table-of-contents"
-import { DocsPager } from "@/components/docs/docs-pager"
-import { DocsHeaderNav } from "@/components/docs/docs-header-nav"
 
-// Solo los slugs del registro son válidos; cualquier otro 404.
+import { DocsHeaderNav } from "@/components/docs/docs-header-nav"
+import { DocsPager } from "@/components/docs/docs-pager"
+import { DocsTableOfContents } from "@/components/docs/table-of-contents"
+
+import { Page } from "@/components/layout/page"
+
 export const dynamicParams = false
 
-export function generateStaticParams() {
-    return docPages.map((p) => ({ slug: p.slug }))
-}
-
-export async function generateMetadata({
-    params,
-}: {
-    params: Promise<{ slug: string }>
-}) {
-    const { slug } = await params
-    const page = getDocPage(slug)
-    if (!page) return {}
-    return {
+export const { generateStaticParams, generateMetadata } = createDocRoute({
+    entries: docPages,
+    getEntry: getDocPage,
+    loaders: docLoaders,
+    getFallback: (page) => ({
         title: page.title,
         description: page.description,
-    }
-}
+    }),
+})
 
 export default async function DocPage({
     params,
@@ -35,6 +30,7 @@ export default async function DocPage({
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params
+
     const page = getDocPage(slug)
     const load = docLoaders[slug]
 
@@ -42,49 +38,60 @@ export default async function DocPage({
         notFound()
     }
 
-    const { default: Content } = await load()
+    const { default: Content, frontmatter } = await load()
+
     const { content } = await getFileContent(
         `content/docs/${slug}.mdx`,
         `${slug}.mdx`,
     )
+
     const toc = content ? extractToc(content) : []
     const href = `/docs/${slug}`
 
+    // El frontmatter del MDX es la fuente de la cabecera; el registry queda como
+    // fallback (y como manifiesto de navegación/rutas).
+    const title = frontmatter?.title ?? page.title
+    const description = frontmatter?.description ?? page.description
+
     return (
-        <div className="w-full min-w-0 xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-8">
-            <article className="relative mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-6 pb-4">
-                {toc.length > 0 ? (
-                    <DocsTableOfContents
-                        toc={toc}
-                        variant="floating"
-                        className="xl:hidden border-dashed"
-                    />
-                ) : null}
-                <header className="flex flex-col gap-3 py-6 px-4">
-                    <div className="flex items-start justify-between gap-4">
-                        <div className="flex min-w-0 flex-col gap-3">
-                            <h1 className="text-3xl font-bold">{page.title}</h1>
-                            {page.description ? (
-                                <p className="text-base text-muted-foreground">
-                                    {page.description}
-                                </p>
-                            ) : null}
-                        </div>
-                        <DocsHeaderNav href={href} className="shrink-0" />
-                    </div>
-                </header>
+        <Page variant="sidebar" className="max-w-none ">
+            <Page.Main className="py-6">
+                {toc.length > 0 && (
+                    <Page.Toc>
+                        <DocsTableOfContents
+                            toc={toc}
+                            variant="floating"
+                            className="border-dashed"
+                        />
+                    </Page.Toc>
+                )}
 
-                <div className="min-w-0 px-4">
+                <Page.Header className="mx-auto w-full max-w-160">
+                    <Page.Heading>
+                        <Page.Title>{title}</Page.Title>
+                        {description && (
+                            <Page.Description>
+                                {description}
+                            </Page.Description>
+                        )}
+                    </Page.Heading>
+
+                    <Page.Actions>
+                        <DocsHeaderNav href={href} />
+                    </Page.Actions>
+                </Page.Header>
+
+                <Page.Content className="mx-auto w-full max-w-160">
                     <Content />
-                </div>
-                <DocsPager href={href} className="px-4" />
-            </article>
+                </Page.Content>
+                <DocsPager href={href} className="mx-auto w-full max-w-160 px-4" />
+            </Page.Main>
 
-            {toc.length > 0 ? (
-                <aside className="sticky top-(--header-height) hidden h-[calc(100svh-var(--header-height))] w-56 shrink-0 overflow-y-auto py-6 xl:block">
+            {toc.length > 0 && (
+                <Page.Aside className="">
                     <DocsTableOfContents toc={toc} />
-                </aside>
-            ) : null}
-        </div>
+                </Page.Aside>
+            )}
+        </Page>
     )
 }
