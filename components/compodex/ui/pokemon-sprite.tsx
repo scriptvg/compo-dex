@@ -5,20 +5,19 @@ import { Avatar as PokemonSpritePrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-function PokemonSprite({
-    className,
-    size = "default",
-    ...props
-}: React.ComponentProps<typeof PokemonSpritePrimitive.Root> & {
+export type PokemonSpriteProps = React.ComponentProps<
+    typeof PokemonSpritePrimitive.Root
+> & {
     size?: "default" | "sm" | "lg"
-    
-}) {
+}
+
+function PokemonSprite({ className, size = "default", ...props }: PokemonSpriteProps) {
     return (
         <PokemonSpritePrimitive.Root
             data-slot="pokemon-sprite"
             data-size={size}
             className={cn(
-                "group/pokemon-sprite relative flex size-8 shrink-0 aspect-square select-none after:absolute after:inset-0 after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten",
+                "group/pokemon-sprite relative flex size-8 shrink-0 aspect-square select-none after:absolute after:inset-0 after:mix-blend-darken data-[size=lg]:size-20 data-[size=sm]:size-6 dark:after:mix-blend-lighten",
                 className
             )}
             {...props}
@@ -26,10 +25,11 @@ function PokemonSprite({
     )
 }
 
-function PokemonSpriteImage({
-    className,
-    ...props
-}: React.ComponentProps<typeof PokemonSpritePrimitive.Image>) {
+export type PokemonSpriteImageProps = React.ComponentProps<
+    typeof PokemonSpritePrimitive.Image
+>
+
+function PokemonSpriteImage({ className, ...props }: PokemonSpriteImageProps) {
     return (
         <PokemonSpritePrimitive.Image
             data-slot="pokemon-sprite-image"
@@ -42,10 +42,14 @@ function PokemonSpriteImage({
     )
 }
 
+export type PokemonSpriteFallbackProps = React.ComponentProps<
+    typeof PokemonSpritePrimitive.Fallback
+>
+
 function PokemonSpriteFallback({
     className,
     ...props
-}: React.ComponentProps<typeof PokemonSpritePrimitive.Fallback>) {
+}: PokemonSpriteFallbackProps) {
     return (
         <PokemonSpritePrimitive.Fallback
             data-slot="pokemon-sprite-fallback"
@@ -58,7 +62,9 @@ function PokemonSpriteFallback({
     )
 }
 
-function PokemonSpriteBadge({ className, ...props }: React.ComponentProps<"span">) {
+export type PokemonSpriteBadgeProps = React.ComponentProps<"span">
+
+function PokemonSpriteBadge({ className, ...props }: PokemonSpriteBadgeProps) {
     return (
         <span
             data-slot="pokemon-sprite-badge"
@@ -74,12 +80,14 @@ function PokemonSpriteBadge({ className, ...props }: React.ComponentProps<"span"
     )
 }
 
-function PokemonSpriteGroup({ className, ...props }: React.ComponentProps<"div">) {
+export type PokemonSpriteGroupProps = React.ComponentProps<"div">
+
+function PokemonSpriteGroup({ className, ...props }: PokemonSpriteGroupProps) {
     return (
         <div
             data-slot="pokemon-sprite-group"
             className={cn(
-                "group/pokemon-sprite-group flex -space-x-2 *:data-[slot=pokemon-sprite]:ring-2 *:data-[slot=pokemon-sprite]:ring-background",
+                "group/pokemon-sprite-group flex -space-x-2 ",
                 className
             )}
             {...props}
@@ -87,15 +95,17 @@ function PokemonSpriteGroup({ className, ...props }: React.ComponentProps<"div">
     )
 }
 
+export type PokemonSpriteGroupCountProps = React.ComponentProps<"div">
+
 function PokemonSpriteGroupCount({
     className,
     ...props
-}: React.ComponentProps<"div">) {
+}: PokemonSpriteGroupCountProps) {
     return (
         <div
             data-slot="pokemon-sprite-group-count"
             className={cn(
-                "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/pokemon-sprite-group:size-10 group-has-data-[size=sm]/pokemon-sprite-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/pokemon-sprite-group:[&>svg]:size-5 group-has-data-[size=sm]/pokemon-sprite-group:[&>svg]:size-3",
+                "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/pokemon-sprite-group:size-20 group-has-data-[size=lg]/pokemon-sprite-group:text-2xl group-has-data-[size=sm]/pokemon-sprite-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/pokemon-sprite-group:[&>svg]:size-5 group-has-data-[size=sm]/pokemon-sprite-group:[&>svg]:size-3",
                 className
             )}
             {...props}

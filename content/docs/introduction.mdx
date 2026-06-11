@@ -1,25 +1,101 @@
-**compodex** es una librería de componentes con temática Pokémon construida sobre
-Next.js, React y Tailwind CSS. Combina un sitio de documentación con una Pokédex
-funcional que consume la PokéAPI.
+---
+title: Introducción
+description: "CompoDex es una biblioteca de componentes de interfaz de usuario inspirada en Pokémon, diseñada para ayudar a los desarrolladores a crear aplicaciones web con temática Pokémon de manera rápida y sencilla."
+slug: "/docs/introduction"
+---
 
-## Qué incluye
+**This is not a Pokédex. It is the foundation for building Pokémon applications.**
 
-- **Components** — primitivos de UI como `PokemonBadge`, `PokemonCard` y `PokemonSprite`.
-- **Blocks** — bloques compuestos listos para usar (tarjetas, búsqueda, filtros de la Pokédex).
-- **Docs** — esta documentación, con preview en vivo y código fuente de cada ejemplo.
+Most Pokémon projects start the same way: fetching data from PokéAPI, creating cards, rendering sprites, building search experiences, and repeating the same UI patterns across every application.
 
-## Filosofía
+This approach works well at first. **But as projects grow, developers often end up rewriting the same components, duplicating API logic, and maintaining inconsistent interfaces across multiple codebases.**
 
-Cada componente sigue el mismo patrón: estilos con `class-variance-authority`,
-composición por slots y variantes por tipo de Pokémon. El objetivo es que copiar
-un ejemplo y adaptarlo sea inmediato.
+This is what CompoDex aims to solve. It is built around the following principles:
 
-## Ejemplo
+- **Pokémon-First:** Components designed specifically for Pokémon-related applications.
+- **Composition:** Small, reusable building blocks that work together seamlessly.
+- **Open Code:** Components are fully accessible and customizable.
+- **Developer Experience:** Consistent APIs with TypeScript-first support.
+- **Production Ready:** Designed for real applications, not just demos.
 
-Los ejemplos se renderizan en vivo y muestran su código fuente real:
+## Pokémon-First
 
-<ComponentPreview name="pokemon-badge" />
+Most UI libraries are designed to solve generic interface problems.
 
-## Siguiente paso
+CompoDex takes a different approach. Every component is built around the Pokémon ecosystem and the common patterns developers encounter when working with PokéAPI.
 
-Continúa con la [instalación](/docs/installation) para arrancar el proyecto.
+This means:
+
+- **Domain-Specific Components:** Components understand Pokémon concepts such as types, sprites, IDs, and stats.
+- **Less Boilerplate:** Spend less time transforming API responses and more time building features.
+- **Consistent Experiences:** Every Pokémon-related component follows the same design language and conventions.
+
+*In a typical project, you build Pokémon cards, type badges, and sprite renderers from scratch. With CompoDex, these building blocks already exist and work together as a unified system.*
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="faq-1" className="border-none">
+    <AccordionTrigger>
+      Why build a Pokémon-focused component library?
+    </AccordionTrigger>
+    <AccordionContent>
+      <span>
+        Most Pokémon applications solve the same challenges repeatedly:
+        displaying Pokémon data, rendering sprites, managing type badges,
+        building search interfaces, and organizing Pokédex layouts.
+      </span>
+      <span className="mt-4">
+        CompoDex provides reusable solutions for these common patterns,
+        allowing developers to focus on creating features instead of rebuilding
+        foundational UI elements from scratch.
+      </span>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Composition
+
+Every component in CompoDex follows a common, composable interface. **Components are designed to be combined together, allowing developers to build complex Pokémon experiences from simple building blocks.**
+
+*A shared interface creates predictability for both developers and AI tools. You are not learning a different API every time you introduce a new component.*
+
+## Open Code
+
+CompoDex gives you access to the actual implementation of every component. You have complete control over customization and extension.
+
+This means:
+
+- **Full Transparency:** Understand exactly how every component works.
+- **Easy Customization:** Adapt behavior, styling, and structure without limitations.
+- **Flexible Integration:** Use components alongside your existing design system.
+- **AI-Friendly:** Open source code allows AI tools to understand and improve implementations.
+
+*If you need a Pokémon card with additional interactions or custom layouts, you can modify the component directly instead of fighting against a restrictive abstraction.*
+
+## Developer Experience
+
+CompoDex is designed to feel natural for modern React and Next.js developers.
+
+- **TypeScript First:** Fully typed APIs and component interfaces.
+- **Consistent Patterns:** Familiar conventions across the entire library.
+- **Tailwind CSS Ready:** Easy customization through utility classes.
+- **Modern React:** Built using contemporary React practices and patterns.
+
+*Good developer experience means spending less time learning APIs and more time shipping features.*
+
+## Production Ready
+
+CompoDex includes components and patterns commonly used in Pokémon applications.
+
+- **Pokémon Cards**
+- **Type Badges**
+- **Sprites and Artwork**
+- **Search Interfaces**
+- **Pokédex Layouts**
+- **Loading States**
+- **Reusable UI Blocks**
+
+*Every component is designed to scale from small projects to production applications.*
+
+## Next Steps
+
+Continue to the installation guide to add CompoDex to your project and start building Pokémon-powered experiences.

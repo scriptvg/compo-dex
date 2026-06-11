@@ -8,10 +8,11 @@ export type FlatDoc = {
 }
 
 /** Lista plana y ordenada de todas las páginas de docs (según el orden del
- * `pageTree`). Base para breadcrumb y pager prev/next. */
+ * `pageTree`). Base para breadcrumb, pager prev/next y la búsqueda ⌘K.
+ * Excluye las páginas `disabled` (componentes aún no implementados). */
 export const flatDocs: FlatDoc[] = (pageTree.children ?? []).flatMap((group) =>
     (group.children ?? [])
-        .filter((page) => Boolean(page.href))
+        .filter((page) => Boolean(page.href) && !page.disabled)
         .map((page) => ({
             href: page.href as string,
             name: page.name,

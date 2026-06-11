@@ -12,6 +12,8 @@ export type ComponentDoc = {
     category: ComponentCategory
     /** Short description shown on the component page. */
     description?: string
+    /** List of dependencies required by the component. */
+    dependencies?: string[]
     /** Lifecycle status. `planned` = aún no implementado. */
     status?: ComponentStatus
     /** Show the "New" badge in the sidebar. */
@@ -28,11 +30,26 @@ export type ComponentDoc = {
 export const componentDocs: ComponentDoc[] = [
     // ── Primitivos (compodex/ui) ─────────────────────────────────────────
     {
+        slug: "pokedex",
+        name: "Pokedex",
+        category: "component",
+        description:
+            "Primitivos controlables para construir Pokédex: búsqueda, filtros de dominio, paginación incremental y renderizado de colecciones.",
+        status: "stable",
+        isNew: true,
+        dependencies: ["radix-ui", "lucide-react"],
+        imports: {
+            name: "Pokedex",
+            from: "@/components/compodex/ui/pokedex",
+        },
+    },
+    {
         slug: "pokemon-badge",
         name: "Pokemon Badge",
         category: "component",
         description: "Insignia de tipo de Pokémon para mostrar el tipo elemental de un Pokémon.",
         status: "stable",
+        dependencies: ["class-variance-authority", "radix-ui"],
         imports: {
             name: "PokemonBadgeType",
             from: "@/components/compodex/ui/badge-type",
@@ -61,7 +78,7 @@ export const componentDocs: ComponentDoc[] = [
             from: "@/components/compodex/ui/pokemon-sprite",
         },
     },
-    /* {
+    {
         slug: "pokemon-type-icon",
         name: "Pokemon Type Icon",
         category: "component",
@@ -88,23 +105,10 @@ export const componentDocs: ComponentDoc[] = [
         category: "component",
         description: "Placeholder de carga para tarjetas y sprites.",
         status: "planned",
-    }, */
+    },
 
     // ── Bloques compuestos (compodex/blocks) ─────────────────────────────
-    {
-        slug: "pokedex-card",
-        name: "Pokedex Card",
-        category: "block",
-        description: "Tarjeta de la Pokédex con sprite, número, nombre y tipos.",
-        status: "stable",
-    },
-    {
-        slug: "pokedex-search-bar",
-        name: "Pokedex Search Bar",
-        category: "block",
-        description: "Barra de búsqueda con normalización y estado compartido.",
-        status: "stable",
-    },
+
     {
         slug: "pokedex-filter-menu",
         name: "Pokedex Filter Menu",

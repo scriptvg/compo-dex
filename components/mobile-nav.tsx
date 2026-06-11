@@ -66,20 +66,33 @@ function MobileMenu() {
                                 <div className="flex flex-col gap-3">
                                     {group.children.map((page) =>
                                         page.href ? (
-                                            <MobileLink
-                                                key={page.href}
-                                                href={page.href}
-                                                onOpenChange={setOpen}
-                                                active={pathname === page.href}
-                                            >
-                                                {page.name}
-                                                {page.isNew && (
-                                                    <span
-                                                        className="flex size-2 rounded-full bg-blue-500"
-                                                        title="New"
-                                                    />
-                                                )}
-                                            </MobileLink>
+                                            page.disabled ? (
+                                                <span
+                                                    key={page.href}
+                                                    aria-disabled="true"
+                                                    className="flex items-center gap-2 text-lg text-muted-foreground/50"
+                                                >
+                                                    {page.name}
+                                                    <span className="text-[10px] font-medium tracking-wide uppercase">
+                                                        Soon
+                                                    </span>
+                                                </span>
+                                            ) : (
+                                                <MobileLink
+                                                    key={page.href}
+                                                    href={page.href}
+                                                    onOpenChange={setOpen}
+                                                    active={pathname === page.href}
+                                                >
+                                                    {page.name}
+                                                    {page.isNew && (
+                                                        <span
+                                                            className="flex size-2 rounded-full bg-blue-500"
+                                                            title="New"
+                                                        />
+                                                    )}
+                                                </MobileLink>
+                                            )
                                         ) : null,
                                     )}
                                 </div>

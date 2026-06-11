@@ -10,6 +10,8 @@ export type PageTreeNode = {
     type?: "folder"
     /** `true` to show the "New" badge next to the link. */
     isNew?: boolean
+    /** `true` para componentes `planned`: visibles pero no navegables. */
+    disabled?: boolean
     children?: PageTreeNode[]
 }
 
@@ -18,6 +20,7 @@ function toLeaf(c: ComponentDoc): PageTreeNode {
         name: c.name,
         href: `/docs/components/${c.slug}`,
         isNew: c.isNew,
+        disabled: c.status === "planned",
     }
 }
 

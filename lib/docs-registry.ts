@@ -19,6 +19,16 @@ export const docPages: DocPage[] = [
         title: "Installation",
         description: "Cómo instalar y arrancar el proyecto.",
     },
+    {
+        slug: "components",
+        title: "Components",
+        description: "Documentación de los componentes disponibles.",
+    },
+    {
+        slug: "build-a-pokedex",
+        title: "Build a Pokédex",
+        description: "Guía progresiva para construir una Pokédex completa.",
+    },
 ]
 
 export function getDocPage(slug: string): DocPage | undefined {

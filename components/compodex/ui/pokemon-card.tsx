@@ -11,27 +11,27 @@ const pokemonCardVariants = cva(
     {
         variants: {
             type: {
-                normal: "bg-stone-400/50",
-                fire: "bg-red-500/50",
-                water: "bg-blue-500/50",
-                electric: "bg-yellow-400/50",
-                grass: "bg-green-500/50",
-                ice: "bg-cyan-300/50",
-                fighting: "bg-rose-700/50",
-                poison: "bg-violet-600/50",
-                ground: "bg-amber-600/50",
-                flying: "bg-indigo-400/50",
-                psychic: "bg-pink-500/50",
-                bug: "bg-lime-500/50",
-                rock: "bg-yellow-700/50",
-                ghost: "bg-purple-800/50",
-                dragon: "bg-fuchsia-700/50",
-                dark: "bg-neutral-800/50",
-                steel: "bg-slate-500/50",
-                fairy: "bg-pink-300/50",
-                stellar: "bg-violet-500/50",
-                unknown: "bg-gray-500/50",
-                shadow: "bg-gray-800/50",
+                normal: "bg-type-normal/50",
+                fire: "bg-type-fire/50",
+                water: "bg-type-water/50",
+                electric: "bg-type-electric/50",
+                grass: "bg-type-grass/50",
+                ice: "bg-type-ice/50",
+                fighting: "bg-type-fighting/50",
+                poison: "bg-type-poison/50",
+                ground: "bg-type-ground/50",
+                flying: "bg-type-flying/50",
+                psychic: "bg-type-psychic/50",
+                bug: "bg-type-bug/50",
+                rock: "bg-type-rock/50",
+                ghost: "bg-type-ghost/50",
+                dragon: "bg-type-dragon/50",
+                dark: "bg-type-dark/50",
+                steel: "bg-type-steel/50",
+                fairy: "bg-type-fairy/50",
+                stellar: "bg-type-stellar/50",
+                unknown: "bg-type-unknown/50",
+                shadow: "bg-type-shadow/50",
             },
             secondary: {
                 normal: "",
@@ -65,87 +65,87 @@ const pokemonCardVariants = cva(
             {
                 type: "normal",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-stone-400/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-normal/50 to-type-flying/50",
             },
             {
                 type: "normal",
                 secondary: "fairy",
-                className: "bg-gradient-to-r from-stone-400/50 to-pink-300/50",
+                className: "bg-gradient-to-r from-type-normal/50 to-type-fairy/50",
             },
             {
                 type: "fire",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-red-500/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-fire/50 to-type-flying/50",
             },
             {
                 type: "water",
                 secondary: "fighting",
-                className: "bg-gradient-to-r from-blue-500/50 to-rose-700/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-fighting/50",
             },
             {
                 type: "water",
                 secondary: "ice",
-                className: "bg-gradient-to-r from-blue-500/50 to-cyan-300/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-ice/50",
             },
             {
                 type: "water",
                 secondary: "poison",
-                className: "bg-gradient-to-r from-blue-500/50 to-purple-600/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-poison/50",
             },
             {
                 type: "water",
                 secondary: "psychic",
-                className: "bg-gradient-to-r from-blue-500/50 to-pink-500/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-psychic/50",
             },
             {
                 type: "water",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-blue-500/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-flying/50",
             },
             {
                 type: "water",
                 secondary: "electric",
-                className: "bg-gradient-to-r from-blue-500/50 to-yellow-400/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-electric/50",
             },
             {
                 type: "water",
                 secondary: "fairy",
-                className: "bg-gradient-to-r from-blue-500/50 to-pink-300/50",
+                className: "bg-gradient-to-r from-type-water/50 to-type-fairy/50",
             },
             {
                 type: "grass",
                 secondary: "poison",
-                className: "bg-gradient-to-r from-green-500/50 to-purple-600/50",
+                className: "bg-gradient-to-r from-type-grass/50 to-type-poison/50",
             },
             {
                 type: "grass",
                 secondary: "psychic",
-                className: "bg-gradient-to-r from-green-500/50 to-pink-500/50",
+                className: "bg-gradient-to-r from-type-grass/50 to-type-psychic/50",
             },
             {
                 type: "grass",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-green-500/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-grass/50 to-type-flying/50",
             },
             {
                 type: "electric",
                 secondary: "steel",
-                className: "bg-gradient-to-r from-yellow-400/50 to-slate-500/50",
+                className: "bg-gradient-to-r from-type-electric/50 to-type-steel/50",
             },
             {
                 type: "electric",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-yellow-400/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-electric/50 to-type-flying/50",
             },
             {
                 type: "ice",
                 secondary: "psychic",
-                className: "bg-gradient-to-r from-cyan-300/50 to-pink-500/50",
+                className: "bg-gradient-to-r from-type-ice/50 to-type-psychic/50",
             },
             {
                 type: "ice",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-cyan-300/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-ice/50 to-type-flying/50",
             },
             {
                 type: "fighting",
@@ -154,17 +154,17 @@ const pokemonCardVariants = cva(
             {
                 type: "poison",
                 secondary: "ground",
-                className: "bg-gradient-to-r from-violet-600/50 to-amber-600/50",
+                className: "bg-gradient-to-r from-type-poison/50 to-type-ground/50",
             },
             {
                 type: "poison",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-violet-600/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-poison/50 to-type-flying/50",
             },
             {
                 type: "ground",
                 secondary: "rock",
-                className: "bg-gradient-to-r from-amber-600/50 to-yellow-700/50",
+                className: "bg-gradient-to-r from-type-ground/50 to-type-rock/50",
             },
             {
                 type: "flying",
@@ -173,52 +173,52 @@ const pokemonCardVariants = cva(
             {
                 type: "psychic",
                 secondary: "fairy",
-                className: "bg-gradient-to-r from-pink-500/50 to-pink-300/50",
+                className: "bg-gradient-to-r from-type-psychic/50 to-type-fairy/50",
             },
             {
                 type: "psychic",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-pink-500/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-psychic/50 to-type-flying/50",
             },
             {
                 type: "bug",
                 secondary: "poison",
-                className: "bg-gradient-to-r from-lime-500/50 to-purple-600/50",
+                className: "bg-gradient-to-r from-type-bug/50 to-type-poison/50",
             },
             {
                 type: "bug",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-lime-500/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-bug/50 to-type-flying/50",
             },
             {
                 type: "bug",
                 secondary: "grass",
-                className: "bg-gradient-to-r from-lime-500/50 to-green-500/50",
+                className: "bg-gradient-to-r from-type-bug/50 to-type-grass/50",
             },
             {
                 type: "rock",
                 secondary: "ground",
-                className: "bg-gradient-to-r from-yellow-700/50 to-amber-600/50",
+                className: "bg-gradient-to-r from-type-rock/50 to-type-ground/50",
             },
             {
                 type: "rock",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-yellow-700/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-rock/50 to-type-flying/50",
             },
             {
                 type: "rock",
                 secondary: "water",
-                className: "bg-gradient-to-r from-yellow-700/50 to-blue-500/50",
+                className: "bg-gradient-to-r from-type-rock/50 to-type-water/50",
             },
             {
                 type: "ghost",
                 secondary: "poison",
-                className: "bg-gradient-to-r from-purple-800/50 to-violet-600/50",
+                className: "bg-gradient-to-r from-type-ghost/50 to-type-poison/50",
             },
             {
                 type: "dragon",
                 secondary: "flying",
-                className: "bg-gradient-to-r from-fuchsia-700/50 to-indigo-400/50",
+                className: "bg-gradient-to-r from-type-dragon/50 to-type-flying/50",
             },
             {
                 type: "dark",
@@ -237,6 +237,13 @@ const pokemonCardVariants = cva(
     }
 )
 
+export type PokemonCardProps = React.ComponentProps<"div"> & {
+    size?: "default" | "sm"
+    isMega?: boolean
+    type?: PokemonBadgeType
+    secondary?: PokemonBadgeType
+}
+
 function PokemonCard({
     className,
     size = "default",
@@ -244,7 +251,7 @@ function PokemonCard({
     type = "normal",
     secondary = undefined,
     ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm", isMega?: boolean, type?: PokemonBadgeType, secondary?: PokemonBadgeType }) {
+}: PokemonCardProps) {
     return (
         <div
             data-slot="pokemon-card"
@@ -258,7 +265,9 @@ function PokemonCard({
     )
 }
 
-function PokemonCardHeader({ className, ...props }: React.ComponentProps<"div">) {
+export type PokemonCardHeaderProps = React.ComponentProps<"div">
+
+function PokemonCardHeader({ className, ...props }: PokemonCardHeaderProps) {
     return (
         <div
             data-slot="pokemon-card-header"
@@ -271,7 +280,9 @@ function PokemonCardHeader({ className, ...props }: React.ComponentProps<"div">)
     )
 }
 
-function PokemonCardTitle({ className, ...props }: React.ComponentProps<"div">) {
+export type PokemonCardTitleProps = React.ComponentProps<"div">
+
+function PokemonCardTitle({ className, ...props }: PokemonCardTitleProps) {
     return (
         <div
             data-slot="pokemon-card-title"

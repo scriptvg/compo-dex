@@ -17,7 +17,13 @@ const nextConfig = {
 const withMDX = createMDX({
     options: {
         // Plugins como string para que Turbopack pueda serializarlos.
-        remarkPlugins: [["remark-frontmatter"], ["remark-gfm"]],
+        // remark-frontmatter parsea el bloque YAML; remark-mdx-frontmatter lo
+        // expone como `export const frontmatter` (debe ir después).
+        remarkPlugins: [
+            ["remark-frontmatter"],
+            ["remark-mdx-frontmatter"],
+            ["remark-gfm"],
+        ],
         rehypePlugins: [["rehype-slug"]],
     },
 })

@@ -82,7 +82,7 @@ export function DocsTableOfContents({
             <Popover open={open} onOpenChange={setOpen}>
                 <div
                     className={cn(
-                        "sticky top-(--header-height) z-20 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+                        "sticky top-0 z-20 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
                         className,
                     )}
                 >
@@ -102,7 +102,7 @@ export function DocsTableOfContents({
                 <PopoverContent
                     align="start"
                     sideOffset={0}
-                    className="no-scrollbar max-h-[60svh] w-[var(--radix-popover-trigger-width)] gap-2 overflow-y-auto"
+                    className="no-scrollbar max-h-[60svh] w-[var(--radix-popover-trigger-width)] gap-2 overflow-y-auto bg-background p-4 text-sm ring-0 border-b border-dashed"
                 >
                     {toc.map((item) => (
                         <a

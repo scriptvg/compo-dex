@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pokemon-type-colors",
+  "title": "Pokemon Type Colors",
+  "description": "Theme tokens for every Pokemon type. Installing this adds --color-type-* variables to your Tailwind theme, generating utilities like bg-type-fire, text-type-grass, or border-type-water.",
+  "cssVars": {
+    "theme": {
+      "--color-type-normal": "#a8a29e",
+      "--color-type-fire": "#ef4444",
+      "--color-type-water": "#3b82f6",
+      "--color-type-electric": "#facc15",
+      "--color-type-grass": "#22c55e",
+      "--color-type-ice": "#67e8f9",
+      "--color-type-fighting": "#be123c",
+      "--color-type-poison": "#7c3aed",
+      "--color-type-ground": "#d97706",
+      "--color-type-flying": "#818cf8",
+      "--color-type-psychic": "#ec4899",
+      "--color-type-bug": "#84cc16",
+      "--color-type-rock": "#a16207",
+      "--color-type-ghost": "#6b21a8",
+      "--color-type-dragon": "#a21caf",
+      "--color-type-dark": "#262626",
+      "--color-type-steel": "#64748b",
+      "--color-type-fairy": "#f9a8d4",
+      "--color-type-stellar": "#8b5cf6",
+      "--color-type-unknown": "#6b7280",
+      "--color-type-shadow": "#1f2937"
+    }
+  },
+  "type": "registry:theme"
+}
