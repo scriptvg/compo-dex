@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "compo-dex",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "pokemon-sprite",
+      "type": "registry:ui",
+      "title": "Pokemon Sprite",
+      "description": "Avatar-based Pokémon sprite with size variants and graceful image fallbacks.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "components/compodex/ui/pokemon-sprite.tsx",
+          "type": "registry:component",
+          "target": "components/compodex/ui/pokemon-sprite.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge-type",
+      "type": "registry:ui",
+      "title": "Pokemon Type Badge",
+      "description": "Type-colored badge and swatch primitives for Pokémon elemental types.",
+      "dependencies": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "components/compodex/ui/badge-type.tsx",
+          "type": "registry:component",
+          "target": "components/compodex/ui/badge-type.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pokemon-card",
+      "type": "registry:ui",
+      "title": "Pokemon Card",
+      "description": "Composable, type-themed Pokémon card built from compound subcomponents.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "badge-type"
+      ],
+      "files": [
+        {
+          "path": "components/compodex/ui/pokemon-card.tsx",
+          "type": "registry:component",
+          "target": "components/compodex/ui/pokemon-card.tsx"
+        }
+      ]
+    }
+  ]
+}
