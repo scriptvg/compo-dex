@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "compo-dex",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "pokemon-image",
+      "type": "registry:ui",
+      "title": "Pokemon Image",
+      "description": "Display Pokémon images with support for different official artwork variants and fallbacks.",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "components/compo-dex/pokemon-image.tsx",
+          "type": "registry:component",
+          "target": "components/compo-dex/pokemon-image.tsx"
+        }
+      ]
+    }
+  ]
+}
