@@ -1,5 +1,4 @@
-import { usePokemonByName } from "@/services/pokemon.service"
-import { usePokemonSpeciesByName } from "@/services/pokemon.service"
+import { usePokemonByName, usePokemonSpeciesByName } from "@/hooks/usePokemon"
 import { PokemonBadgeType } from "@/components/compodex/ui/badge-type"
 import { PokemonSprite, PokemonSpriteFallback, PokemonSpriteImage } from "@/components/compodex/ui/pokemon-sprite"
 import { PokemonCard, PokemonCardHeader, PokemonCardTitle } from "@/components/compodex/ui/pokemon-card"
@@ -22,6 +21,8 @@ function PokedexCard({ pokemon }: { pokemon: NamedAPIResource }) {
       <PokemonCard
         className="relative overflow-hidden p-2"
         isMega={isMega}
+        isLegendary={speciesData?.is_legendary}
+        isMythical={speciesData?.is_mythical}
         type={
           (pokemonData?.types[0]?.type.name ?? "normal") as PokemonBadgeType
         }
@@ -35,7 +36,7 @@ function PokedexCard({ pokemon }: { pokemon: NamedAPIResource }) {
           <PokemonSpriteFallback />
         </PokemonSprite>
         <div className="absolute left-4 top-4">
-          <Badge className="bg-foreground text-background">{pokemonData?.id.toString().padStart(3, "0")}</Badge>
+          <Badge className="bg-foreground text-background">#{pokemonData?.id.toString().padStart(3, "0")}</Badge>
         </div>
   
         <div className="absolute right-4 top-4 flex max-w-[70%] flex-wrap justify-end gap-1">
@@ -57,7 +58,7 @@ function PokedexCard({ pokemon }: { pokemon: NamedAPIResource }) {
             <Badge className="bg-foreground text-background">Mythical</Badge>
           ) : null}
           {isMega ? (
-            <Badge className="border border-amber-600/80 bg-amber-600 text-white">
+            <Badge className="rainbow-animated">
               Mega
             </Badge>
           ) : null}

@@ -1,8 +1,8 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { Layout } from "@/components/layout/layout"
-import { Main } from "@/components/layout/main"
+import { Layout } from "@/components/ui/layout"
+import { Main } from "@/components/ui/main"
 import { Logo } from "@/components/ui/logo"
 import { Navbar, NavbarContainer } from "@/components/ui/navbar"
 import { ToggleTheme } from "@/components/ui/toggle-theme"

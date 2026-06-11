@@ -3,10 +3,8 @@
 import { useQueries } from "@tanstack/react-query"
 import { type NamedAPIResource } from "pokenode-ts"
 import type { PokedexFilterState } from "@/contexts/pokedex-context"
-import {
-  pokeApi,
-  usePokemonSpeciesFlagsIndex,
-} from "@/services/pokemon.service"
+import { pokeApi } from "@/services/pokemon.api"
+import { usePokemonSpeciesFlags } from "@/hooks/usePokemon"
 
 function unionSets(sets: Set<string>[]): Set<string> {
   const out = new Set<string>()
@@ -37,7 +35,7 @@ export function usePokedexFilteredList(
 ) {
   const needFlags = filters.legendaryOnly || filters.mythicalOnly
   const { data: speciesFlags, isPending: flagsPending } =
-    usePokemonSpeciesFlagsIndex(needFlags)
+    usePokemonSpeciesFlags(needFlags)
 
   const generationQueries = useQueries({
     queries: filters.selectedGenerations.map((name) => ({

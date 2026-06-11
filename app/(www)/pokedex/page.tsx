@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState, type ReactNode } from "react"
-import { Page, PageContent, PageHeader } from "@/components/layout/page"
+import { Page, PageContent, PageHeader } from "@/components/ui/page"
 import { Button } from "@/components/ui/button"
 import { type NamedAPIResource } from "pokenode-ts"
-import { usePokemonNameIndex } from "@/services/pokemon.service"
+import { usePokemonNameIndex } from "@/hooks/usePokemon"
 import { PokedexCard } from "@/components/compodex/blocks/pokedex-card"
 import { PokedexSearchBar } from "@/components/compodex/blocks/pokedex-search-bar"
 import { PokedexFilterMenu } from "@/components/compodex/blocks/pokedex-filter-menu"
@@ -17,7 +17,6 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Badge } from "@/components/ui/badge"
 
 const PAGE_SIZE = 24
 

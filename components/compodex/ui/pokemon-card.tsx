@@ -57,7 +57,15 @@ const pokemonCardVariants = cva(
                 shadow: "",
             },
             isMega: {
-                true: "rainbow-animated",
+                true: "",
+                false: "",
+            },
+            isLegendary: {
+                true: "",
+                false: "",
+            },
+            isMythical: {
+                true: "",
                 false: "",
             }
         },
@@ -241,16 +249,18 @@ function PokemonCard({
     className,
     size = "default",
     isMega = false,
+    isLegendary = false,
+    isMythical = false,
     type = "normal",
     secondary = undefined,
     ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm", isMega?: boolean, type?: PokemonBadgeType, secondary?: PokemonBadgeType }) {
+}: React.ComponentProps<"div"> & { size?: "default" | "sm", isMega?: boolean, isLegendary?: boolean, isMythical?: boolean, type?: PokemonBadgeType, secondary?: PokemonBadgeType }) {
     return (
         <div
             data-slot="pokemon-card"
             data-size={size}
             className={cn(
-                pokemonCardVariants({ type, secondary, isMega }),
+                pokemonCardVariants({ type, secondary, isMega, isLegendary, isMythical }),
                 className
             )}
             {...props}

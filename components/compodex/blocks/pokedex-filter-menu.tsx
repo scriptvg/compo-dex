@@ -22,9 +22,9 @@ import {
   type PokemonBadgeType as PokemonBadgeTypeName,
 } from "@/components/compodex/ui/badge-type"
 import {
-  usePokemonGenerationNameList,
-  usePokemonTypeNameList,
-} from "@/services/pokemon.service"
+  usePokemonGenerationList,
+  usePokemonTypeList,
+} from "@/hooks/usePokemon"
 import { Filter } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -76,9 +76,9 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
   } = usePokedex()
 
   const { data: typeNames = [], isLoading: typesLoading } =
-    usePokemonTypeNameList()
+    usePokemonTypeList()
   const { data: generationNames = [], isLoading: gensLoading } =
-    usePokemonGenerationNameList()
+    usePokemonGenerationList()
 
   const sortedTypes = sortTypeNames(typeNames)
 
@@ -137,7 +137,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
                 }}
               >
                 <DropdownMenuRadioItem value="__all__">Todas</DropdownMenuRadioItem>
-                {generationNames.map((name) => (
+                {generationNames.map((name: string) => (
                   <DropdownMenuRadioItem key={`gen-r-${name}`} value={name}>
                     {GENERATION_LABEL[name] ?? name}
                   </DropdownMenuRadioItem>
@@ -154,7 +154,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
             {gensLoading ? (
               <DropdownMenuItem disabled>Cargando…</DropdownMenuItem>
             ) : (
-              generationNames.map((name) => (
+              generationNames.map((name: string) => (
                 <DropdownMenuCheckboxItem
                   key={`gen-c-${name}`}
                   checked={filters.selectedGenerations.includes(name)}
@@ -176,7 +176,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
             {typesLoading ? (
               <DropdownMenuItem disabled>Cargando…</DropdownMenuItem>
             ) : (
-              sortedTypes.map((name) => (
+              sortedTypes.map((name: string) => (
                 <DropdownMenuCheckboxItem
                   key={`p-${name}`}
                   checked={filters.selectedPrimaryTypes.includes(name)}
@@ -201,7 +201,7 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
             {typesLoading ? (
               <DropdownMenuItem disabled>Cargando…</DropdownMenuItem>
             ) : (
-              sortedTypes.map((name) => (
+              sortedTypes.map((name: string) => (
                 <DropdownMenuCheckboxItem
                   key={`s-${name}`}
                   checked={filters.selectedSecondaryTypes.includes(name)}
@@ -220,13 +220,13 @@ export function PokedexFilterMenu({ className }: { className?: string }) {
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
           checked={filters.legendaryOnly}
-          onCheckedChange={(v) => setLegendaryOnly(Boolean(v))}
+          onCheckedChange={(v: boolean) => setLegendaryOnly(Boolean(v))}
         >
           Solo legendarios
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={filters.mythicalOnly}
-          onCheckedChange={(v) => setMythicalOnly(Boolean(v))}
+          onCheckedChange={(v: boolean) => setMythicalOnly(Boolean(v))}
         >
           Solo míticos
         </DropdownMenuCheckboxItem>

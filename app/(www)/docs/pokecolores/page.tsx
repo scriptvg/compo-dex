@@ -2,7 +2,7 @@ import {
     POKEMON_TYPE_ORDER,
     POKEMON_TYPE_SURFACE,
 } from "@/components/compodex/ui/badge-type"
-import { Page, PageContent, PageHeader } from "@/components/layout/page"
+import { Page, PageContent, PageHeader } from "@/components/ui/page"
 import {
     Card,
     CardDescription,
@@ -42,6 +42,10 @@ export default function PokeColoresPage() {
         "normal-unknown": "bg-gradient-to-r from-stone-400/50 to-gray-500/50",
         "normal-shadow": "bg-gradient-to-r from-stone-400/50 to-gray-800/50",
     } as const
+
+    
+
+
     return (
         <Page className="w-full items-stretch">
             <PageHeader className="w-full border-b border-dashed px-4 py-4">
