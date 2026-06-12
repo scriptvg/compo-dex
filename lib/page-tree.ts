@@ -33,6 +33,7 @@ export const pageTree: PageTreeNode = {
             children: docPages.map((p) => ({
                 name: p.title,
                 href: `/docs/${p.slug}`,
+                isNew: p.isNew,
             })),
         },
         {

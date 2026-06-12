@@ -3,6 +3,8 @@ export type DocPage = {
     slug: string
     title: string
     description?: string
+    /** When true the sidebar renders a blue "new" dot next to the link. */
+    isNew?: boolean
 }
 
 /** Páginas de guía (no-componentes). Fuente única para el sidebar (Getting
@@ -28,6 +30,12 @@ export const docPages: DocPage[] = [
         slug: "build-a-pokedex",
         title: "Build a Pokédex",
         description: "Guía progresiva para construir una Pokédex completa.",
+    },
+    {
+        slug: "changelog",
+        title: "Changelog",
+        description: "What's new in CompoDex UI.",
+        isNew: true,
     },
 ]
 

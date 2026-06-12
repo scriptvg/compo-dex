@@ -1,0 +1,79 @@
+---
+title: "Changelog"
+description: "What's new in CompoDex UI."
+---
+
+Track every release of CompoDex UI. Newest entries appear first.
+Breaking changes are marked explicitly; everything else is additive.
+
+---
+
+## June 2026 — v1.0.0
+
+First production release of CompoDex UI. The registry, the documentation site, and the landing page all ship together as a unified `1.0` milestone.
+
+### Registry components
+
+Six installable registry items are available from day one:
+
+- **`pokemon-type-colors`** — CSS custom-property theme that maps all 18 Pokémon types to consistent HSL color tokens. Install this first; the other components consume it.
+- **`badge-type`** — Inline type badge rendered with the correct type color, border, and contrast. Supports all 18 types and a `ghost` variant for muted displays.
+- **`pokemon-card`** — Full Pokémon card with sprite, name, National Dex number, type badges, and an optional stat bar. Composes `badge-type` and `pokemon-sprite` internally.
+- **`pokemon-sprite`** — Sprite renderer backed by PokéAPI CDN. Ships an expanded size scale: `xs`, `sm`, `md` (default), `lg`, `xl`, `2xl`, and a dedicated `card` size tuned for use inside `pokemon-card`.
+- **`pokemon-stat`** — Horizontal stat bar for HP / Attack / Defense / Sp. Atk / Sp. Def / Speed. Animated fill on mount, color-coded by stat value.
+- **`pokedex`** — Full-page Pokédex shell. Search field, type filter, infinite scroll grid, and a side panel that renders a `pokemon-card` for the selected entry.
+
+### How to add a component
+
+Install the theme tokens first, then add any component:
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-type-colors" />
+
+Then add the components you need, for example:
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-card" />
+
+All six items are individually installable:
+
+<CommandBlock command="shadcn@latest add @compodex/badge-type" />
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-sprite" />
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-stat" />
+
+<CommandBlock command="shadcn@latest add @compodex/pokedex" />
+
+<Callout type="tip" title="Install order matters">
+  Always add `pokemon-type-colors` before any other CompoDex component. The
+  type CSS tokens are defined there and all other components depend on them at
+  runtime.
+</Callout>
+
+### Quick usage example
+
+```tsx
+import { PokemonCard } from "@/components/compodex/ui/pokemon-card"
+
+export default function Page() {
+  return (
+    <PokemonCard
+      id={6}
+      name="Charizard"
+      types={["fire", "flying"]}
+      sprite="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+    />
+  )
+}
+```
+
+### Site & docs
+
+- New marketing landing page with a live component showcase grid demonstrating `pokemon-card`, `badge-type`, and `pokemon-sprite` side by side.
+- Full MDX documentation site with per-component pages, an interactive preview for every component, a copy-ready `CommandBlock` for each install command, and a right-hand TOC generated from `##` headings.
+- Getting Started section covers Introduction, Installation, and a step-by-step Build a Pokédex guide.
+
+<Callout type="note">
+  CompoDex follows the shadcn registry model — components are copied into your
+  project, not imported from a package. You own the code and can modify it
+  freely.
+</Callout>

@@ -24,4 +24,5 @@ export const docLoaders: Record<string, () => Promise<DocModule>> = {
     introduction: () => import("@/content/docs/introduction.mdx"),
     installation: () => import("@/content/docs/installation.mdx"),
     "build-a-pokedex": () => import("@/content/docs/build-a-pokedex.mdx"),
+    changelog: () => import("@/content/docs/changelog.mdx"),
 }
