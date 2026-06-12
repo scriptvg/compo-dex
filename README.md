@@ -57,7 +57,7 @@ CompoDex is distributed as a [shadcn registry](https://ui.shadcn.com/docs/regist
 pnpm dlx shadcn@latest add @compodex/pokemon-type-colors
 
 # Add components
-pnpm dlx shadcn@latest add @compodex/pokemon-badge
+pnpm dlx shadcn@latest add @compodex/badge-type
 pnpm dlx shadcn@latest add @compodex/pokemon-sprite
 pnpm dlx shadcn@latest add @compodex/pokemon-card
 pnpm dlx shadcn@latest add @compodex/pokemon-stat
@@ -69,14 +69,14 @@ pnpm dlx shadcn@latest add @compodex/pokedex
 ### Usage
 
 ```tsx
-import { BadgeType } from "@/components/compodex/ui/badge-type";
+import { PokemonBadgeType } from "@/components/compodex/ui/badge-type";
 import { PokemonCard } from "@/components/compodex/ui/pokemon-card";
 
 export function Charizard() {
   return (
-    <PokemonCard primaryType="fire" secondaryType="flying">
-      <BadgeType type="fire" />
-      <BadgeType type="flying" variant="soft" />
+    <PokemonCard type="fire" secondary="flying">
+      <PokemonBadgeType type="fire">Fire</PokemonBadgeType>
+      <PokemonBadgeType type="flying" variant="soft">Flying</PokemonBadgeType>
     </PokemonCard>
   );
 }
@@ -210,9 +210,22 @@ Please run `pnpm lint` and `pnpm typecheck` before opening a PR.
 
 ## License
 
-Released under the [MIT License](./LICENSE).
+The CompoDex source code is released under the [MIT License](./LICENSE).
 
-> Pokémon and Pokémon character names are trademarks of Nintendo / Game Freak / The Pokémon Company. CompoDex is an unofficial, fan-made project and is not affiliated with or endorsed by them.
+### Trademark disclaimer
+
+"Pokémon" and all Pokémon character names are trademarks of Nintendo, Game Freak, and The Pokémon Company. CompoDex is an unofficial, fan-made project and is not affiliated with, sponsored by, or endorsed by any of them.
+
+### Sprite and artwork attribution
+
+Pokémon sprites and official artwork displayed in the demo are sourced from [PokéAPI](https://pokeapi.co) and the [PokeAPI/sprites](https://github.com/PokeAPI/sprites) repository. These assets are used solely for demonstration purposes and remain the property of their respective owners (Nintendo / Game Freak / The Pokémon Company).
+
+### Built on open-source foundations
+
+CompoDex is built on top of:
+
+- [shadcn/ui](https://ui.shadcn.com) — MIT License
+- [Radix UI](https://www.radix-ui.com) — MIT License
 
 <div align="center">
 
