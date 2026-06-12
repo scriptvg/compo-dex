@@ -22,35 +22,135 @@ function useActiveItem(itemIds: string[]) {
     const [activeId, setActiveId] = React.useState<string | null>(null)
 
     React.useEffect(() => {
+        if (itemIds.length === 0) {
+            return
+        }
+
+        // Track which headings are currently inside the active band and always
+        // pick the first one in document order, so overlapping headings don't
+        // fight over the active state.
+        const visible = new Set<string>()
+
         const observer = new IntersectionObserver(
             (entries) => {
                 for (const entry of entries) {
                     if (entry.isIntersecting) {
-                        setActiveId(entry.target.id)
+                        visible.add(entry.target.id)
+                    } else {
+                        visible.delete(entry.target.id)
                     }
+                }
+
+                const firstVisible = itemIds.find((id) => visible.has(id))
+                if (firstVisible) {
+                    setActiveId(firstVisible)
                 }
             },
             { rootMargin: "0% 0% -80% 0%" },
         )
 
-        for (const id of itemIds ?? []) {
-            const element = document.getElementById(id)
-            if (element) {
-                observer.observe(element)
+        const elements = itemIds
+            .map((id) => document.getElementById(id))
+            .filter((el): el is HTMLElement => el !== null)
+
+        for (const element of elements) {
+            observer.observe(element)
+        }
+
+        // The active band is only the top 20% of the viewport, so the last
+        // heading can never reach it (there isn't enough room to scroll it up).
+        // When the page is scrolled to the bottom, force the last heading active
+        // so no item is ever left unmarked.
+        const onScroll = () => {
+            const reachedBottom =
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight - 2
+            if (reachedBottom) {
+                setActiveId(itemIds[itemIds.length - 1])
             }
         }
 
+        onScroll()
+        window.addEventListener("scroll", onScroll, { passive: true })
+        window.addEventListener("resize", onScroll)
+
         return () => {
-            for (const id of itemIds ?? []) {
-                const element = document.getElementById(id)
-                if (element) {
-                    observer.unobserve(element)
-                }
-            }
+            observer.disconnect()
+            window.removeEventListener("scroll", onScroll)
+            window.removeEventListener("resize", onScroll)
         }
     }, [itemIds])
 
     return activeId
+}
+
+function useScrollProgress() {
+    const [progress, setProgress] = React.useState(0)
+
+    React.useEffect(() => {
+        const onScroll = () => {
+            const scrollTop = window.scrollY
+            const docHeight =
+                document.documentElement.scrollHeight - window.innerHeight
+            setProgress(
+                docHeight > 0
+                    ? Math.min(1, Math.max(0, scrollTop / docHeight))
+                    : 0,
+            )
+        }
+
+        onScroll()
+        window.addEventListener("scroll", onScroll, { passive: true })
+        window.addEventListener("resize", onScroll)
+
+        return () => {
+            window.removeEventListener("scroll", onScroll)
+            window.removeEventListener("resize", onScroll)
+        }
+    }, [])
+
+    return progress
+}
+
+function ScrollProgressRing({
+    progress,
+    className,
+}: {
+    progress: number
+    className?: string
+}) {
+    const radius = 7
+    const circumference = 2 * Math.PI * radius
+
+    return (
+        <svg
+            viewBox="0 0 18 18"
+            className={cn("size-4 shrink-0 -rotate-90", className)}
+            aria-hidden="true"
+        >
+            <circle
+                cx="9"
+                cy="9"
+                r={radius}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="opacity-20"
+            />
+            <circle
+                cx="9"
+                cy="9"
+                r={radius}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={circumference * (1 - progress)}
+                className="text-foreground transition-[stroke-dashoffset] duration-150 ease-out"
+            />
+        </svg>
+    )
 }
 
 export function DocsTableOfContents({
@@ -68,6 +168,7 @@ export function DocsTableOfContents({
         [toc],
     )
     const activeHeading = useActiveItem(itemIds)
+    const scrollProgress = useScrollProgress()
 
     if (!toc?.length) {
         return null
@@ -82,7 +183,7 @@ export function DocsTableOfContents({
             <Popover open={open} onOpenChange={setOpen}>
                 <div
                     className={cn(
-                        "sticky top-(--header-height) z-20 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
+                        "sticky top-(--header-height) z-20 border-b bg-background ",
                         className,
                     )}
                 >
@@ -91,7 +192,7 @@ export function DocsTableOfContents({
                             type="button"
                             className="group flex h-10 w-full items-center gap-2 px-4 text-sm font-medium text-muted-foreground"
                         >
-                            <List className="size-4 shrink-0" />
+                            <ScrollProgressRing progress={scrollProgress} />
                             <span className="truncate text-foreground">
                                 {activeTitle}
                             </span>

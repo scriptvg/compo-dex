@@ -78,7 +78,7 @@ export function DocShell({
       </Page.Main>
 
       {hasToc ? (
-        <Page.Aside className="flex flex-col">
+        <Page.Aside>
           {/* Fixed header outside the scroll: `position: sticky` misbehaves
               inside Radix ScrollArea's table-display viewport. */}
           <p className="shrink-0 px-4 pt-4 pb-2 text-xs font-medium text-muted-foreground">
