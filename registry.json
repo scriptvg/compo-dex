@@ -93,6 +93,19 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "pokemon-stat",
+      "type": "registry:ui",
+      "title": "Pokemon Stat",
+      "description": "Base-stat rows (HP, Attack, Defense, …) composed on shadcn Field and Progress, with per-stat colors and composable label/value/bar parts.",
+      "registryDependencies": ["utils", "field", "progress"],
+      "files": [
+        {
+          "path": "components/compodex/ui/pokemon-stat.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
