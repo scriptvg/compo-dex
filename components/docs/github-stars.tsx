@@ -43,7 +43,7 @@ export function GithubStars({ className }: { className?: string }) {
     }, [])
 
     return (
-        <Button variant="ghost" size="sm" asChild className={className}>
+        <Button variant="ghost"  asChild className={className}>
             <a
                 href={`https://github.com/${REPO}`}
                 target="_blank"
