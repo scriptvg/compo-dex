@@ -1,6 +1,6 @@
 ---
 title: "Pokemon Card"
-description: "Una tarjeta inspirada en las cartas Pokémon que adapta su fondo al tipo (y tipo secundario) del Pokémon, con soporte para tamaños y un modo Mega animado."
+description: "A Pokémon-inspired card that adapts its surface to the Pokémon's type (and optional secondary type), with support for sizes and an animated Mega variant."
 slug: "/components/pokemon-card"
 ---
 
@@ -16,7 +16,7 @@ slug: "/components/pokemon-card"
 
 <TabsContent value="cli">
 
-<CommandBlock command="shadcn@latest add pokemon-card" />
+<CommandBlock command="shadcn@latest add @compodex/pokemon-card" />
 
 </TabsContent>
 
@@ -24,19 +24,30 @@ slug: "/components/pokemon-card"
 
 <Steps>
 <Step>
-Instala las dependencias requeridas.
+
+Install the required dependencies.
 
 <CommandBlock install="class-variance-authority" />
 
 </Step>
 <Step>
-Copia el siguiente código en `components/compodex/ui/pokemon-card.tsx`.
+
+Add the `badge-type` and `pokemon-type-colors` components that this card depends on.
+
+<CommandBlock command="shadcn@latest add @compodex/badge-type @compodex/pokemon-type-colors" />
+
+</Step>
+<Step>
+
+Copy the following code into `components/compodex/ui/pokemon-card.tsx`.
 
 <ComponentSource src="components/compodex/ui/pokemon-card.tsx" />
 
 </Step>
 <Step>
-Actualiza las rutas de import a las de tu proyecto.
+
+Update the import paths to match your project structure.
+
 </Step>
 </Steps>
 
@@ -46,7 +57,11 @@ Actualiza las rutas de import a las de tu proyecto.
 ## Usage
 
 ```tsx
-import { PokemonCard, PokemonCardHeader, PokemonCardTitle } from "@/components/compodex/ui/pokemon-card"
+import {
+  PokemonCard,
+  PokemonCardHeader,
+  PokemonCardTitle,
+} from "@/components/compodex/ui/pokemon-card"
 ```
 
 ```tsx
@@ -57,10 +72,13 @@ import { PokemonCard, PokemonCardHeader, PokemonCardTitle } from "@/components/c
 </PokemonCard>
 ```
 
+The card surface reads its color from the type-colors theme token (`pokemon-type-colors`). Pass a `secondary` type to get a dual-type gradient surface blending both colors. The `mega` variant adds an animated shimmer overlay for Mega-evolved Pokémon.
+
 ## Examples
 
 ### Dual type
-Usando el prop `secondary` para mostrar un fondo degradado entre el tipo principal y el secundario.
+
+Pass the `secondary` prop to render a gradient surface that blends the primary and secondary type colors.
 
 <ComponentPreview name="pokemon-card-dual" />
 
@@ -68,14 +86,14 @@ Usando el prop `secondary` para mostrar un fondo degradado entre el tipo princip
 
 ### PokemonCard
 
-Contenedor principal de la tarjeta. Además acepta todas las props nativas de `<div>`.
+Main card container. Also accepts all native `<div>` props.
 
 <PropsTable of="pokemon-card" component="PokemonCard" />
 
 ### PokemonCardHeader
 
-Cabecera de la tarjeta. Acepta todas las props nativas de `<div>`.
+Card header slot. Accepts all native `<div>` props.
 
 ### PokemonCardTitle
 
-Título de la tarjeta. Acepta todas las props nativas de `<div>`.
+Card title slot. Accepts all native `<div>` props.

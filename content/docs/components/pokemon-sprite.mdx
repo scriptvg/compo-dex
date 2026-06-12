@@ -1,7 +1,7 @@
 ---
 title: "Pokemon Sprite"
-description: "Un elemento de imagen con un respaldo para representar pokemons."
-slug: "/components/pokemon-card"
+description: "An image element with a fallback for rendering Pokémon sprites. Built on Radix UI Avatar."
+slug: "/components/pokemon-sprite"
 ---
 
 <ComponentPreview name="pokemon-sprite" />
@@ -15,25 +15,35 @@ slug: "/components/pokemon-card"
 </TabsList>
 
 <TabsContent value="cli">
-<CommandBlock command="shadcn@latest add pokemon-sprite" />
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-sprite" />
+
 </TabsContent>
 
 <TabsContent value="manual">
+
 <Steps>
 <Step>
-Instala las dependencias requeridas.
+
+Install the required dependencies.
 
 <CommandBlock install="radix-ui" />
+
 </Step>
 <Step>
-Copia el siguiente código en `components/compodex/ui/pokemon-sprite.tsx`.
+
+Copy the following code into `components/compodex/ui/pokemon-sprite.tsx`.
 
 <ComponentSource src="components/compodex/ui/pokemon-sprite.tsx" />
+
 </Step>
 <Step>
-Actualiza las rutas de import a las de tu proyecto.
+
+Update the import paths to match your project structure.
+
 </Step>
 </Steps>
+
 </TabsContent>
 </Tabs>
 
@@ -56,6 +66,30 @@ import {
 </PokemonSprite>
 ```
 
+`PokemonSprite` is built on [Radix UI Avatar](https://www.radix-ui.com/primitives/docs/components/avatar) and inherits its image-load lifecycle: `PokemonSpriteImage` renders once the image loads, and `PokemonSpriteFallback` is shown while it loads or if it fails.
+
+### Size scale
+
+The `size` prop controls the square dimensions of the sprite. Use `card` when placing a sprite inside a `PokemonCard` media slot — it is sized to fit that context precisely.
+
+| Value | Size |
+| --- | --- |
+| `xs` | 20 px |
+| `sm` | 24 px |
+| `default` | 32 px |
+| `md` | 40 px |
+| `lg` | 80 px |
+| `xl` | 112 px |
+| `2xl` | 144 px |
+| `card` | 160 px |
+
+```tsx
+<PokemonSprite size="lg">
+  <PokemonSpriteImage src="/sprites/charizard.png" alt="Charizard" />
+  <PokemonSpriteFallback>CH</PokemonSpriteFallback>
+</PokemonSprite>
+```
+
 ## Examples
 
 ### Sprite group
@@ -66,16 +100,16 @@ import {
 
 ### PokemonSprite
 
-Contenedor raíz del sprite. Acepta todas las props de `Avatar.Root`.
+Root sprite container — wraps [Radix UI `Avatar.Root`](https://www.radix-ui.com/primitives/docs/components/avatar). Accepts all `Avatar.Root` props plus `size`.
 
 <PropsTable of="pokemon-sprite" component="PokemonSprite" />
 
-### Subcomponentes
+### Subcomponents
 
-| Componente | Base | Description |
+| Component | Base | Description |
 | --- | --- | --- |
-| `PokemonSpriteImage` | `Avatar.Image` | Renderiza la imagen del Pokémon. Acepta las props de `Avatar.Image`. |
-| `PokemonSpriteFallback` | `Avatar.Fallback` | Contenido mostrado mientras la imagen carga o si falla. Acepta las props de `Avatar.Fallback`. |
-| `PokemonSpriteBadge` | `<span>` | Insignia posicionada sobre el sprite. Acepta las props de un `<span>`. |
-| `PokemonSpriteGroup` | `<div>` | Agrupa varios sprites con solapamiento. Acepta las props de un `<div>`. |
-| `PokemonSpriteGroupCount` | `<div>` | Muestra el conteo restante dentro de un grupo. Acepta las props de un `<div>`. |
+| `PokemonSpriteImage` | `Avatar.Image` | Renders the Pokémon image. Accepts all `Avatar.Image` props. |
+| `PokemonSpriteFallback` | `Avatar.Fallback` | Shown while the image loads or if it fails. Accepts all `Avatar.Fallback` props. |
+| `PokemonSpriteBadge` | `<span>` | A badge positioned over the sprite (bottom-right corner). Accepts all `<span>` props. |
+| `PokemonSpriteGroup` | `<div>` | Groups multiple sprites with overlap. Accepts all `<div>` props. |
+| `PokemonSpriteGroupCount` | `<div>` | Displays a remaining count chip inside a group. Accepts all `<div>` props. |

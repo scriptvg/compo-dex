@@ -1,32 +1,32 @@
 ---
 title: "Build a Pokédex"
-description: "Guía progresiva: construye una Pokédex completa con los primitivos de compodex, paso a paso."
+description: "A progressive guide: build a complete Pokédex with compodex primitives, step by step."
 ---
 
-Esta guía construye una Pokédex completa — lista, búsqueda, paginación, estado vacío y filtros — usando los primitivos de `Pokedex`. Cada paso añade una capacidad sobre el anterior, igual que crecería en un proyecto real.
+This guide builds a complete Pokédex — list, search, pagination, empty state, and filters — using the `Pokedex` primitives. Each step adds one capability on top of the previous one, the same way a feature grows in a real project.
 
 <Callout type="note">
-Los primitivos gestionan **estado y composición**. Los datos (fetching, caché, índices) son siempre de tu app — aquí usamos TanStack Query y PokeAPI como ejemplo, pero cualquier fuente sirve.
+The primitives manage **state and composition**. Data fetching, caching, and indexing are always your app's responsibility — this guide uses TanStack Query and PokéAPI as an example, but any data source works.
 </Callout>
 
-## Estructura final
+## Final structure
 
 ```txt
 app/pokedex/
-├── page.tsx          # estado controlado + composición
+├── page.tsx          # controlled state + composition
 components/
-├── pokedex-card.tsx  # tu card por item
+├── pokedex-card.tsx  # your per-item card
 services/
-├── pokemon.ts        # tu capa de datos (react-query)
+├── pokemon.ts        # your data layer (react-query)
 ```
 
-## 1. Instala el primitivo
+## 1. Install the primitive
 
 <CommandBlock command="shadcn@latest add @compodex/pokedex" />
 
-## 2. La lista
+## 2. The list
 
-Empieza con datos y un `renderItem`. `PokedexItems` ya renderiza un grid responsive.
+Start with data and a `renderItem`. `PokedexItems` already renders a responsive grid.
 
 ```tsx
 "use client"
@@ -46,12 +46,12 @@ export default function PokedexPage() {
 ```
 
 <Callout type="tip">
-`renderItem` ya aplica la key por ti usando `getItemKey` (por defecto `item.name`), así que puedes omitir `key` dentro del render.
+`renderItem` already applies the key via `getItemKey` (defaults to `item.name`), so you can omit `key` inside the render.
 </Callout>
 
-## 3. La búsqueda
+## 3. Search
 
-Añade `PokedexSearch`. Sin configurar nada, el root filtra los items comparando la query normalizada contra `item.name`.
+Add `PokedexSearch`. Without any extra configuration, the root filters items by comparing the normalized query against `item.name`.
 
 ```tsx
 <Pokedex items={pokemon}>
@@ -60,9 +60,9 @@ Añade `PokedexSearch`. Sin configurar nada, el root filtra los items comparando
 </Pokedex>
 ```
 
-## 4. La paginación
+## 4. Pagination
 
-`pageSize` activa la ventana incremental y `PokedexLoadMore` la avanza. La ventana **se resetea sola** cuando cambia la query o los filtros.
+`pageSize` activates an incremental window and `PokedexLoadMore` advances it. The window **resets automatically** whenever the query or filters change.
 
 ```tsx
 <Pokedex items={pokemon} pageSize={24}>
@@ -73,28 +73,28 @@ Añade `PokedexSearch`. Sin configurar nada, el root filtra los items comparando
 ```
 
 <Callout type="tip">
-¿Prefieres infinite scroll? `usePokedex()` expone `loadMore` y `hasMore` — conéctalos a un `IntersectionObserver` y elimina el botón.
+Prefer infinite scroll? `usePokedex()` exposes `loadMore` and `hasMore` — connect them to an `IntersectionObserver` and remove the button.
 </Callout>
 
-## 5. El estado vacío
+## 5. Empty state
 
-`PokedexEmpty` solo aparece cuando no hay coincidencias. `PokedexClear` resetea la búsqueda y se deshabilita solo.
+`PokedexEmpty` appears only when there are no matches. `PokedexClear` resets the search and disables itself automatically.
 
 ```tsx
 <PokedexEmpty>
   <EmptyHeader>
-    <EmptyTitle>Sin resultados</EmptyTitle>
-    <EmptyDescription>Prueba otra búsqueda.</EmptyDescription>
+    <EmptyTitle>No results</EmptyTitle>
+    <EmptyDescription>Try a different search.</EmptyDescription>
   </EmptyHeader>
   <EmptyContent>
-    <PokedexClear clears="query">Limpiar búsqueda</PokedexClear>
+    <PokedexClear clears="query">Clear search</PokedexClear>
   </EmptyContent>
 </PokedexEmpty>
 ```
 
-## 6. Estado controlado
+## 6. Controlled state
 
-Hasta aquí el root gestionaba su propio estado. Para sincronizar con la URL (o un formulario, o estado global), pásalo controlado: `query` + `onQueryChange`.
+Up to this point the root was managing its own state. To sync with the URL (or a form, or global state), pass it as controlled: `query` + `onQueryChange`.
 
 ```tsx
 const [query, setQuery] = useState(searchParams.get("q") ?? "")
@@ -104,11 +104,11 @@ const [query, setQuery] = useState(searchParams.get("q") ?? "")
 </Pokedex>
 ```
 
-## 7. Filtros de dominio
+## 7. Domain filters
 
-`PokedexFilterState` cubre generaciones, tipo primario/secundario, legendarios y míticos. Solo tu app sabe a qué generación pertenece cada Pokémon, así que hay dos estrategias:
+`PokedexFilterState` covers generations, primary/secondary type, legendaries, and mythicals. Only your app knows which generation each Pokémon belongs to, so there are two strategies:
 
-**A. Pre-filtra en tu capa de datos** y desactiva el matcher interno:
+**A. Pre-filter in your data layer** and disable the internal matcher:
 
 ```tsx
 const { matched } = useMyFilteredList(pokemon, query, filters)
@@ -123,7 +123,7 @@ const { matched } = useMyFilteredList(pokemon, query, filters)
 >
 ```
 
-**B. Inyecta un `filterFn`** con acceso a tus índices:
+**B. Inject a `filterFn`** with access to your indices:
 
 ```tsx
 <Pokedex
@@ -136,19 +136,19 @@ const { matched } = useMyFilteredList(pokemon, query, filters)
 >
 ```
 
-El menú de filtros se arma con cualquier UI (dropdown, sheet, sidebar) leyendo los toggles del contexto:
+The filter menu can be any UI (dropdown, sheet, sidebar) that reads toggles from context:
 
 ```tsx
 function FilterMenu() {
   const { filters, togglePrimaryType, clearFilters, hasActiveFilters } = usePokedex()
-  // tu dropdown-menu con checkboxes por tipo...
+  // your dropdown-menu with type checkboxes...
 }
 ```
 
 <Callout type="warning">
-Si tus filtros dependen de datos remotos (p. ej. qué Pokémon son de tipo agua), expón un `loading` en el root mientras resuelven — así `PokedexEmpty` no parpadea con un falso "sin resultados".
+If your filters depend on remote data (e.g., which Pokémon are Water-type), pass `loading` to the root while they resolve — this prevents `PokedexEmpty` from flashing a false "no results" state.
 </Callout>
 
-## Resultado
+## Result
 
-La Pokédex de este sitio ([/pokedex](/pokedex)) está construida exactamente así: estado controlado en la página, datos con TanStack Query + PokeAPI, filtros pre-calculados con `shouldFilter={false}` y un menú de filtros propio sobre `dropdown-menu`. Es la implementación de referencia de esta guía.
+The Pokédex on this site ([/pokedex](/pokedex)) is built exactly this way: controlled state in the page, data via TanStack Query + PokéAPI, filters pre-calculated with `shouldFilter={false}`, and a custom filter menu over `dropdown-menu`. It is the reference implementation for this guide.

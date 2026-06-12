@@ -1,6 +1,6 @@
 ---
 title: "Pokemon Badge"
-description: "Badge component to display Pokémon types with consistent styling and color coding."
+description: "Badge component to display Pokémon types with consistent color coding."
 dependencies: ["class-variance-authority", "radix-ui"]
 slug: "/components/pokemon-badge"
 ---
@@ -11,13 +11,13 @@ slug: "/components/pokemon-badge"
 
 <Tabs defaultValue="cli">
 <TabsList variant="line">
-<TabsTrigger value="cli">Command</TabsTrigger>
+<TabsTrigger value="cli">CLI</TabsTrigger>
 <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
 
 <TabsContent value="cli">
 
-<CommandBlock command="shadcn@latest add pokemon-badge" />
+<CommandBlock command="shadcn@latest add @compodex/badge-type" />
 
 </TabsContent>
 
@@ -26,21 +26,21 @@ slug: "/components/pokemon-badge"
 <Steps>
 <Step>
 
-Instala las dependencias requeridas.
+Install the required dependencies.
 
 <CommandBlock install="class-variance-authority radix-ui" />
 
 </Step>
 <Step>
 
-Copia el siguiente código en `components/compodex/ui/badge-type.tsx`.
+Copy the following code into `components/compodex/ui/badge-type.tsx`.
 
 <ComponentSource src="components/compodex/ui/badge-type.tsx" />
 
 </Step>
 <Step>
 
-Actualiza las rutas de import a las de tu proyecto.
+Update the import paths to match your project structure.
 
 </Step>
 </Steps>
@@ -61,17 +61,19 @@ import { PokemonBadgeType } from "@/components/compodex/ui/badge-type"
 ## Examples
 
 ### Type
-Usa la prop `type` para mostrar el tipo elemental del Pokémon, lo que define el color de fondo y texto de la insignia.
+
+Use the `type` prop to display a Pokémon's elemental type. It sets the badge's background and text color automatically based on the type-colors theme token.
 
 <ComponentPreview name="pokemon-badge-variants" />
 
 ### Combined
-Usa la prop `variant` para cambiar el estilo visual de la insignia. Ten en cuenta que algunas variantes pueden no ser ideales para ciertos tipos debido a sus colores.
+
+Use the `variant` prop to change the visual style of the badge. Note that some variants may not suit every type due to color contrast.
 
 <ComponentPreview name="pokemon-badge-variants-type" />
 
 ## API Reference
 
-Props del componente `PokemonBadgeType`. Además acepta todas las props nativas de `<span>`.
+Props for `PokemonBadgeType`. Also accepts all native `<span>` props.
 
 <PropsTable of="pokemon-badge" component="PokemonBadgeType" />

@@ -1,11 +1,9 @@
 ---
 title: "Pokedex"
-description: "Controllable primitives to build Pokedex UIs: search, domain filters, incremental pagination, and renderItem-based collections."
+description: "Controllable primitives to build Pokédex UIs: search, domain filters, incremental pagination, and renderItem-based collections."
 dependencies: ["radix-ui", "lucide-react"]
 slug: "/components/pokedex"
 ---
-
-
 
 <ComponentPreview name="pokedex" />
 
@@ -18,30 +16,42 @@ slug: "/components/pokedex"
 </TabsList>
 
 <TabsContent value="cli">
+
 <CommandBlock command="shadcn@latest add @compodex/pokedex" />
+
 </TabsContent>
 
 <TabsContent value="manual">
+
 <Steps>
 <Step>
-Instala las dependencias requeridas.
+
+Install the required dependencies.
 
 <CommandBlock install="radix-ui lucide-react" />
+
 </Step>
 <Step>
-Añade los componentes requeridos.
+
+Add the required [shadcn/ui](https://ui.shadcn.com) components.
 
 <CommandBlock command="shadcn@latest add button empty input-group" />
+
 </Step>
 <Step>
-Copia el siguiente código en `components/compodex/ui/pokedex.tsx`.
+
+Copy the following code into `components/compodex/ui/pokedex.tsx`.
 
 <ComponentSource src="components/compodex/ui/pokedex.tsx" />
+
 </Step>
 <Step>
-Actualiza las rutas de import a las de tu proyecto.
+
+Update the import paths to match your project structure.
+
 </Step>
 </Steps>
+
 </TabsContent>
 </Tabs>
 
@@ -64,45 +74,45 @@ import { EmptyHeader, EmptyTitle } from "@/components/ui/empty"
 ```tsx
 <Pokedex items={pokemon} pageSize={24}>
   <PokedexSearch />
-  <PokedexItems renderItem={(p) => <MiCard pokemon={p} />} />
+  <PokedexItems renderItem={(p) => <MyCard pokemon={p} />} />
   <PokedexEmpty>
     <EmptyHeader>
-      <EmptyTitle>Sin resultados</EmptyTitle>
+      <EmptyTitle>No results</EmptyTitle>
     </EmptyHeader>
   </PokedexEmpty>
   <PokedexLoadMore />
 </Pokedex>
 ```
 
-Por defecto el root filtra los `items` comparando la query normalizada contra `item.name`, `PokedexItems` renderiza un grid responsive y `PokedexLoadMore` gestiona sus propios labels. Los datos y el fetching son tuyos.
+The root filters `items` by comparing the normalized query against `item.name`, `PokedexItems` renders a responsive grid, and `PokedexLoadMore` manages its own labels. The component composes [Radix UI](https://www.radix-ui.com) primitives and [shadcn/ui](https://ui.shadcn.com) components (`button`, `empty`, `input-group`) under the hood. **Data fetching is always the consumer's responsibility** — you supply the items array; this component handles state and rendering.
 
 <Callout type="tip">
-¿Construyendo una Pokédex completa? Sigue la guía paso a paso en [Build a Pokédex](/docs/build-a-pokedex).
+Building a full Pokédex? Follow the step-by-step guide at [Build a Pokédex](/docs/build-a-pokedex).
 </Callout>
 
 ## Examples
 
 ### Grid
 
-`PokedexItems` renderiza un grid responsive por defecto; `pageSize` + `PokedexLoadMore` añaden la paginación incremental.
+`PokedexItems` renders a responsive grid by default; `pageSize` + `PokedexLoadMore` add incremental pagination.
 
 <ComponentPreview name="pokedex-grid" />
 
 ### Empty state
 
-`PokedexEmpty` aparece solo cuando no hay coincidencias; `PokedexClear` resetea la búsqueda y se deshabilita solo.
+`PokedexEmpty` appears only when there are no matches; `PokedexClear` resets the search and disables itself automatically.
 
 <ComponentPreview name="pokedex-empty" />
 
 ### Count
 
-`PokedexCount` acepta un render-prop con `visible`, `matched` y `total` para formatear el conteo.
+`PokedexCount` accepts a render prop with `visible`, `matched`, and `total` for formatting the count display.
 
 <ComponentPreview name="pokedex-count" />
 
-### Estado controlado
+### Controlled state
 
-Cada pieza de estado acepta el patrón `value` / `defaultValue` / `onChange`, así puedes sincronizar la búsqueda con la URL, un formulario o estado externo.
+Each piece of state follows the `value` / `defaultValue` / `onChange` pattern, so you can sync search with the URL, a form, or external state.
 
 ```tsx
 const [query, setQuery] = useState(searchParams.get("q") ?? "")
@@ -112,9 +122,9 @@ const [query, setQuery] = useState(searchParams.get("q") ?? "")
 </Pokedex>
 ```
 
-### Filtrado en el servidor
+### Server-side filtering
 
-Si tus items ya llegan filtrados (búsqueda server-side, índice externo), desactiva el filtrado interno con `shouldFilter`.
+If your items already arrive filtered (server-side search, external index), disable internal filtering with `shouldFilter`.
 
 ```tsx
 const { data } = useQuery({
@@ -132,9 +142,9 @@ const { data } = useQuery({
 </Pokedex>
 ```
 
-### Filtros con conocimiento de datos
+### Data-aware filters
 
-El shape de filtros (`PokedexFilterState`) cubre generaciones, tipo primario/secundario, legendarios y míticos. Solo tu app sabe a qué generación pertenece cada Pokémon, así que inyecta un `filterFn` propio — o pre-filtra y usa `shouldFilter={false}`.
+The filter shape (`PokedexFilterState`) covers generations, primary/secondary type, legendaries, and mythicals. Only your app knows which generation each Pokémon belongs to, so inject your own `filterFn` — or pre-filter and use `shouldFilter={false}`.
 
 ```tsx
 <Pokedex
@@ -142,7 +152,7 @@ El shape de filtros (`PokedexFilterState`) cubre generaciones, tipo primario/sec
   filterFn={(item, query, filters) =>
     item.name.includes(query) &&
     (filters.generations.length === 0 ||
-      filters.generations.includes(miIndice.get(item.name)?.generation ?? ""))
+      filters.generations.includes(myIndex.get(item.name)?.generation ?? ""))
   }
 >
   {/* ... */}
@@ -151,7 +161,7 @@ El shape de filtros (`PokedexFilterState`) cubre generaciones, tipo primario/sec
 
 ### Infinite scroll
 
-`usePokedex()` expone todo el estado del contexto. Conecta `loadMore` a un IntersectionObserver en lugar del botón.
+`usePokedex()` exposes the full context state. Wire `loadMore` to an `IntersectionObserver` instead of a button.
 
 ```tsx
 function InfiniteSentinel() {
@@ -173,90 +183,90 @@ function InfiniteSentinel() {
 
 ## Accessibility
 
-`PokedexSearch` es un `<input>` de texto estándar — añade tu propio `aria-label` o asócialo a un `<label>`. El botón de limpiar integrado y `PokedexClear` exponen labels accesibles y se deshabilitan cuando no aplican.
+`PokedexSearch` is a standard text `<input>` — add your own `aria-label` or associate it with a `<label>`. The built-in clear button and `PokedexClear` expose accessible labels and disable themselves when there is nothing to clear.
 
 ### Keyboard interactions
 
 | Key | Description |
 | --- | --- |
-| `Escape` | Limpia la búsqueda si hay texto. Con la query vacía, el evento sigue propagándose (p. ej. para cerrar un diálogo contenedor). |
+| `Escape` | Clears the search if there is text. When the query is already empty, the event continues to propagate (e.g., to close a containing dialog). |
 
 ## API Reference
 
 ### Pokedex
 
-Root del conjunto. Posee el estado de búsqueda, filtros y paginación, y lo expone por contexto a los subcomponentes. `query` y `filters` siguen el patrón controlado/no controlado. Además acepta todas las props nativas de `<div>`.
+Root of the component set. Owns the search, filter, and pagination state, and exposes it through context to all subcomponents. `query` and `filters` follow the controlled/uncontrolled pattern. Also accepts all native `<div>` props.
 
 <PropsTable of="pokedex" component="Pokedex" />
 
 ### PokedexSearch
 
-Input de búsqueda ligado a la query del contexto, con icono de búsqueda y botón de limpiar integrado (visible solo cuando hay texto). `className` se aplica al contenedor; el resto de props van al `<input>`, del que además acepta todas las props nativas.
+Search input bound to the context query, with a search icon and a built-in clear button (visible only when there is text). `className` is applied to the wrapper; all other props go to the `<input>`. Also accepts all native `<input>` props.
 
 <PropsTable of="pokedex" component="PokedexSearch" />
 
 ### PokedexClear
 
-Botón que resetea la búsqueda, los filtros o ambos. Se deshabilita solo cuando no hay nada que limpiar. Además acepta todas las props nativas de `<button>`.
+Button that resets the search, the filters, or both. Disables itself automatically when there is nothing to clear. Also accepts all native `<button>` props.
 
 <PropsTable of="pokedex" component="PokedexClear" />
 
 ### PokedexItems
 
-Renderiza los items visibles (ventana de paginación incluida) con la key resuelta por `getItemKey`. Grid responsive por defecto; cualquier layout (lista, tabla, masonry) sobreescribiendo `className`. Además acepta todas las props nativas de `<div>`.
+Renders the visible items (including the pagination window) with a key resolved by `getItemKey`. Responsive grid by default; override `className` for any other layout (list, table, masonry). Also accepts all native `<div>` props.
 
 <PropsTable of="pokedex" component="PokedexItems" />
 
 ### PokedexEmpty
 
-Estado vacío. Solo se renderiza cuando no hay coincidencias y `loading` es `false`. Compón su contenido con `EmptyHeader`, `EmptyTitle`, `EmptyDescription` y `EmptyContent`. Expone `data-reason="no-match"` cuando hay query o filtros activos y `data-reason="no-items"` cuando simplemente no llegaron datos. Además acepta todas las props nativas de `<div>`.
+Empty state. Only renders when there are no matches and `loading` is `false`. Compose its content with `EmptyHeader`, `EmptyTitle`, `EmptyDescription`, and `EmptyContent`. Exposes `data-reason="no-match"` when there is an active query or filters, and `data-reason="no-items"` when no items arrived at all. Also accepts all native `<div>` props.
 
 ### PokedexLoadMore
 
-Botón de paginación. Devuelve `null` si no hay `pageSize` o no hay coincidencias; al agotar resultados se deshabilita y expone `data-state="exhausted"`. Además acepta todas las props nativas de `<button>`.
+Pagination button. Returns `null` when `pageSize` is unset or there are no matches; disables itself and exposes `data-state="exhausted"` when all results are shown. Also accepts all native `<button>` props.
 
 <PropsTable of="pokedex" component="PokedexLoadMore" />
 
 ### PokedexCount
 
-Conteo de resultados. Además acepta todas las props nativas de `<span>`.
+Result count display. Also accepts all native `<span>` props.
 
 <PropsTable of="pokedex" component="PokedexCount" />
 
 ### usePokedex
 
-Hook de acceso al contexto — debe usarse dentro de `<Pokedex>`. Tipable con `usePokedex<MiTipo>()`.
+Context access hook — must be used inside `<Pokedex>`. Generic: `usePokedex<MyType>()`.
 
-| Propiedad | Type | Description |
+| Property | Type | Description |
 | --- | --- | --- |
-| `items` | `T[]` | Todos los items, tal como llegaron. |
-| `matchedItems` | `T[]` | Items tras aplicar `filterFn` (o `items` si `shouldFilter` es `false`). |
-| `visibleItems` | `T[]` | Coincidencias recortadas por la ventana de paginación. |
-| `query` / `queryNormalized` | `string` | Query cruda y normalizada (trim + lowercase). |
-| `setQuery` | `(query: string) => void` | Actualiza la query. |
-| `filters` | `PokedexFilterState` | Estado de filtros actual. |
-| `setFilters` | `(filters \| updater) => void` | Reemplaza o actualiza los filtros. |
-| `toggleGeneration` / `togglePrimaryType` / `toggleSecondaryType` | `(name: string) => void` | Alterna un valor en la lista correspondiente. |
-| `setGenerations` | `(names: string[]) => void` | Reemplaza la selección de generaciones (p. ej. radio). |
-| `setLegendaryOnly` / `setMythicalOnly` | `(value: boolean) => void` | Activa/desactiva los flags. |
-| `clearFilters` | `() => void` | Resetea a `EMPTY_POKEDEX_FILTERS`. |
-| `hasActiveFilters` | `boolean` | `true` si algún filtro está activo. |
-| `pageSize` | `number \| null` | `null` cuando la paginación está desactivada. |
-| `visibleCount` | `number` | Tamaño actual de la ventana. |
-| `hasMore` | `boolean` | Quedan items por mostrar. |
-| `loadMore` | `() => void` | Amplía la ventana en `pageSize`. |
-| `loading` | `boolean` | El `loading` del root. |
+| `items` | `T[]` | All items as supplied. |
+| `matchedItems` | `T[]` | Items after `filterFn` (or `items` when `shouldFilter` is `false`). |
+| `visibleItems` | `T[]` | Matches trimmed to the current pagination window. |
+| `query` / `queryNormalized` | `string` | Raw query and normalized form (trimmed + lowercased). |
+| `setQuery` | `(query: string) => void` | Updates the query. |
+| `filters` | `PokedexFilterState` | Current filter state. |
+| `setFilters` | `(filters \| updater) => void` | Replaces or updates filters. |
+| `toggleGeneration` / `togglePrimaryType` / `toggleSecondaryType` | `(name: string) => void` | Toggles a value in the corresponding list. |
+| `setGenerations` | `(names: string[]) => void` | Replaces the generation selection (e.g., radio behavior). |
+| `setLegendaryOnly` / `setMythicalOnly` | `(value: boolean) => void` | Enables or disables the flag. |
+| `clearFilters` | `() => void` | Resets to `EMPTY_POKEDEX_FILTERS`. |
+| `hasActiveFilters` | `boolean` | `true` when any filter is active. |
+| `pageSize` | `number \| null` | `null` when pagination is disabled. |
+| `visibleCount` | `number` | Current window size. |
+| `hasMore` | `boolean` | Whether more items remain to be shown. |
+| `loadMore` | `() => void` | Expands the window by `pageSize`. |
+| `loading` | `boolean` | The `loading` prop from the root. |
 
 ### PokedexFilterState
 
 ```tsx
 type PokedexFilterState = {
-  generations: string[]      // nombres de la API, p. ej. "generation-i"
-  primaryTypes: string[]     // tipos permitidos en slot 1 — unión (OR)
-  secondaryTypes: string[]   // tipos permitidos en slot 2 — unión (OR)
+  generations: string[]      // API names, e.g. "generation-i"
+  primaryTypes: string[]     // types allowed in slot 1 — union (OR)
+  secondaryTypes: string[]   // types allowed in slot 2 — union (OR)
   legendaryOnly: boolean
   mythicalOnly: boolean
 }
 ```
 
-`EMPTY_POKEDEX_FILTERS` se exporta como valor inicial/reset.
+`EMPTY_POKEDEX_FILTERS` is exported as the initial/reset value.

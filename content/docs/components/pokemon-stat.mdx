@@ -1,6 +1,6 @@
 ---
 title: "Pokemon Stat"
-description: "Filas de estadísticas base (HP, Ataque, Defensa…) compuestas sobre shadcn Field y Progress, con color por stat, partes recomponibles y una lista con render prop."
+description: "Base stat rows (HP, Attack, Defense…) composed on shadcn/ui Field and Progress, with per-stat color, recomposable parts, and a render-prop list."
 slug: "/components/pokemon-stat"
 ---
 
@@ -15,25 +15,35 @@ slug: "/components/pokemon-stat"
 </TabsList>
 
 <TabsContent value="cli">
+
 <CommandBlock command="shadcn@latest add @compodex/pokemon-stat" />
+
 </TabsContent>
 
 <TabsContent value="manual">
+
 <Steps>
 <Step>
-Añade los componentes shadcn sobre los que se compone.
+
+Add the [shadcn/ui](https://ui.shadcn.com) components this builds on.
 
 <CommandBlock command="shadcn@latest add field progress" />
+
 </Step>
 <Step>
-Copia el siguiente código en `components/compodex/ui/pokemon-stat.tsx`.
+
+Copy the following code into `components/compodex/ui/pokemon-stat.tsx`.
 
 <ComponentSource src="components/compodex/ui/pokemon-stat.tsx" />
+
 </Step>
 <Step>
-Actualiza las rutas de import a las de tu proyecto.
+
+Update the import paths to match your project structure.
+
 </Step>
 </Steps>
+
 </TabsContent>
 </Tabs>
 
@@ -56,15 +66,15 @@ import {
 </PokemonStat>
 ```
 
-Cada fila es un `Field` de shadcn: un `FieldLabel` (nombre + valor) sobre un `Progress`, enlazados con `htmlFor` / `id` igual que el ejemplo de progress con label de shadcn. El root es **layout + contexto**: tú compones las partes. Con un `stat` conocido (`hp`, `attack`, `defense`, `special-attack`, `special-defense`, `speed`) se autocompletan etiqueta y color; la barra se escala contra `max` (por defecto `255`).
+Each row is a [shadcn/ui](https://ui.shadcn.com) `Field`: a `FieldLabel` (name + value) above a `Progress`, linked via `htmlFor` / `id` — the same pattern as the shadcn progress-with-label example. The root is **layout + context**: you compose the parts. For known stats (`hp`, `attack`, `defense`, `special-attack`, `special-defense`, `speed`) the label and color are resolved automatically; the bar scales against `max` (default `255`).
 
-Por defecto `PokemonStatLabel` muestra `nombre … valor` (el valor empujado a la derecha con `ml-auto`). Pásale children para recomponer la fila.
+By default `PokemonStatLabel` renders `name … value` (value pushed right with `ml-auto`). Pass children to recompose the label row.
 
 ## Examples
 
-### Lista con render prop
+### Render-prop list
 
-`PokemonStatList` recibe los datos por `stats` (un array de entries o un record `{ stat: value }`) y un **render prop** como children que decide cómo se pinta cada fila. La lista solo itera, normaliza el orden y pone la `key`.
+`PokemonStatList` accepts data via `stats` (an array of entries or a `{ stat: value }` record) and a **render prop** as children that decides how each row is rendered. The list only iterates, normalizes order, and sets the `key`.
 
 ```tsx
 const stats = {
@@ -87,12 +97,12 @@ const stats = {
 ```
 
 <Callout type="tip">
-El render prop pasa una función como children, así que el consumidor debe ser un Client Component (`"use client"`).
+The render prop passes a function as children, so the consumer must be a Client Component (`"use client"`).
 </Callout>
 
-### Composición manual
+### Manual composition
 
-Sin `stats`, `PokemonStatList` es solo un wrapper de espaciado: compón las filas a mano.
+Without `stats`, `PokemonStatList` is just a spacing wrapper — compose rows by hand.
 
 ```tsx
 <PokemonStatList>
@@ -107,23 +117,23 @@ Sin `stats`, `PokemonStatList` es solo un wrapper de espaciado: compón las fila
 </PokemonStatList>
 ```
 
-### Label a medida
+### Custom label
 
-Como las partes leen el contexto, puedes recomponer la fila del label. `PokemonStatValue` lleva el valor; colócalo donde quieras.
+Because all parts read from context, you can recompose the label row freely. `PokemonStatValue` carries the value — place it wherever you need it.
 
 ```tsx
 <PokemonStat stat="attack" value={84}>
   <PokemonStatLabel>
-    <span>Ataque</span>
+    <span>Attack</span>
     <PokemonStatValue className="ml-auto text-primary" />
   </PokemonStatLabel>
   <PokemonStatBar className="h-1" />
 </PokemonStat>
 ```
 
-### Stat personalizado
+### Custom stat
 
-Para stats fuera del set conocido, pasa `label`, `color` y `max` tú mismo.
+For stats outside the known set, pass `label`, `color`, and `max` yourself.
 
 ```tsx
 <PokemonStat label="Total" value={530} max={780} color="var(--primary)">
@@ -134,57 +144,57 @@ Para stats fuera del set conocido, pasa `label`, `color` y `max` tú mismo.
 
 ## Accessibility
 
-`PokemonStatBar` se apoya en el `Progress` de shadcn (Radix), que ya expone `role="progressbar"` con `aria-valuenow` / `aria-valuemin` / `aria-valuemax`. Encima:
+`PokemonStatBar` is built on the [shadcn/ui](https://ui.shadcn.com) `Progress` component (which wraps [Radix UI](https://www.radix-ui.com)), so it already exposes `role="progressbar"` with `aria-valuenow` / `aria-valuemin` / `aria-valuemax`. Additionally:
 
-- El valor real (`value / max`, no el porcentaje) se anuncia vía `aria-valuetext`.
-- `PokemonStatLabel` es un `FieldLabel` con `htmlFor` apuntando al `id` de la barra (generado con `useId`), igual que el patrón de progress con label de shadcn.
+- The actual value (`value / max`, not the percentage) is announced via `aria-valuetext`.
+- `PokemonStatLabel` is a `FieldLabel` with `htmlFor` pointing to the bar's `id` (generated with `useId`), matching the shadcn progress-with-label pattern.
 
 ## API Reference
 
 ### PokemonStat
 
-Root de una fila de stat — un `Field` de shadcn. Posee `value` + `max`, deriva el porcentaje y el color, y los comparte por contexto. Además acepta todas las props de `Field`.
+Root of a stat row — a shadcn/ui `Field`. Owns `value` + `max`, derives the percentage and color, and shares them through context. Also accepts all `Field` props.
 
 <PropsTable of="pokemon-stat" component="PokemonStat" />
 
 ### PokemonStatLabel
 
-Fila del label sobre la barra, renderizada con el `FieldLabel` de shadcn y enlazada a la barra por `htmlFor`. Por defecto muestra `nombre … valor`; pasa children para recomponer. Acepta todas las props de `FieldLabel`.
+Label row above the bar, rendered as a shadcn/ui `FieldLabel` and linked to the bar via `htmlFor`. By default renders `name … value`; pass children to recompose. Accepts all `FieldLabel` props.
 
 ### PokemonStatValue
 
-Valor numérico del stat. Por defecto muestra `value` del contexto; pasa children para sobreescribirlo. Acepta todas las props nativas de `<span>`.
+Numeric stat value. Defaults to `value` from context; pass children to override. Accepts all native `<span>` props.
 
 ### PokemonStatBar
 
-La barra — el `Progress` de shadcn recoloreado por stat vía la variable `--stat-color`.
+The bar — a shadcn/ui `Progress` recolored per stat via the `--stat-color` CSS variable.
 
 <PropsTable of="pokemon-stat" component="PokemonStatBar" />
 
 ### PokemonStatList
 
-Wrapper de espaciado. Con `stats` + un `children` render prop renderiza desde datos; sin ellos, compón `<PokemonStat>` a mano. Además acepta todas las props nativas de `<div>`.
+Spacing wrapper. With `stats` + a `children` render prop it renders from data; without them, compose `<PokemonStat>` manually. Also accepts all native `<div>` props.
 
 <PropsTable of="pokemon-stat" component="PokemonStatList" />
 
 ### usePokemonStat
 
-Hook de acceso al contexto — debe usarse dentro de `<PokemonStat>`.
+Context access hook — must be used inside `<PokemonStat>`.
 
-| Propiedad | Type | Description |
+| Property | Type | Description |
 | --- | --- | --- |
-| `name` | `PokemonStatName \| undefined` | El `stat` del root, si se pasó. |
-| `value` / `max` | `number` | Valor base y escala. |
-| `percent` | `number` | `value / max` recortado a 0–100 (lo que consume `PokemonStatBar`). |
-| `label` | `string` | Etiqueta resuelta. |
-| `color` | `string` | Color resuelto del stat. |
-| `id` | `string` | Enlaza el `FieldLabel` (`htmlFor`) con la barra (`id`). |
+| `name` | `PokemonStatName \| undefined` | The `stat` passed to the root, if any. |
+| `value` / `max` | `number` | Base value and scale ceiling. |
+| `percent` | `number` | `value / max` clamped to 0–100 (consumed by `PokemonStatBar`). |
+| `label` | `string` | Resolved display label. |
+| `color` | `string` | Resolved stat color. |
+| `id` | `string` | Links `FieldLabel` (`htmlFor`) to the bar (`id`). |
 
-### Constantes
+### Constants
 
 | Export | Description |
 | --- | --- |
-| `POKEMON_STAT_ORDER` | Orden canónico de los stats (como los devuelve PokéAPI). |
-| `POKEMON_STAT_LABEL` | Mapa stat → etiqueta (`hp` → `HP`, `special-attack` → `Sp. Atk`…). |
-| `POKEMON_STAT_COLOR` | Mapa stat → color (hex inline, sin tokens externos). |
-| `POKEMON_STAT_MAX` | Tope práctico de un stat base (`255`). |
+| `POKEMON_STAT_ORDER` | Canonical stat order (as returned by PokéAPI). |
+| `POKEMON_STAT_LABEL` | Stat → label map (`hp` → `HP`, `special-attack` → `Sp. Atk`…). |
+| `POKEMON_STAT_COLOR` | Stat → color map (inline hex values, no external tokens). |
+| `POKEMON_STAT_MAX` | Practical ceiling for a base stat (`255`). |
