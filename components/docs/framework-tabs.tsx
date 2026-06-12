@@ -13,7 +13,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function FrameworkTabs({ className }: { className?: string }) {
     return (
         <Tabs defaultValue="radix" className={cn("not-prose", className)}>
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between pr-2">
                 <TabsList variant="line">
                     <TabsTrigger value="radix">Radix UI</TabsTrigger>
                     <TabsTrigger value="base" disabled>
@@ -22,7 +22,7 @@ export function FrameworkTabs({ className }: { className?: string }) {
                 </TabsList>
                 <SiRadixui
                     aria-hidden
-                    className="size-4 shrink-0 text-muted-foreground"
+                    className="size-6 shrink-0 text-muted-foreground"
                 />
             </div>
         </Tabs>
