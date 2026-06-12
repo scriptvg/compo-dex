@@ -376,6 +376,7 @@ export type PokedexSearchProps = React.ComponentProps<typeof InputGroupInput>
 function PokedexSearch({
   className,
   placeholder = "Buscar Pokémon…",
+  "aria-label": ariaLabel,
   onChange,
   onKeyDown,
   ...props
@@ -383,11 +384,17 @@ function PokedexSearch({
   const { query, setQuery } = usePokedex()
 
   return (
-    <InputGroup data-slot="pokedex-search" className={cn("h-8", className)}>
+    <InputGroup
+      role="search"
+      data-slot="pokedex-search"
+      className={cn("h-8", className)}
+    >
       <InputGroupInput
-        type="text"
+        type="search"
         autoComplete="off"
         placeholder={placeholder}
+        // Placeholder isn't an accessible name; fall back to it for the label.
+        aria-label={ariaLabel ?? (typeof placeholder === "string" ? placeholder : "Buscar")}
         className="text-xs placeholder:text-muted-foreground"
         value={query}
         onChange={(event) => {
@@ -483,12 +490,13 @@ function PokedexItems<T>({
   children,
   ...props
 }: PokedexItemsProps<T>) {
-  const { visibleItems, getItemKey } = usePokedex<T>()
+  const { visibleItems, getItemKey, loading } = usePokedex<T>()
   const Comp = asChild ? Slot.Root : "div"
 
   return (
     <Comp
       data-slot="pokedex-items"
+      aria-busy={loading || undefined}
       className={cn(
         "grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
         className
@@ -592,6 +600,9 @@ function PokedexCount({
   return (
     <Comp
       data-slot="pokedex-count"
+      // Announce result-count changes (search / filter) to screen readers.
+      role="status"
+      aria-live="polite"
       className={cn(
         "text-xs whitespace-nowrap text-muted-foreground tabular-nums",
         className

@@ -142,4 +142,57 @@ function PokemonBadgeType({
   )
 }
 
-export { PokemonBadgeType, pokemonBadgeTypeVariants }
+/* ----------------------------- Badge group ------------------------------ */
+
+export type PokemonBadgeTypeGroupProps = React.ComponentProps<"div"> & {
+  /**
+   * Convenience: render one badge per type. A Pokémon never has more than two
+   * types, so the list is capped at `max` (default 2). Omit to compose
+   * `<PokemonBadgeType>` children by hand instead.
+   */
+  types?: PokemonBadgeType[]
+  /** Variant forwarded to every generated badge. */
+  variant?: PokemonBadgeTypeProps["variant"]
+  /** Hard cap on badges rendered from `types`. Defaults to the canonical 2. */
+  max?: number
+  asChild?: boolean
+}
+
+function PokemonBadgeTypeGroup({
+  className,
+  types,
+  variant,
+  max = 2,
+  asChild = false,
+  children,
+  ...props
+}: PokemonBadgeTypeGroupProps) {
+  const Comp = asChild ? Slot.Root : "div"
+
+  return (
+    <Comp
+      data-slot="pokemon-badge-type-group"
+      className={cn("flex flex-wrap items-center gap-1", className)}
+      {...props}
+    >
+      {types
+        ? types.slice(0, max).map((type) => (
+            <PokemonBadgeType
+              key={type}
+              type={type}
+              variant={variant}
+              className="capitalize"
+            >
+              {type}
+            </PokemonBadgeType>
+          ))
+        : children}
+    </Comp>
+  )
+}
+
+export {
+  PokemonBadgeType,
+  PokemonBadgeTypeGroup,
+  pokemonBadgeTypeVariants,
+}

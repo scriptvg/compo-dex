@@ -22,6 +22,7 @@ export const demoComponents: Record<string, ComponentType> = {
     "pokemon-card-dual": dynamic(
         () => import("@/components/demo/pokemon-card-dual"),
     ),
+    "pokemon-stat": dynamic(() => import("@/components/demo/pokemon-stat")),
     "pokemon-sprite": dynamic(() => import("@/components/demo/pokemon-sprite")),
     "pokemon-sprite-group": dynamic(
         () => import("@/components/demo/pokemon-sprite-group"),
