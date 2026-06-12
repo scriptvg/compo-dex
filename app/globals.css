@@ -217,6 +217,33 @@
       animation-duration: 0.01ms;
     }
   }
+
+  /* Slim, theme-colored document scrollbar so the native gutter isn't a chunky
+   * light strip on narrow/desktop widths. Mobile uses overlay scrollbars and is
+   * unaffected. Scoped to `html` to leave ScrollArea/other scrollers untouched. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  html::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
+  }
 }
 
 .rainbow-animated {

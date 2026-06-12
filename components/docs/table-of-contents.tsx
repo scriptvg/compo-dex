@@ -82,7 +82,7 @@ export function DocsTableOfContents({
             <Popover open={open} onOpenChange={setOpen}>
                 <div
                     className={cn(
-                        "sticky top-0 z-20 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
+                        "sticky top-(--header-height) z-20 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
                         className,
                     )}
                 >
@@ -156,10 +156,7 @@ export function DocsTableOfContents({
     }
 
     return (
-        <div className={cn("flex flex-col gap-2 p-4 pt-0 text-sm", className)}>
-            <p className="sticky top-0 h-6 bg-background text-xs font-medium text-muted-foreground">
-                On This Page
-            </p>
+        <div className={cn("flex flex-col gap-2 text-sm", className)}>
             {toc.map((item) => (
                 <a
                     key={item.url}

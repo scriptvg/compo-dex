@@ -22,4 +22,5 @@ export const componentLoaders: Record<
     "pokemon-card": () => import("@/content/docs/components/pokemon-card.mdx"),
     "pokemon-sprite": () =>
         import("@/content/docs/components/pokemon-sprite.mdx"),
+    "pokemon-stat": () => import("@/content/docs/components/pokemon-stat.mdx"),
 }

@@ -57,6 +57,15 @@ const POKEMON_TYPES = [
     "shadow",
 ] as const
 
+const STAT_NAMES = [
+    "hp",
+    "attack",
+    "defense",
+    "special-attack",
+    "special-defense",
+    "speed",
+] as const
+
 const BUTTON_VARIANTS = [
     "default",
     "outline",
@@ -149,6 +158,74 @@ export const componentsApi: Record<string, ApiComponent[]> = {
                     default: '"default"',
                     description:
                         "Tamaño del sprite; los subcomponentes se escalan con él. Expuesto como data-size.",
+                },
+            ],
+        },
+    ],
+    "pokemon-stat": [
+        {
+            name: "PokemonStat",
+            props: [
+                {
+                    name: "stat",
+                    type: enumOf("PokemonStatName", STAT_NAMES),
+                    description:
+                        "Stat conocido: autocompleta label y color. Expuesto como data-stat.",
+                },
+                {
+                    name: "value",
+                    type: code("number"),
+                    description: "Valor base del stat (requerido).",
+                },
+                {
+                    name: "max",
+                    type: code("number"),
+                    default: "255",
+                    description:
+                        "Escala contra la que se calcula el llenado de la barra (POKEMON_STAT_MAX).",
+                },
+                {
+                    name: "label",
+                    type: code("string"),
+                    default: "nombre del stat",
+                    description: "Sobreescribe la etiqueta visible.",
+                },
+                {
+                    name: "color",
+                    type: code("string"),
+                    default: "color del stat / --primary",
+                    description:
+                        "Sobreescribe el color de la barra. Se expone como --stat-color.",
+                },
+            ],
+        },
+        {
+            name: "PokemonStatBar",
+            props: [
+                {
+                    name: "...props",
+                    type: code("React.ComponentProps<typeof Progress>"),
+                    description:
+                        "Es el Progress de shadcn recoloreado por stat; acepta todas sus props. value, aria-labelledby y aria-valuetext los aporta el contexto.",
+                },
+            ],
+        },
+        {
+            name: "PokemonStatList",
+            props: [
+                {
+                    name: "stats",
+                    type: code("PokemonStatsInput"),
+                    description:
+                        "Datos a renderizar: array de PokemonStatEntry o record { stat: value } (ordenado por POKEMON_STAT_ORDER).",
+                },
+                {
+                    name: "children",
+                    type: fn(
+                        "((entry: PokemonStatEntry, index: number) => React.ReactNode) | React.ReactNode",
+                    ),
+                    description:
+                        "Render prop: recibe cada entry y devuelve su fila. Pasa un nodo normal para componer <PokemonStat> a mano.",
                 },
             ],
         },

@@ -86,11 +86,18 @@ export const componentDocs: ComponentDoc[] = [
         status: "planned",
     },
     {
-        slug: "pokemon-stat-bar",
-        name: "Pokemon Stat Bar",
+        slug: "pokemon-stat",
+        name: "Pokemon Stat",
         category: "component",
-        description: "Barra de estadística (HP, Ataque, Defensa…) con animación.",
-        status: "planned",
+        description:
+            "Filas de estadísticas base (HP, Ataque, Defensa…) compuestas sobre shadcn Field y Progress, con color por stat y partes recomponibles.",
+        status: "stable",
+        isNew: true,
+        dependencies: ["radix-ui"],
+        imports: {
+            name: "PokemonStat",
+            from: "@/components/compodex/ui/pokemon-stat",
+        },
     },
     {
         slug: "pokemon-number",

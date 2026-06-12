@@ -34,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <AnchorHeading
                 level={2}
                 className={cn(
-                    "mt-8 mb-3 pb-2 text-2xl font-semibold first:mt-0 hover:underline underline-offset-4",
+                    "mt-8 mb-3 pb-2 text-2xl font-semibold first:mt-0",
                     className,
                 )}
                 {...props}

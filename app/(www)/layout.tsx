@@ -8,13 +8,11 @@ import { ToggleTheme } from "@/components/ui/toggle-theme"
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { queryClient } from "@/lib/query"
 import { DocsSearch } from "@/components/docs/docs-search"
 import { MobileMenu } from "@/components/mobile-nav"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 
 function AppNavbar() {
@@ -54,17 +52,6 @@ export default function MainLayout({
 }: {
     children: React.ReactNode
 }) {
-    const pathname = usePathname()
-    const scrollRef = React.useRef<HTMLDivElement>(null)
-
-    // El scroll vive en el viewport del ScrollArea, no en window,
-    // así que hay que resetearlo manualmente al navegar.
-    React.useEffect(() => {
-        scrollRef.current
-            ?.querySelector('[data-slot="scroll-area-viewport"]')
-            ?.scrollTo({ top: 0 })
-    }, [pathname])
-
     return (
         <QueryClientProvider client={queryClient}>
             <Layout className="">
