@@ -1,36 +1,109 @@
 ---
 title: Installation
-description: Guía rápida para instalar y arrancar compodex en local.
+description: Add CompoDex Pokémon-themed components to your Next.js project via the shadcn registry in three steps.
 ---
 
-## Requisitos
+CompoDex is distributed as a **shadcn registry**. Components are copied directly into your project (no runtime package to install), which means you own the code and can customize it freely.
 
-- Node.js 18.18 o superior.
-- [pnpm](https://pnpm.io) como gestor de paquetes.
+## Prerequisites
 
-## Instalar dependencias
+Before you begin, your project must have:
 
-```bash
-pnpm install
+- **Next.js** (App Router) — v14 or later
+- **React 19**
+- **Tailwind CSS v4** — [installation guide](https://tailwindcss.com)
+- **shadcn/ui** already initialized (`pnpm dlx shadcn@latest init`) — [setup guide](https://ui.shadcn.com/docs/installation)
+
+> pnpm is recommended throughout this guide, but npm, yarn, and bun work equally well.
+
+---
+
+<Steps>
+
+<Step>
+
+## Register the @compodex registry
+
+Tell shadcn where to find CompoDex components by adding a `registries` entry to your project's `components.json`:
+
+```json
+{
+  "registries": {
+    "@compodex": "https://compodex.netlify.app/r/{name}.json"
+  }
+}
 ```
 
-## Arrancar en desarrollo
+This entry goes alongside your existing `components.json` fields. If the file already has a `registries` key, add `"@compodex"` inside it.
 
-```bash
-pnpm dev
+</Step>
+
+<Step>
+
+## Add the type-color theme first
+
+Every CompoDex component uses `--color-type-*` CSS variables for Pokémon-type colors. Install the theme token set before adding any component:
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-type-colors" />
+
+This writes `--color-type-fire`, `--color-type-grass`, and all 21 type tokens into your Tailwind theme, generating utilities like `bg-type-fire`, `text-type-water`, and `border-type-electric` automatically.
+
+</Step>
+
+<Step>
+
+## Add a component
+
+Install any CompoDex component with a single command. Here is `badge-type` as an example:
+
+<CommandBlock command="shadcn@latest add @compodex/badge-type" />
+
+Then import and use it:
+
+```tsx
+import { PokemonBadgeType } from "@/components/compodex/ui/badge-type"
+
+export function Demo() {
+  return <PokemonBadgeType type="fire">Fire</PokemonBadgeType>
+}
 ```
 
-El servidor de desarrollo usa Turbopack y queda disponible en
-`http://localhost:3000`.
+<Callout type="note">
+  Components automatically pull their registry dependencies — shadcn `utils`, and any CompoDex items they require (like `@compodex/pokemon-type-colors`). You do not need to install dependencies by hand; shadcn resolves and copies everything in one pass.
+</Callout>
 
-## Scripts disponibles
+</Step>
 
-- `pnpm dev` — servidor de desarrollo.
-- `pnpm build` — build de producción.
-- `pnpm start` — sirve el build de producción.
-- `pnpm lint` — analiza el código con ESLint.
-- `pnpm typecheck` — comprueba los tipos con TypeScript.
+</Steps>
 
-## Siguiente paso
+---
 
-Explora los [componentes](/docs/components/pokemon-badge) disponibles.
+## Available components
+
+| Registry name | Install command |
+|---|---|
+| `pokemon-type-colors` | `pnpm dlx shadcn@latest add @compodex/pokemon-type-colors` |
+| `badge-type` | `pnpm dlx shadcn@latest add @compodex/badge-type` |
+| `pokemon-card` | `pnpm dlx shadcn@latest add @compodex/pokemon-card` |
+| `pokemon-sprite` | `pnpm dlx shadcn@latest add @compodex/pokemon-sprite` |
+| `pokemon-stat` | `pnpm dlx shadcn@latest add @compodex/pokemon-stat` |
+| `pokedex` | `pnpm dlx shadcn@latest add @compodex/pokedex` |
+
+---
+
+## Next steps
+
+- Browse individual component docs and live previews: [Components](/docs/components/pokemon-badge)
+- Follow a full worked example: [Build a Pokédex](/docs/build-a-pokedex)
+
+---
+
+## License and attribution
+
+CompoDex is released under the [MIT License](/LICENSE).
+
+**Pokémon trademark notice:** Pokémon, all Pokémon names, and all related indicia are trademarks of Nintendo, Game Freak, and The Pokémon Company. CompoDex is an unofficial fan project with no affiliation to or endorsement by those rights holders.
+
+**Sprite artwork** is served by [PokéAPI](https://pokeapi.co), which aggregates official and community sprite assets. Please review PokéAPI's terms before using sprites in production.
+
+**CompoDex is built on [shadcn/ui](https://ui.shadcn.com) and [Radix UI](https://www.radix-ui.com)**, both MIT-licensed.
