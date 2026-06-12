@@ -11,11 +11,11 @@ export const siteConfig = {
       },
       title: "A production-ready UI kit for serious Pokédex apps",
       description: "A domain-driven component library built on top of shadcn/ui, designed to handle complex Pokémon data with speed, consistency, and full customization.",
-      commands: ["pnpm dlx shadcn@latest add @compodex/ui/pokemon-badge", "pnpm dlx shadcn@latest add @compodex/ui/pokemon-sprite"],
+      commands: ["pnpm dlx shadcn@latest add @compodex/pokemon-type-colors", "pnpm dlx shadcn@latest add @compodex/pokemon-card"],
       cta: {
         getStarted: {
           label: "Get Started",
-          link: "/docs/getting-started",
+          link: "/docs/installation",
         },
         viewDemo: {
           label: "View Pokedex Demo",
