@@ -48,8 +48,16 @@ const PARTY = [
   { id: 6, name: "Charizard" },
   { id: 9, name: "Blastoise" },
   { id: 3, name: "Venusaur" },
-  { id: 5, name: "Charmarder" },
+  { id: 5, name: "Charmander" },
   { id: 54, name: "Psyduck" },
+  { id: 94, name: "Gengar" },
+  { id: 149, name: "Dragonite" },
+  { id: 130, name: "Gyarados" },
+  { id: 131, name: "Lapras" },
+  { id: 248, name: "Tyranitar" },
+  { id: 384, name: "Rayquaza" },
+  { id: 445, name: "Garchomp" },
+  { id: 635, name: "Hydreigon" },
 ]
 
 // A trimmed Charizard spread keeps the stats tile short.
@@ -157,25 +165,35 @@ export function HeroShowcase({ className }: { className?: string }) {
         <div className="">
           <Tile label="Sprites">
             <PokemonSpriteGroup>
-              {/* sm: 3, md: 4, lg: 5, xl: 6 */}
-              {PARTY.slice(0, 3).map((p) => (
+              {/* Mobile: 14 pokémones */}
+              {PARTY.slice(0, 14).map((p) => (
+                <PokemonSprite key={p.id} size="md" className="bg-card flex sm:hidden">
+                  <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
+                  <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
+                </PokemonSprite>
+              ))}
+              {/* sm: 7 pokémones */}
+              {PARTY.slice(0, 7).map((p) => (
                 <PokemonSprite key={p.id} size="md" className="bg-card hidden sm:flex md:hidden">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
                   <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
                 </PokemonSprite>
               ))}
-              {PARTY.slice(0, 4).map((p) => (
+              {/* md: 9 pokémones */}
+              {PARTY.slice(0, 9).map((p) => (
                 <PokemonSprite key={p.id} size="md" className="bg-card hidden md:flex lg:hidden">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
                   <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
                 </PokemonSprite>
               ))}
+              {/* lg: 5 pokémones */}
               {PARTY.slice(0, 5).map((p) => (
                 <PokemonSprite key={p.id} size="md" className="bg-card hidden lg:flex xl:hidden">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
                   <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
                 </PokemonSprite>
               ))}
+              {/* xl+: 6 pokémones */}
               {PARTY.map((p) => (
                 <PokemonSprite key={p.id} size="md" className="bg-card hidden xl:flex">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />

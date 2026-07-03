@@ -47,7 +47,7 @@ export function MainHero() {
         </div>
 
         {/* Live component showcase */}
-        <HeroShowcase className="w-full max-w-md justify-self-center lg:max-w-none" />
+        <HeroShowcase className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-none justify-self-center" />
       </div>
     </Hero>
   )
