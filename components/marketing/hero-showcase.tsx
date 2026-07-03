@@ -95,14 +95,14 @@ export function HeroShowcase({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-3 sm:gap-4 [&_*]:select-none",
+        "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 [&_*]:select-none",
         className
       )}
       aria-hidden="true"
     >
       {/* Flagship dual-type card */}
       <PokemonCard type="water" secondary="flying" className="row-span-2 p-2">
-        <PokemonCardMedia className="h-full min-h-44 flex-1">
+        <PokemonCardMedia className="h-full min-h-40 flex-1">
           <PokemonSprite size="card" className="bg-card">
             <PokemonSpriteImage src={`${ARTWORK}/130.png`} alt="Gyarados" />
             <PokemonSpriteFallback>GY</PokemonSpriteFallback>
@@ -157,8 +157,27 @@ export function HeroShowcase({ className }: { className?: string }) {
         <div className="">
           <Tile label="Sprites">
             <PokemonSpriteGroup>
+              {/* sm: 3, md: 4, lg: 5, xl: 6 */}
+              {PARTY.slice(0, 3).map((p) => (
+                <PokemonSprite key={p.id} size="md" className="bg-card hidden sm:flex md:hidden">
+                  <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
+                  <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
+                </PokemonSprite>
+              ))}
+              {PARTY.slice(0, 4).map((p) => (
+                <PokemonSprite key={p.id} size="md" className="bg-card hidden md:flex lg:hidden">
+                  <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
+                  <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
+                </PokemonSprite>
+              ))}
+              {PARTY.slice(0, 5).map((p) => (
+                <PokemonSprite key={p.id} size="md" className="bg-card hidden lg:flex xl:hidden">
+                  <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
+                  <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
+                </PokemonSprite>
+              ))}
               {PARTY.map((p) => (
-                <PokemonSprite key={p.id} size="md" className="bg-card">
+                <PokemonSprite key={p.id} size="md" className="bg-card hidden xl:flex">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
                   <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
                 </PokemonSprite>
@@ -170,7 +189,7 @@ export function HeroShowcase({ className }: { className?: string }) {
       </div>
 
       {/* Base stats */}
-      <Tile label="Base stats" className="col-span-2">
+      <Tile label="Base stats" className="col-span-1 md:col-span-2">
         <PokemonStatList className="gap-2">
           {STATS.map((entry) => (
             <PokemonStat key={entry.stat} {...entry}>
