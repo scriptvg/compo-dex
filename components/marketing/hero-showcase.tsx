@@ -194,7 +194,7 @@ export function HeroShowcase({ className }: { className?: string }) {
                 </PokemonSprite>
               ))}
               {/* xl+: 6 pokémones */}
-              {PARTY.map((p) => (
+              {PARTY.slice(0, 6).map((p) => (
                 <PokemonSprite key={p.id} size="md" className="bg-card hidden xl:flex">
                   <PokemonSpriteImage src={`${ARTWORK}/${p.id}.png`} alt={p.name} />
                   <PokemonSpriteFallback>{p.name[0]}</PokemonSpriteFallback>
