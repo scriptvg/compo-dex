@@ -18,6 +18,12 @@ export const demoComponents: Record<string, ComponentType> = {
     "pokemon-badge-variants-type": dynamic(
         () => import("@/components/demo/pokemon-badge-variants-type"),
     ),
+    "pokemon-badge-as-link": dynamic(
+        () => import("@/components/demo/pokemon-badge-as-link"),
+    ),
+    "pokemon-badge-with-tooltip": dynamic(
+        () => import("@/components/demo/pokemon-badge-with-tooltip"),
+    ),
     "pokemon-card": dynamic(() => import("@/components/demo/pokemon-card")),
     "pokemon-card-dual": dynamic(
         () => import("@/components/demo/pokemon-card-dual"),

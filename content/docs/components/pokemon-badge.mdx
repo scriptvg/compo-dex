@@ -66,11 +66,24 @@ Use the `type` prop to display a Pokémon's elemental type. It sets the badge's 
 
 <ComponentPreview name="pokemon-badge-variants" />
 
-### Combined
+### Variants
 
-Use the `variant` prop to change the visual style of the badge. Note that some variants may not suit every type due to color contrast.
+Use the `variant` prop to change the visual style of the badge. Choose from `solid` (default), `soft`, `outline`, or `ghost`.
 
 <ComponentPreview name="pokemon-badge-variants-type" />
+
+### Badge as Link
+
+Use the `asChild` prop to render the badge as a clickable link. Perfect for type filter navigation each kind of type is supported for hover effects with the `variant` prop.
+
+<ComponentPreview name="pokemon-badge-as-link" />
+
+### Badge with Tooltip
+
+Combine with tooltips to show type effectiveness data on hover. Hover over a type to see its weaknesses and strengths.
+
+<ComponentPreview name="pokemon-badge-with-tooltip" />
+
 
 ## API Reference
 
