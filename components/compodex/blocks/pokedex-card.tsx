@@ -31,8 +31,7 @@ function PokedexCard({ pokemon }: { pokemon: NamedAPIResource }) {
 
     return (
       <PokemonCard
-        className="overflow-hidden p-2"
-        isMega={isMega}
+        mega={isMega}
         type={types[0] ?? "normal"}
         secondary={types[1]}
       >

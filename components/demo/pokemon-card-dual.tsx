@@ -11,7 +11,7 @@ import { PokemonSprite, PokemonSpriteFallback, PokemonSpriteImage } from "@/comp
 
 export default function PokemonCardDualDemo() {
     return (
-        <PokemonCard className="overflow-hidden p-2" type="water" secondary="flying">
+        <PokemonCard type="water" secondary="flying">
             <PokemonCardMedia className="h-48">
                 <PokemonSprite className="size-full bg-card">
                     <PokemonSpriteImage src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="Gyarados" />

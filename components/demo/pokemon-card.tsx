@@ -13,7 +13,7 @@ import { PokemonSprite, PokemonSpriteFallback, PokemonSpriteImage } from "@/comp
 
 export default function PokemonCardDemo() {
     return (
-        <PokemonCard className="overflow-hidden p-2" type="electric">
+        <PokemonCard type="electric">
             <PokemonCardMedia className="h-48">
                 <PokemonSprite className="size-full bg-card">
                     <PokemonSpriteImage src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" />

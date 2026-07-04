@@ -1,5 +1,5 @@
 import * as React from "react"
- import { cva } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { POKEMON_TYPE_COLOR, type PokemonBadgeType } from "./badge-type"
@@ -18,7 +18,7 @@ import { POKEMON_TYPE_COLOR, type PokemonBadgeType } from "./badge-type"
  * consumers that want to drive their own state styling.
  */
 const POKEMON_CARD_BASE =
-  "group/pokemon-card relative flex flex-col gap-4 overflow-hidden rounded-none bg-card py-4 text-xs/relaxed text-card-foreground ring-1 ring-foreground/10 has-data-[slot=pokemon-card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-2 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=pokemon-card-footer]:pb-0 *:[img:first-child]:rounded-none *:[img:last-child]:rounded-none"
+  "group/pokemon-card relative flex flex-col gap-4 overflow-hidden rounded-none bg-card p-2 text-xs/relaxed text-card-foreground ring-1 ring-foreground/10 data-[size=sm]:gap-2 data-[size=sm]:p-1.5"
 
 function tint(type: PokemonBadgeType) {
   return `color-mix(in oklab, ${POKEMON_TYPE_COLOR[type]} 50%, transparent)`
@@ -26,7 +26,8 @@ function tint(type: PokemonBadgeType) {
 
 export type PokemonCardProps = React.ComponentProps<"article"> & {
   size?: "default" | "sm"
-  isMega?: boolean
+  /** Mega-evolved form: replaces the type surface with the animated rainbow. */
+  mega?: boolean
   /** Primary type — always present. Drives the card surface. */
   type?: PokemonBadgeType
   /** Optional secondary type. When set, the surface is a primary → secondary gradient. */
@@ -36,7 +37,7 @@ export type PokemonCardProps = React.ComponentProps<"article"> & {
 function PokemonCard({
   className,
   size = "default",
-  isMega = false,
+  mega = false,
   type = "normal",
   secondary,
   style,
@@ -44,7 +45,7 @@ function PokemonCard({
 }: PokemonCardProps) {
   // Mega forms use the animated rainbow surface (its own `background`),
   // so we only set a type surface when the card isn't a Mega.
-  const surface = isMega
+  const surface = mega
     ? undefined
     : secondary
       ? `linear-gradient(to right, ${tint(type)}, ${tint(secondary)})`
@@ -58,7 +59,7 @@ function PokemonCard({
       data-secondary={secondary}
       className={cn(
         POKEMON_CARD_BASE,
-        isMega && "rainbow-animated",
+        mega && "rainbow-animated",
         className
       )}
       style={surface ? { background: surface, ...style } : style}
@@ -74,7 +75,7 @@ function PokemonCardHeader({ className, ...props }: PokemonCardHeaderProps) {
     <div
       data-slot="pokemon-card-header"
       className={cn(
-        "group/pokemon-card-header bg-card @container/pokemon-card-header grid auto-rows-min items-start gap-1 rounded-none px-4 group-data-[size=sm]/pokemon-card:px-3 has-data-[slot=pokemon-card-action]:grid-cols-[1fr_auto] has-data-[slot=pokemon-card-description]:grid-rows-[auto_auto] [.border-b]:pb-4 group-data-[size=sm]/pokemon-card:[.border-b]:pb-3 border px-2 py-1",
+        "group/pokemon-card-header @container/pokemon-card-header grid auto-rows-min items-start gap-1 rounded-none border bg-card px-2 py-1 group-data-[size=sm]/pokemon-card:px-1.5 group-data-[size=sm]/pokemon-card:py-0.5 has-data-[slot=pokemon-card-action]:grid-cols-[1fr_auto] has-data-[slot=pokemon-card-description]:grid-rows-[auto_auto]",
         className
       )}
       {...props}
@@ -134,7 +135,7 @@ function PokemonCardContent({ className, ...props }: PokemonCardContentProps) {
     <div
       data-slot="pokemon-card-content"
       className={cn(
-        "px-4 group-data-[size=sm]/pokemon-card:px-3",
+        "px-2 group-data-[size=sm]/pokemon-card:px-1.5",
         className
       )}
       {...props}
@@ -149,7 +150,7 @@ function PokemonCardFooter({ className, ...props }: PokemonCardFooterProps) {
     <div
       data-slot="pokemon-card-footer"
       className={cn(
-        "flex items-center rounded-none border-t p-4 group-data-[size=sm]/pokemon-card:p-3",
+        "flex items-center rounded-none border bg-card px-2 py-1 group-data-[size=sm]/pokemon-card:px-1.5 group-data-[size=sm]/pokemon-card:py-0.5",
         className
       )}
       {...props}
@@ -183,10 +184,10 @@ function PokemonCardMedia({ className, ...props }: PokemonCardMediaProps) {
 const pokemonCardOverlayVariants = cva("absolute z-10 flex flex-wrap gap-1", {
   variants: {
     position: {
-      "top-left": "left-4 top-4 max-w-[70%] justify-start",
-      "top-right": "right-4 top-4 max-w-[70%] justify-end",
-      "bottom-left": "bottom-4 left-4 max-w-[calc(100%-2rem)] justify-start",
-      "bottom-right": "bottom-4 right-4 max-w-[70%] justify-end",
+      "top-left": "left-2 top-2 max-w-[70%] justify-start",
+      "top-right": "right-2 top-2 max-w-[70%] justify-end",
+      "bottom-left": "bottom-2 left-2 max-w-[calc(100%-1rem)] justify-start",
+      "bottom-right": "bottom-2 right-2 max-w-[70%] justify-end",
     },
   },
   defaultVariants: {
