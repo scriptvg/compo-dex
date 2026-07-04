@@ -1,6 +1,7 @@
 ---
 title: "Pokemon Card"
 description: "A Pokémon-inspired card that adapts its surface to the Pokémon's type (and optional secondary type), with support for sizes and an animated Mega variant."
+dependencies: ["class-variance-authority"]
 slug: "/components/pokemon-card"
 ---
 
@@ -72,7 +73,7 @@ import {
 </PokemonCard>
 ```
 
-The card surface reads its color from the type-colors theme token (`pokemon-type-colors`). Pass a `secondary` type to get a dual-type gradient surface blending both colors. The `mega` variant adds an animated shimmer overlay for Mega-evolved Pokémon.
+The card surface reads its color from the type-colors theme token (`pokemon-type-colors`). Pass a `secondary` type to get a dual-type gradient surface blending both colors. The `mega` prop replaces the type surface with an animated rainbow for Mega-evolved Pokémon.
 
 ## Examples
 
@@ -82,18 +83,70 @@ Pass the `secondary` prop to render a gradient surface that blends the primary a
 
 <ComponentPreview name="pokemon-card-dual" />
 
+### With sprite
+
+`PokemonCardMedia` is a positioning slot: place a [Pokemon Sprite](/docs/components/pokemon-sprite) inside it to render the artwork. When the image fails to load (or there is no artwork yet), `PokemonSpriteFallback` keeps the composition intact instead of leaving an empty hole.
+
+<ComponentPreview name="pokemon-card-sprite" />
+
+### Type badges and overlays
+
+Anchor chips over the artwork with `PokemonCardOverlay`: the dex number top-left, a [Pokemon Badge](/docs/components/pokemon-badge) group top-right, and status flags in the bottom corners. Each overlay pins flush to its corner via the `position` prop.
+
+<ComponentPreview name="pokemon-card-badges" />
+
+### Mega
+
+The `mega` prop replaces the type surface with the animated rainbow used by Mega-evolved forms. Everything else composes the same way.
+
+<ComponentPreview name="pokemon-card-mega" />
+
+### Size
+
+Use `size="sm"` for denser layouts like grids: paddings and gaps tighten across every slot.
+
+<ComponentPreview name="pokemon-card-sm" />
+
 ## API Reference
 
 ### PokemonCard
 
-Main card container. Also accepts all native `<div>` props.
+Main card container, rendered as an `<article>`. The tinted frame (padding + overflow clipping) is built in. Also accepts all native `<article>` props.
 
 <PropsTable of="pokemon-card" component="PokemonCard" />
 
+### PokemonCardMedia
+
+<PropsTable of="pokemon-card" component="PokemonCardMedia" />
+
+### PokemonCardOverlay
+
+<PropsTable of="pokemon-card" component="PokemonCardOverlay" />
+
+### PokemonCardNumber
+
+<PropsTable of="pokemon-card" component="PokemonCardNumber" />
+
 ### PokemonCardHeader
 
-Card header slot. Accepts all native `<div>` props.
+<PropsTable of="pokemon-card" component="PokemonCardHeader" />
 
 ### PokemonCardTitle
 
-Card title slot. Accepts all native `<div>` props.
+<PropsTable of="pokemon-card" component="PokemonCardTitle" />
+
+### PokemonCardDescription
+
+<PropsTable of="pokemon-card" component="PokemonCardDescription" />
+
+### PokemonCardContent
+
+<PropsTable of="pokemon-card" component="PokemonCardContent" />
+
+### PokemonCardFooter
+
+<PropsTable of="pokemon-card" component="PokemonCardFooter" />
+
+### PokemonCardAction
+
+<PropsTable of="pokemon-card" component="PokemonCardAction" />

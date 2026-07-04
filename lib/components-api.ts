@@ -140,10 +140,112 @@ export const componentsApi: Record<string, ApiComponent[]> = {
                     description: "Densidad de la tarjeta. Expuesto como data-size.",
                 },
                 {
-                    name: "isMega",
+                    name: "mega",
                     type: code("boolean"),
                     default: "false",
-                    description: "Activa el borde animado del modo Mega.",
+                    description:
+                        "Reemplaza la superficie de tipo por el arcoíris animado del modo Mega.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardMedia",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"div">'),
+                    description:
+                        "Slot relativo que posiciona el artwork y ancla los PokemonCardOverlay hijos.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardOverlay",
+            props: [
+                {
+                    name: "position",
+                    type: enumOf("Position", [
+                        "top-left",
+                        "top-right",
+                        "bottom-left",
+                        "bottom-right",
+                    ]),
+                    default: '"top-left"',
+                    description:
+                        "Esquina a la que se ancla el overlay. Expuesto como data-position.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardNumber",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"span">'),
+                    description:
+                        "Chip del número de Pokédex (p. ej. #025). El formato lo decide el consumidor.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardHeader",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"div">'),
+                    description:
+                        "Banda blanca del nombre; ajusta su grid cuando hay Action o Description.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardTitle",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"h3">'),
+                    description: "Título de la tarjeta, renderizado como <h3>.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardDescription",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"p">'),
+                    description: "Texto de apoyo en tono muted.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardContent",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"div">'),
+                    description: "Slot de contenido libre de la tarjeta.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardFooter",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"div">'),
+                    description: "Banda inferior, con el mismo tratamiento que el header.",
+                },
+            ],
+        },
+        {
+            name: "PokemonCardAction",
+            props: [
+                {
+                    name: "...props",
+                    type: code('React.ComponentProps<"div">'),
+                    description:
+                        "Slot de acción alineado a la derecha dentro del header.",
                 },
             ],
         },

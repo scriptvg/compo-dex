@@ -28,6 +28,18 @@ export const demoComponents: Record<string, ComponentType> = {
     "pokemon-card-dual": dynamic(
         () => import("@/components/demo/pokemon-card-dual"),
     ),
+    "pokemon-card-sprite": dynamic(
+        () => import("@/components/demo/pokemon-card-sprite"),
+    ),
+    "pokemon-card-badges": dynamic(
+        () => import("@/components/demo/pokemon-card-badges"),
+    ),
+    "pokemon-card-mega": dynamic(
+        () => import("@/components/demo/pokemon-card-mega"),
+    ),
+    "pokemon-card-sm": dynamic(
+        () => import("@/components/demo/pokemon-card-sm"),
+    ),
     "pokemon-stat": dynamic(() => import("@/components/demo/pokemon-stat")),
     "pokemon-sprite": dynamic(() => import("@/components/demo/pokemon-sprite")),
     "pokemon-sprite-group": dynamic(
