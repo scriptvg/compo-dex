@@ -78,7 +78,19 @@
           "path": "components/compodex/ui/pokemon-card.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "css": {
+        ".rainbow-animated": {
+          "background": "linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet)",
+          "background-size": "400% 400%",
+          "animation": "rainbowMove 8s ease infinite"
+        },
+        "@keyframes rainbowMove": {
+          "0%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+          "100%": { "background-position": "0% 50%" }
+        }
+      }
     },
     {
       "name": "pokemon-sprite",
