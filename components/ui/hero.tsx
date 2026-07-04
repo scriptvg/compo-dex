@@ -10,7 +10,7 @@ function Hero({
   return (
     <section
       className={cn(
-        "mx-auto flex min-h-[calc(100dvh-2rem)] w-full scroll-mt-24 items-center justify-center border-b border-dashed px-4 sm:px-6",
+        "mx-auto flex min-h-[calc(100dvh-2rem)] w-full scroll-mt-24 items-center justify-center px-4 sm:px-6 border-b border-dashed",
         className
       )}
       {...props}
