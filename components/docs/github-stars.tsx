@@ -5,7 +5,7 @@ import { FiGithub } from "react-icons/fi"
 
 import { Button } from "@/components/ui/button"
 
-const REPO = "scriptvg/compo-dex"
+const REPO = "kromm-solutions/compo-dex"
 
 function formatStars(n: number): string {
     if (n >= 1000) {
