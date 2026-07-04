@@ -14,10 +14,16 @@ Breaking changes are marked explicitly; everything else is additive.
 
 - Fixed `badge-type` soft variant losing its colors inside portaled content (tooltips): colors now resolve via inline styles from a per-type map.
 - `pokemon-stat` colors are now backed by `--color-stat-*` theme tokens with light/dark values instead of hardcoded hex.
+- **Breaking:** `pokemon-card` prop `isMega` renamed to `mega`.
+- `pokemon-card` now builds the tinted frame in (padding + overflow clipping): no more magic `p-2 overflow-hidden` classes on every usage.
+- `pokemon-card` header cleaned up (conflicting debug classes removed), overlays pin flush to the corners, and the footer is styled as a white band like the header.
+- Fixed the mega rainbow animation not shipping with CLI installs: the CSS now travels in the registry item's `css` field.
 
 ### Documentation site
 
 - New Pokemon Badge demos: badge as link (`asChild`) and badge with tooltip showing type effectiveness.
+- New Pokemon Card examples: sprite composition with fallback (no-image case), badge overlays, mega surface, and size comparison.
+- Pokemon Card API reference is now complete: props tables for all 10 exported subcomponents.
 - Table of contents rebuilt on shadcn-style primitives (`TocItem`, `TocList`, `TocFloating`) with shared scroll-state hooks; the active section now draws a primary indicator over the aside's dashed border.
 - New library promo card at the bottom of the docs aside, with a 3D component preview that dissolves into the background.
 - Docs aside widened from 15rem to 18rem.
