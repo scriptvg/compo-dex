@@ -13,9 +13,9 @@ export const POKEMON_TYPE_SURFACE = {
   normal: "bg-type-normal text-white",
   fire: "bg-type-fire text-white",
   water: "bg-type-water text-white",
-  electric: "bg-type-electric text-white",
-  grass: "bg-type-grass text-white",
-  ice: "bg-type-ice text-white",
+  electric: "bg-type-electric text-slate-900",
+  grass: "bg-type-grass text-slate-900",
+  ice: "bg-type-ice text-slate-900",
   fighting: "bg-type-fighting text-white",
   poison: "bg-type-poison text-white",
   ground: "bg-type-ground text-white",
@@ -27,7 +27,7 @@ export const POKEMON_TYPE_SURFACE = {
   dragon: "bg-type-dragon text-white",
   dark: "bg-type-dark text-white",
   steel: "bg-type-steel text-white",
-  fairy: "bg-type-fairy text-white",
+  fairy: "bg-type-fairy text-slate-900",
   stellar: "bg-type-stellar text-white",
   unknown: "bg-type-unknown text-white",
   shadow: "bg-type-shadow text-white",
@@ -96,7 +96,7 @@ const pokemonBadgeTypeVariants = cva(
       variant: {
         solid:
           "border-transparent bg-(--pokemon-type) text-white [a]:hover:bg-(--pokemon-type)/80",
-        soft: "border-transparent bg-(--pokemon-type)/10 text-(--pokemon-type) [a]:hover:bg-(--pokemon-type)/20",
+        soft: "border-transparent [a]:hover:opacity-80",
         outline:
           "border-(--pokemon-type) text-(--pokemon-type) [a]:hover:bg-(--pokemon-type)/10",
         ghost:
@@ -125,6 +125,52 @@ function PokemonBadgeType({
 }: PokemonBadgeTypeProps) {
   const Comp = asChild ? Slot.Root : "span"
 
+  const COLOR_HEX_MAP = {
+    normal: "#a8a29e",
+    fire: "#ef4444",
+    water: "#3b82f6",
+    electric: "#facc15",
+    grass: "#22c55e",
+    ice: "#67e8f9",
+    fighting: "#be123c",
+    poison: "#7c3aed",
+    ground: "#d97706",
+    flying: "#818cf8",
+    psychic: "#ec4899",
+    bug: "#84cc16",
+    rock: "#a16207",
+    ghost: "#6b21a8",
+    dragon: "#a21caf",
+    dark: "#262626",
+    steel: "#64748b",
+    fairy: "#f9a8d4",
+    stellar: "#8b5cf6",
+    unknown: "#6b7280",
+    shadow: "#1f2937",
+  } as const
+
+  const getInlineStyles = () => {
+    const baseColor = POKEMON_TYPE_COLOR[type]
+    const hexColor = COLOR_HEX_MAP[type] || "#000000"
+
+    if (variant === "soft") {
+      // Convert hex to RGB for alpha blending
+      const r = parseInt(hexColor.slice(1, 3), 16)
+      const g = parseInt(hexColor.slice(3, 5), 16)
+      const b = parseInt(hexColor.slice(5, 7), 16)
+
+      return {
+        "--pokemon-type": baseColor,
+        backgroundColor: `rgba(${r}, ${g}, ${b}, 0.4) !important`,
+        color: `${hexColor} !important`,
+      } as React.CSSProperties
+    }
+
+    return {
+      "--pokemon-type": baseColor,
+    } as React.CSSProperties
+  }
+
   return (
     <Comp
       data-slot="pokemon-badge-type"
@@ -133,7 +179,7 @@ function PokemonBadgeType({
       className={cn(pokemonBadgeTypeVariants({ variant }), className)}
       style={
         {
-          "--pokemon-type": POKEMON_TYPE_COLOR[type],
+          ...getInlineStyles(),
           ...style,
         } as React.CSSProperties
       }
