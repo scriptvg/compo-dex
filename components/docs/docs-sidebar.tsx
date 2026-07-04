@@ -20,7 +20,7 @@ export function DocsSidebar({
 
   return (
     <Sidebar
-      className="sticky top-(--header-height) z-30 hidden h-[calc(100svh-var(--header-height))] overscroll-none border-r bg-transparent [--sidebar-menu-width:--spacing(60)] lg:flex xl:border-0"
+      className="sticky top-(--header-height) z-30 hidden h-[calc(100svh-var(--header-height))] overscroll-none border-r bg-transparent [--sidebar-menu-width:--spacing(60)] lg:flex xl:border-r border-dashed"
       collapsible="none"
       {...props}
     >
