@@ -41,7 +41,7 @@ const pageVariants = cva("mx-auto w-full max-w-[1400px]", {
     variants: {
         variant: {
             default: "",
-            sidebar: "xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-8",
+            sidebar: "xl:grid xl:grid-cols-[minmax(0,1fr)_18rem] xl:gap-8",
         },
     },
     defaultVariants: {
@@ -163,7 +163,7 @@ function PageAside({ className, ...props }: React.ComponentProps<"aside">) {
             className={cn(
                 // Fixed height + overflow-hidden so an inner ScrollArea owns the
                 // scrolling (auto-hiding scrollbar) instead of the native one.
-                "sticky top-(--header-height) hidden h-[calc(100svh-var(--header-height))] w-60 shrink-0 flex-col self-start overflow-hidden xl:flex",
+                "sticky top-(--header-height) hidden h-[calc(100svh-var(--header-height))] w-72 shrink-0 flex-col self-start overflow-hidden xl:flex",
                 className,
             )}
         />

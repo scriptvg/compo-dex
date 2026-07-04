@@ -5,15 +5,9 @@ import { Page } from "@/components/layout/page"
 import { DocsHeaderNav } from "@/components/docs/docs-header-nav"
 import { DocsPager } from "@/components/docs/docs-pager"
 import { DocsTableOfContents } from "@/components/docs/table-of-contents"
+import { LibraryCard } from "@/components/docs/library-card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card"
-import { Button } from "../ui/button"
+import PokemonCardDemo from "../demo/pokemon-card"
 
 export type DocShellProps = {
   /** Page title (frontmatter wins, registry is the fallback). */
@@ -47,14 +41,11 @@ export function DocShell({
   return (
     <Page variant="sidebar" className="max-w-none">
       <Page.Main>
-        {/* Floating ToC must be a direct child of the tall Page.Main:
-                    `sticky` is confined to its parent's box, so wrapping it in a
-                    bar-height slot (Page.Toc) left it nothing to stick over. */}
         {hasToc ? (
           <DocsTableOfContents
             toc={toc}
             variant="floating"
-            className="border-dashed xl:hidden"
+            className="xl:hidden"
           />
         ) : null}
 
@@ -78,32 +69,22 @@ export function DocShell({
       </Page.Main>
 
       {hasToc ? (
-        <Page.Aside>
-          {/* Fixed header outside the scroll: `position: sticky` misbehaves
-              inside Radix ScrollArea's table-display viewport. */}
+        <Page.Aside className="flex flex-col border-l border-dashed border-border">
           <p className="shrink-0 px-4 pt-4 pb-2 text-xs font-medium text-muted-foreground">
             On This Page
           </p>
           <ScrollArea className="min-h-0 flex-1">
             <div className="px-4 pb-4">
-              <DocsTableOfContents toc={toc} />
-              <Card className="mt-4">
-                <CardHeader>
-                  <CardTitle>Deploy your compodex app on Vercel</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>Trusted by OpenAI, Sonos, Adobe, and more.</p>
-                  <p>
-                    Vercel provides tools and infrastructure to deploy apps and
-                    features at scale.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button>Deploy Now</Button>
-                </CardFooter>
-              </Card>
+              <DocsTableOfContents toc={toc} variant="list" />
             </div>
           </ScrollArea>
+          <LibraryCard
+            title="Compodex."
+            description="Despliega más rápido con bloques y plantillas listos para usar"
+            linkText="Ver más"
+            linkHref="/docs/components"
+            preview={<PokemonCardDemo />}
+          />
         </Page.Aside>
       ) : null}
     </Page>
