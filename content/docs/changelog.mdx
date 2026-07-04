@@ -10,35 +10,78 @@ Breaking changes are marked explicitly; everything else is additive.
 
 ## Unreleased
 
-### Components
+We've been auditing the registry component by component, starting with `badge-type` and `pokemon-card`. The goal: every component should work out of the box after a CLI install, with no tribal knowledge required. Along the way the docs got a full table-of-contents rebuild, richer examples, and the landing page grew from a lone hero into a complete site.
 
-- Fixed `badge-type` soft variant losing its colors inside portaled content (tooltips): colors now resolve via inline styles from a per-type map.
-- `pokemon-stat` colors are now backed by `--color-stat-*` theme tokens with light/dark values instead of hardcoded hex.
-- **Breaking:** `pokemon-card` prop `isMega` renamed to `mega`.
-- `pokemon-card` now builds the tinted frame in (padding + overflow clipping): no more magic `p-2 overflow-hidden` classes on every usage.
-- `pokemon-card` header cleaned up (conflicting debug classes removed), overlays pin flush to the corners, and the footer is styled as a white band like the header.
-- Fixed the mega rainbow animation not shipping with CLI installs: the CSS now travels in the registry item's `css` field.
+### Pokemon Card — cleaner API
 
-### Documentation site
+`pokemon-card` used to require magic classes to look right: every single consumer repeated `className="overflow-hidden p-2"` to get the tinted frame. That knowledge now lives in the component. Drop the classes; the frame is the default.
 
-- New Pokemon Badge demos: badge as link (`asChild`) and badge with tooltip showing type effectiveness.
-- New Pokemon Card examples: sprite composition with fallback (no-image case), badge overlays, mega surface, and size comparison.
-- Pokemon Card API reference is now complete: props tables for all 10 exported subcomponents.
-- Table of contents rebuilt on shadcn-style primitives (`TocItem`, `TocList`, `TocFloating`) with shared scroll-state hooks; the active section now draws a primary indicator over the aside's dashed border.
-- New library promo card at the bottom of the docs aside, with a 3D component preview that dissolves into the background.
-- Docs aside widened from 15rem to 18rem.
+```tsx
+// Before
+<PokemonCard className="overflow-hidden p-2" type="electric">
 
-### Landing page and site
+// After
+<PokemonCard type="electric">
+```
 
-- New landing sections: Features, How It Works, Core Building, Why This Kit, and FAQ, with dashed separators that span the full content column.
-- New site-wide footer: brand info, Docs/Components/Project links, and an oversized Compodex wordmark clipped by the page's bottom edge.
+The rest of the cleanup:
 
-### Landing page improvements
+- **Breaking:** the `isMega` prop is now `mega`, matching shadcn naming conventions (`asChild`, not `isAsChild`).
+- The header slot had conflicting leftover classes (`border px-2 py-1` silently overriding `px-4`). It's now a single coherent declaration with a proper `size="sm"` variant.
+- `PokemonCardOverlay` pins flush to the corners (`top-2/left-2` instead of `top-4/left-4`), so dex numbers and type badges sit tight against the media edges.
+- `PokemonCardFooter` is styled as a white band like the header, and `PokemonCardContent` paddings scale with the frame.
 
-- Expanded Pokémon roster in hero showcase from 6 to 14 species.
-- Made sprite group responsive by viewport: shows 14 on mobile, 7 on sm, 9 on md, 5 on lg, and all 14 on xl.
-- Increased showcase max-width for better use of available space: now scales from 576px (mobile) to full width on large screens.
-- Fixed CLI command responsiveness on ultra-small devices (360px) with adjusted max-width breakpoints.
+### Mega rainbow ships with the CLI
+
+The animated rainbow surface for Mega forms only worked on this site — the CSS lived in our `globals.css`, so CLI installs of `@compodex/pokemon-card` got a dead class and a static card. The keyframes and class now travel in the registry item's `css` field and install automatically:
+
+<CommandBlock command="shadcn@latest add @compodex/pokemon-card" />
+
+### Badge colors survive portals
+
+The `soft` variant of `badge-type` lost its colors inside portaled content like tooltips and dropdowns, because the Tailwind-generated `bg-(--pokemon-type)/40` utilities didn't resolve across the portal boundary. Soft badges now compute their background and text color inline from a per-type map, so they render correctly anywhere in the tree.
+
+### Stat colors are theme tokens
+
+`pokemon-stat` used to hardcode a hex color per stat. Each stat is now backed by a `--color-stat-*` token with tuned light and dark values, so the bars adapt to your theme like every other CompoDex color:
+
+```css
+:root {
+  --color-stat-hp: #22c55e;
+  --color-stat-attack: #f97316;
+  /* ...defense, special-attack, special-defense, speed */
+}
+```
+
+### Richer component docs
+
+Both audited components got the full documentation treatment:
+
+- **Pokemon Badge:** new examples for badge-as-link (`asChild`) and badge-with-tooltip showing type effectiveness data on hover.
+- **Pokemon Card:** new examples covering sprite composition — including the no-artwork case, where `PokemonSpriteFallback` keeps the layout intact — badge overlays in every corner, the mega surface, and a `size="sm"` comparison.
+- **Complete API references:** props tables for every exported subcomponent (all 10 of Pokemon Card's), driven by a single source of truth in `lib/components-api.ts`.
+
+### Docs table of contents, rebuilt
+
+The table of contents was a 275-line monolith. It's now composed shadcn-style: `TocItem`, `TocList`, and `TocFloating` primitives in `ui/`, scroll-state hooks in `lib/hooks/`, and a thin `DocsTableOfContents` that picks the right variant per viewport. The active section draws a primary indicator bar directly over the aside's dashed border, and the mobile floating variant shows reading progress in a ring.
+
+The aside also grew from 15rem to 18rem and now ends in a library promo card with a 3D-tilted component preview that dissolves into the background.
+
+### The landing page is a full site now
+
+The home page grew five new sections below the hero — Features, How It Works, Core Building, Why This Kit, and FAQ — each separated by dashed rules that run edge-to-edge against the page's side borders.
+
+There's also a site-wide footer: brand info and credits, Docs/Components/Project link columns aligned to the content grid, the Nintendo/Pokémon trademark disclaimer, and an oversized Compodex wordmark clipped by the bottom edge of the page.
+
+### CompoDex joins Kromm Solutions
+
+CompoDex is the first library shipped under [Kromm Solutions](https://github.com/kromm-solutions) — the KS monogram you see across the site. The repository moved to [kromm-solutions/compo-dex](https://github.com/kromm-solutions/compo-dex) (old links redirect), and the site's credits and logo labels now reflect the brand.
+
+### Hero fixes
+
+- Expanded the Pokémon roster in the hero showcase from 6 to 14 species, with per-breakpoint sprite counts (14 on mobile, 7 on `sm`, 9 on `md`, 5 on `lg`, all 14 on `xl`).
+- The showcase now scales from 576px on mobile to full width on large screens.
+- Fixed CLI command overflow on ultra-small devices (360px).
 
 ---
 
