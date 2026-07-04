@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { Logo } from "@/components/ui/logo"
 import { siteConfig } from "@/lib/site-config"
 
-const REPO_URL = "https://github.com/scriptvg/compo-dex"
+const REPO_URL = "https://github.com/kromm-solutions/compo-dex"
 
 const footerLinks = [
   {
@@ -68,7 +68,7 @@ export function SiteFooter({
         <div className="grid w-full gap-10 px-6 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex w-fit items-center gap-2">
-            <Logo alt="Compodex UI" />
+            <Logo alt="Kromm Solutions" />
             <span className="text-sm font-semibold">{siteConfig.title}</span>
           </Link>
           <p className="max-w-xs text-sm text-muted-foreground">
@@ -78,14 +78,14 @@ export function SiteFooter({
             This project is crafted by{" "}
             <ExternalLink href="https://github.com/scriptvg">
               scriptvg
-            </ExternalLink>
-            . Peep the source code on{" "}
+            </ExternalLink>{" "}
+            under Kromm Solutions. Peep the source code on{" "}
             <ExternalLink href={REPO_URL}>GitHub</ExternalLink>.
           </p>
           <p className="max-w-xs text-sm text-muted-foreground">
             Not affiliated with Nintendo or The Pokémon Company.
           </p>
-          <p className="text-sm font-medium">2026 · Compodex UI</p>
+          <p className="text-sm font-medium">2026 · Kromm Solutions</p>
         </div>
 
         {footerLinks.map((group) => (

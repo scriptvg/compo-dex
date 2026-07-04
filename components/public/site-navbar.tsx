@@ -20,7 +20,7 @@ export function AppNavbar() {
             className="hidden md:flex"
           >
             <Link href="/">
-              <Logo alt="Logo" />
+              <Logo alt="Kromm Solutions" />
             </Link>
           </Button>
           <MobileMenu />

@@ -61,7 +61,7 @@ export function LibraryCard({
           {icon ?? (
             <Image
               src="/logo_dark.png"
-              alt="Logo"
+              alt="Kromm Solutions"
               width={40}
               height={40}
               className="size-10 rounded-md dark:invert"
