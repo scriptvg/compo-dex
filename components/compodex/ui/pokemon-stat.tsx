@@ -37,14 +37,14 @@ export const POKEMON_STAT_LABEL = {
   speed: "Speed",
 } as const satisfies Record<PokemonStatName, string>
 
-/** Self-contained per-stat colors (inline so the component installs alone). */
+/** Per-stat colors backed by theme tokens (--color-stat-*) in globals.css. */
 export const POKEMON_STAT_COLOR = {
-  hp: "#22c55e",
-  attack: "#f97316",
-  defense: "#eab308",
-  "special-attack": "#3b82f6",
-  "special-defense": "#84cc16",
-  speed: "#ec4899",
+  hp: "var(--color-stat-hp)",
+  attack: "var(--color-stat-attack)",
+  defense: "var(--color-stat-defense)",
+  "special-attack": "var(--color-stat-special-attack)",
+  "special-defense": "var(--color-stat-special-defense)",
+  speed: "var(--color-stat-speed)",
 } as const satisfies Record<PokemonStatName, string>
 
 /** Practical maximum of a single base stat across the games (Blissey HP = 255). */

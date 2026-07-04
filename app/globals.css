@@ -120,6 +120,33 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    --color-stat-hp: #22c55e;
+    --color-stat-attack: #f97316;
+    --color-stat-defense: #eab308;
+    --color-stat-special-attack: #3b82f6;
+    --color-stat-special-defense: #84cc16;
+    --color-stat-speed: #ec4899;
+    --color-type-normal: #a8a29e;
+    --color-type-fire: #ef4444;
+    --color-type-water: #3b82f6;
+    --color-type-electric: #facc15;
+    --color-type-grass: #22c55e;
+    --color-type-ice: #67e8f9;
+    --color-type-fighting: #be123c;
+    --color-type-poison: #7c3aed;
+    --color-type-ground: #d97706;
+    --color-type-flying: #818cf8;
+    --color-type-psychic: #ec4899;
+    --color-type-bug: #84cc16;
+    --color-type-rock: #a16207;
+    --color-type-ghost: #6b21a8;
+    --color-type-dragon: #a21caf;
+    --color-type-dark: #262626;
+    --color-type-steel: #64748b;
+    --color-type-fairy: #f9a8d4;
+    --color-type-stellar: #8b5cf6;
+    --color-type-unknown: #6b7280;
+    --color-type-shadow: #1f2937;
 }
 
 .dark {
@@ -154,6 +181,12 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+    --color-stat-hp: #4ade80;
+    --color-stat-attack: #fb923c;
+    --color-stat-defense: #facc15;
+    --color-stat-special-attack: #60a5fa;
+    --color-stat-special-defense: #bef264;
+    --color-stat-speed: #f472b6;
 }
 
 @layer base {
